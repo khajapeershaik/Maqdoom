@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2020 Maqdoom. All rights reserved.
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageViewModel" />
+
+        <variable
+            name="spinAdapter"
+            type="android.widget.ArrayAdapter" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/parentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/tg_background"
+        android:clickable="true">
+
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/navigation_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/navBackBtn"
+                style="@style/Button.ImageButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/back_btn"
+                android:onClick="@{() -> viewModel.goBackToPrevious()}"
+                android:visibility="visible" />
+
+            <TextView
+                style="@style/TextStyle.Menu.Normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:gravity="center"
+                android:text="@string/add_service"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <ImageButton
+                android:id="@+id/navProceedBtn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/proceed"
+                android:onClick="@{() -> viewModel.onSubmitButtonClick()}"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginBottom="50dp">
+
+            <RelativeLayout
+                android:id="@+id/activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/tg_background"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/tvCategory"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/service_category"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp" />
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerType"
+                    style="@style/Widget.MyApp.HeaderBar.SpinnerService"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvCategory"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp" />
+
+                <TextView
+                    android:id="@+id/tvSubCategory"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinnerType"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/service_sub_category"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerSubType"
+                    style="@style/Widget.MyApp.HeaderBar.SpinnerService"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvSubCategory"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:entries="@array/sub_category_options"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinnerSubType"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/Service_name"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvName"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:ellipsize="end"
+                    android:hint="@string/name_hint"
+                    android:imeOptions="actionNext"
+                    android:padding="8dp"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:id="@+id/tvCountry"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etName"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/Service_country"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerCountry"
+                    style="@style/Widget.MyApp.HeaderBar.SpinnerService"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvCountry"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:entries="@array/country_list"
+                    android:paddingEnd="5dp"
+                    android:paddingRight="5dp"
+                    android:prompt="@string/s_city" />
+
+                <TextView
+                    android:id="@+id/tvCity"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinnerCountry"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/Service_city"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/spinnerCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvCity"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:ellipsize="end"
+                    android:hint="Please enter language"
+                    android:imeOptions="actionNext"
+                    android:padding="8dp"
+                    android:singleLine="true" />
+                <!--<androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerCity"
+                    style="@style/Widget.MyApp.HeaderBar.SpinnerService"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvCity"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:entries="@array/city_list"
+                    android:paddingEnd="5dp"
+                    android:paddingRight="5dp"
+                    android:prompt="@string/s_city" />-->
+
+                <LinearLayout
+                    android:id="@+id/llContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinnerCity"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/ll_phone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvPhone"
+                            style="@style/TextStyle.Menu.Normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/Service_phone"
+                            android:textAllCaps="false"
+                            android:textColor="@color/light_grey"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:id="@+id/etPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/tvName"
+                            android:background="@drawable/custom_bg_edit_text_one"
+                            android:hint="@string/phone_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:padding="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llWhatsApp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvWhatsApp"
+                            style="@style/TextStyle.Menu.Normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/view"
+                            android:layout_gravity="left|center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/Service_wp"
+                            android:textAllCaps="false"
+                            android:textColor="@color/light_grey"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:id="@+id/etWhatsApp"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/tvName"
+                            android:background="@drawable/custom_bg_edit_text_one"
+                            android:hint="@string/whats_app_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:padding="8dp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llContact"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/ll_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            style="@style/TextStyle.Menu.Normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/service_location"
+                            android:textAllCaps="false"
+                            android:textColor="@color/light_grey"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:id="@+id/etLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/tvName"
+                            android:background="@drawable/custom_bg_edit_text_one"
+                            android:hint="@string/location_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:padding="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvPrice"
+                            style="@style/TextStyle.Menu.Normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/view"
+                            android:layout_gravity="left|center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/service_price"
+                            android:textAllCaps="false"
+                            android:textColor="@color/light_grey"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:id="@+id/etPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/tvName"
+                            android:background="@drawable/custom_bg_edit_text_one"
+                            android:hint="@string/location_price"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:padding="8dp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlPackage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llLocation"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:onClick="@{() -> viewModel.showOptionAlert()}">
+
+                    <TextView
+                        android:id="@+id/tvPackageIncludes"
+                        style="@style/TextStyle.Menu.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center|center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="Package includes"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15sp" />
+
+                    <!--<EditText
+                        android:id="@+id/etPackageIncludes"
+                        android:layout_width="70dp"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/tvPackageIncludes"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_toStartOf="@+id/rlAddIncl"
+                        android:layout_toLeftOf="@+id/rlAddIncl"
+                        android:background="@drawable/custom_bg_edit_text_one"
+                        android:enabled="false"
+                        android:hint="@string/service_includes_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:padding="8dp" />-->
+
+                    <RelativeLayout
+                        android:id="@+id/rlAddIncl"
+                        android:layout_width="25dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toEndOf="@+id/tvPackageIncludes"
+                        android:layout_toRightOf="@+id/tvPackageIncludes"
+                        android:background="@drawable/custom_bg_edit_text_four">
+
+                        <ImageView
+                            android:id="@+id/imImg"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginRight="20dp"
+                            android:src="@drawable/plus">
+
+                        </ImageView>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlFlight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlPackage"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvFlight"
+                        style="@style/TextStyle.Menu.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/package_flights"
+                        android:textAllCaps="false"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnFlightClose"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/reduce"
+                        android:onClick="@{() -> viewModel.onDeletePackage(@string/package_flights)}"
+                        android:padding="10dp"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlHotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlFlight"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvHotel"
+                        style="@style/TextStyle.Menu.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/package_hotels"
+                        android:textAllCaps="false"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnHotelClose"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/reduce"
+                        android:onClick="@{() -> viewModel.onDeletePackage(@string/package_hotels)}"
+                        android:padding="10dp"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlMeals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlHotel"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvMeals"
+                        style="@style/TextStyle.Menu.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/package_meals"
+                        android:textAllCaps="false"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnMealClose"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/reduce"
+                        android:onClick="@{() -> viewModel.onDeletePackage(@string/package_meals)}"
+                        android:padding="10dp"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlSS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlMeals"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvSS"
+                        style="@style/TextStyle.Menu.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/package_sight_seeing"
+                        android:textAllCaps="false"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnSSClose"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/reduce"
+                        android:onClick="@{() -> viewModel.onDeletePackage(@string/package_sight_seeing)}"
+                        android:padding="10dp"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlSV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlSS"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvSV"
+                        style="@style/TextStyle.Menu.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/package_site_visit"
+                        android:textAllCaps="false"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnSVClose"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/reduce"
+                        android:onClick="@{() -> viewModel.onDeletePackage(@string/package_site_visit)}"
+                        android:padding="10dp"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <!--<TextView
+                    android:id="@+id/tvLanguage"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlSV"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/Service_language"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp" />-->
+
+                <!--<androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerLanguage"
+                    style="@style/Widget.MyApp.HeaderBar.SpinnerService"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvLanguage"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:entries="@array/language_list"
+                    android:paddingEnd="5dp"
+                    android:paddingRight="5dp"
+                    android:prompt="@string/s_city" />-->
+
+                <RelativeLayout
+                    android:id="@+id/rlLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlSV"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:onClick="@{() -> viewModel.showLanguageAlert()}">
+
+                    <TextView
+                        android:id="@+id/tvLanguages"
+                        style="@style/TextStyle.Menu.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center|center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginRight="40dp"
+                        android:text="Add Language"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15sp" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlAddIncLan"
+                        android:layout_width="25dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toEndOf="@+id/tvLanguages"
+                        android:layout_toRightOf="@+id/tvLanguage"
+                        android:background="@drawable/custom_bg_edit_text_four">
+
+                        <ImageView
+                            android:id="@+id/imLanImg"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginRight="20dp"
+                            android:src="@drawable/plus">
+
+                        </ImageView>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/rlLanguageSelected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlLanguage"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <!--<TextView
+                    android:id="@+id/tvImage"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlLanguageSelected"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/Service_image"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp" />-->
+
+                <RelativeLayout
+                    android:id="@+id/rlImageListList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlLanguageSelected"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:onClick="@{() -> viewModel.onSelectImage()}">
+
+                    <TextView
+                        android:id="@+id/tvImageList"
+                        style="@style/TextStyle.Menu.Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center|center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="60dp"
+                        android:layout_marginRight="60dp"
+                        android:text="Add images"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/light_grey"
+                        android:textSize="15sp" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlAddIncImg"
+                        android:layout_width="25dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toEndOf="@+id/tvImageList"
+                        android:layout_toRightOf="@+id/tvImageList"
+                        android:background="@drawable/custom_bg_edit_text_four">
+
+                        <ImageView
+                            android:id="@+id/imSelImg"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginRight="20dp"
+                            android:src="@drawable/plus">
+
+                        </ImageView>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+                <!--<EditText
+                    android:id="@+id/etImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvImage"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:drawableRight="@drawable/add_image"
+                    android:editable="false"
+                    android:hint="@string/Service_image_upload_hint"
+                    android:inputType="none"
+                    android:padding="8dp"
+                    android:onClick="@{() -> viewModel.onSelectImage()}"
+                    android:paddingRight="5dp" />-->
+
+                <LinearLayout
+                    android:id="@+id/rlImageSelected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlImageListList"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical"></LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvNoOfPeoples"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlImageSelected"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/service_people"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/etNoOfPeoples"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvNoOfPeoples"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:hint="@string/service_people_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/tvMore"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etNoOfPeoples"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/Service_more"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/etMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_below="@+id/tvMore"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/custom_bg_edit_text_three"
+                    android:padding="8dp" />
+
+
+            </RelativeLayout>
+        </ScrollView>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/address_looking_up"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
+
+    </RelativeLayout>
+
+</layout>

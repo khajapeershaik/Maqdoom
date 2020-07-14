@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "426862658405",
+    "firebase_url": "https://maqdoom-324d1.firebaseio.com",
+    "project_id": "maqdoom-324d1",
+    "storage_bucket": "maqdoom-324d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426862658405:android:6b524f6204b33d5d52578c",
+        "android_client_info": {
+          "package_name": "com.project.maqdoom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426862658405-gh3been9trsbdj4b175mbmbm50hf3s8p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.maqdoom",
+            "certificate_hash": "228f1e0b78836a34b4329a6b6001d58c61fc6506"
+          }
+        },
+        {
+          "client_id": "426862658405-ltpqh94umqkeu409v8jq23scsmdv4gar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4Y0s592zWU2KRzTPq27YYWbpGw9iZ74o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426862658405-ltpqh94umqkeu409v8jq23scsmdv4gar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
