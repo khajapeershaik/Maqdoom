@@ -3,48 +3,61 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/toolbar"
+    <LinearLayout
+        android:id="@+id/rl_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/navigation_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/navBackBtn"
-            style="@style/Button.ImageButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/back_btn"
-            android:onClick="@{() -> viewModel.goBackToPrevious()}"
-            android:visibility="visible" />
-
+        android:orientation="vertical">
         <TextView
             style="@style/TextStyle.Menu.Normal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_head"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/navigation_bg"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:gravity="center"
             android:text="@string/add_service"
             android:textColor="@color/white"
             android:textSize="17sp" />
 
-    </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recycler_services"
+            android:layout_below="@+id/tv_head" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/recycler_services"
-        android:layout_below="@+id/toolbar" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:weightSum="2"
+        android:layout_below="@+id/rl_parent">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_cancel"
+            android:text="@string/cancel"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_save_disabled_shape"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_submit"
+            android:layout_marginLeft="10dp"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_save_pressed_shape"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

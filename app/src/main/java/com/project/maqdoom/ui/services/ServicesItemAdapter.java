@@ -19,6 +19,14 @@ public class ServicesItemAdapter extends RecyclerView.Adapter<ServicesItemAdapte
     Context context;
     List<ServicesChecklistItems> servicesChecklistItemsList = new ArrayList<>();
 
+    private ServicesItemAdapter.onItemclickListener mListener;
+    public interface onItemclickListener {
+        void onItemclickListener(View view,int position,String data);
+    }
+    public void setOnItemClickListener(ServicesItemAdapter.onItemclickListener mListener){
+        this.mListener = mListener;
+    }
+
     public ServicesItemAdapter(Context context, List<ServicesChecklistItems> list) {
         this.context = context;
         this.servicesChecklistItemsList = list;
@@ -42,31 +50,14 @@ public class ServicesItemAdapter extends RecyclerView.Adapter<ServicesItemAdapte
         holder.checkBox.setChecked(servicesChecklistItems.isSelected());
         holder.checkBox.setTag(servicesChecklistItemsList.get(position));
 
-      /*  holder.tv_name.setText(fruits.getName());
-        holder.tv_price.setText(fruits.getPrice());
-
-        holder.checkBox.setChecked(fruits.isSelected());
-        holder.checkBox.setTag(list.get(position));
-
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String data = "";
-                Fruits fruits1 = (Fruits)holder.checkBox.getTag();
 
-                fruits1.setSelected(holder.checkBox.isChecked());
-
-                list.get(position).setSelected(holder.checkBox.isChecked());
-
-                for (int j=0; j<list.size();j++){
-
-                    if (list.get(j).isSelected() == true){
-                        data = data + "\n" + list.get(j).getName().toString() + "   " + list.get(j).getPrice().toString();
-                    }
-                }
-                Toast.makeText(context, "Selected Fruits : \n " + data, Toast.LENGTH_SHORT).show();
+                mListener.onItemclickListener(view,position,servicesChecklistItemsList.get(position).name);
             }
-        });*/
+
+        });
     }
 
     @Override

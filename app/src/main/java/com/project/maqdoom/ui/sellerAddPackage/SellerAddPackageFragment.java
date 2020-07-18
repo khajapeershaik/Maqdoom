@@ -14,6 +14,7 @@
 package com.project.maqdoom.ui.sellerAddPackage;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -41,7 +43,9 @@ import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.databinding.FragmentSellerAddPackageBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
+import com.project.maqdoom.ui.services.ServicesChecklistItems;
 import com.project.maqdoom.ui.services.ServicesDailogFragment;
+import com.project.maqdoom.ui.services.ServicesItemAdapter;
 
 import org.json.JSONObject;
 
@@ -60,6 +64,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPackageBinding, SellerAddPackageViewModel> implements SellerAddPackageNavigator {
@@ -634,29 +640,44 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         images = new HashMap<>();
         hashMap = new HashMap<>();
         imageUpload = new HashMap<>();
-        fragmentSellerAddPackageBinding.rlServices.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                ServicesDailogFragment editNameDialogFragment = ServicesDailogFragment.newInstance("Some Title");
-                editNameDialogFragment.show(fm, "fragment_edit_name");
+        fragmentSellerAddPackageBinding.rlServices.setOnClickListener(v -> {
 
+            ServicesItemAdapter servicesItemAdapter;
+            List<ServicesChecklistItems> servicesChecklist = new ArrayList<>();
+            ArrayList<String>selectedServiceList = new ArrayList<>();
+            final Dialog dialog = new Dialog(getActivity());
+            dialog.setContentView(R.layout.dialog_services);
 
-                /*ServicesDailogFragment fragment1 = new ServicesDailogFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-               // fragment1.show(fragmentTransaction, "fragment_edit_name");
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.replace(R.id.clRootView, fragment1);
-                fragmentTransaction.commit();*/
+            RecyclerView recyclerServices = dialog.findViewById(R.id.recycler_services);
 
-               /* getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .disallowAddToBackStack()
-                        .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                        .add(R.id.clRootView, ServicesDailogFragment.newInstance("fragment_edit_name"), ServicesDailogFragment.TAG)
-                        .commit();*/
+            String[] itemServices = getResources().getStringArray(R.array.item_services);
+
+            for (int i = 0; i < itemServices.length; i++) {
+
+                ServicesChecklistItems servicesChecklistItems = new ServicesChecklistItems(itemServices[i], false);
+                servicesChecklist.add(servicesChecklistItems);
             }
+            servicesItemAdapter = new ServicesItemAdapter(getActivity(), servicesChecklist);
+
+            recyclerServices.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            recyclerServices.setAdapter(servicesItemAdapter);
+
+            servicesItemAdapter.setOnItemClickListener((view1, position, data) -> selectedServiceList.add(data));
+
+            Button dialogButtonCancel = dialog.findViewById(R.id.btn_cancel);
+            // if button is clicked, close the custom dialog
+            dialogButtonCancel.setOnClickListener(v1 -> dialog.dismiss());
+
+            Button dialogButtonSave = dialog.findViewById(R.id.btn_submit);
+            dialogButtonSave.setOnClickListener(v1->{
+                String service = "";
+                for(String name :selectedServiceList){
+                    service = service+", "+name;
+                }
+                fragmentSellerAddPackageBinding.etServices.setText(service);
+                dialog.dismiss();
+            });
+            dialog.show();
         });
         reqQueue = Volley.newRequestQueue(getActivity());
         hideKeyboard();
