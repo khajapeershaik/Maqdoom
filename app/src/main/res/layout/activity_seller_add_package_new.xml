@@ -89,6 +89,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/btnAdd"
             android:layout_below="@+id/toolbar">
 
             <RelativeLayout
@@ -125,9 +126,9 @@
                     android:layout_below="@+id/tvCategory"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:entries="@array/travel_options"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp" />
+                    android:layout_marginRight="20dp"
+                    android:entries="@array/travel_options" />
 
                 <TextView
                     android:id="@+id/tvSubCategory"
@@ -195,6 +196,7 @@
                     android:imeOptions="actionNext"
                     android:padding="8dp"
                     android:singleLine="true" />
+
                 <TextView
                     android:id="@+id/tvServices"
                     style="@style/TextStyle.Menu.Normal"
@@ -305,11 +307,9 @@
                             android:inputType="phone"
                             android:padding="8dp" />
 
-
                     </LinearLayout>
 
                 </LinearLayout>
-
 
 
                 <LinearLayout
@@ -365,6 +365,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
+
                         <TextView
                             android:id="@+id/tvPrice"
                             style="@style/TextStyle.Menu.Normal"
@@ -403,8 +404,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
-                    android:baselineAligned="false"
                     android:layout_marginRight="20dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -474,99 +475,42 @@
                 </LinearLayout>
 
 
-
-
-
-
-
-
-                <RelativeLayout
-                    android:id="@+id/rlPackage"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tvLanguage"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/llCountry"
+                    android:layout_gravity="left|center_vertical"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
-                    android:onClick="@{() -> viewModel.showOptionAlert()}"
-                    android:background="@drawable/custom_bg_edit_text_one">
+                    android:text="@string/s_language"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp" />
 
-                    <TextView
-                        android:id="@+id/tvPackageIncludes"
-                        style="@style/TextStyle.Menu.Normal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center|center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
-                        android:text="Click to add Package"
-                        android:textAlignment="center"
-                        android:textAllCaps="false"
-                        android:textColor="@color/light_grey"
-                        android:textSize="15sp" />
 
-                    <!--<EditText
-                        android:id="@+id/etPackageIncludes"
-                        android:layout_width="70dp"
-                        android:layout_height="40dp"
-                        android:layout_below="@+id/tvPackageIncludes"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_toStartOf="@+id/rlAddIncl"
-                        android:layout_toLeftOf="@+id/rlAddIncl"
-                        android:background="@drawable/custom_bg_edit_text_one"
-                        android:enabled="false"
-                        android:hint="@string/service_includes_hint"
-                        android:imeOptions="actionNext"
-                        android:inputType="textMultiLine"
-                        android:padding="8dp" />-->
-
-                    <RelativeLayout
-                        android:id="@+id/rlAddIncl"
-                        android:layout_width="40dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/custom_bg_edit_text_four">
-
-                        <ImageView
-                            android:id="@+id/imImg"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginRight="20dp"
-                            android:src="@drawable/plus">
-
-                        </ImageView>
-                    </RelativeLayout>
-
-                </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerLanguage"
+                    style="@style/Widget.MyApp.HeaderBar.SpinnerService"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvLanguage"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:entries="@array/language_list"
+                    android:visibility="visible" />
 
                 <RelativeLayout
                     android:id="@+id/rlFlight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlPackage"
+                    android:layout_below="@+id/spinnerLanguage"
                     android:layout_marginStart="30dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="5dp"
@@ -797,51 +741,37 @@
                         android:visibility="visible" />
                 </RelativeLayout>
 
-                <!--<TextView
-                    android:id="@+id/tvLanguage"
+
+                <TextView
+                    android:id="@+id/tvPackageDetails"
                     style="@style/TextStyle.Menu.Normal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlSV"
-                    android:layout_gravity="center|center_vertical"
+                    android:layout_below="@+id/spinnerLanguage"
+                    android:layout_gravity="left|center_vertical"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
-                    android:text="@string/Service_language"
-                    android:textAlignment="center"
+                    android:text="Package Details"
                     android:textAllCaps="false"
                     android:textColor="@color/light_grey"
-                    android:textSize="13sp" />-->
+                    android:textSize="13sp" />
 
-                <!--<androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spinnerLanguage"
-                    style="@style/Widget.MyApp.HeaderBar.SpinnerService"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/tvLanguage"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:entries="@array/language_list"
-                    android:paddingEnd="5dp"
-                    android:paddingRight="5dp"
-                    android:prompt="@string/s_city" />-->
 
                 <RelativeLayout
                     android:id="@+id/rlLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlSV"
+                    android:layout_below="@+id/tvPackageDetails"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
-                    android:onClick="@{() -> viewModel.showLanguageAlert()}"
-                    android:background="@drawable/custom_bg_edit_text_one">
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:onClick="@{() -> viewModel.showLanguageAlert()}">
 
                     <TextView
                         android:id="@+id/tvLanguages"
@@ -861,7 +791,6 @@
                         android:textSize="15sp" />
 
 
-
                     <RelativeLayout
                         android:id="@+id/rlAddIncLan"
                         android:layout_width="40dp"
@@ -871,9 +800,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/custom_bg_edit_text_four">
 
@@ -893,6 +822,7 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/rlLanguageSelected"
                     android:layout_width="match_parent"
@@ -924,18 +854,37 @@
                     android:textColor="@color/light_grey"
                     android:textSize="13sp" />-->
 
+                <TextView
+                    android:id="@+id/tvUpload"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlLanguage"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="Upload the picture of licence"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="15sp" />
+
                 <RelativeLayout
                     android:id="@+id/rlImageListList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlLanguageSelected"
+                    android:layout_below="@+id/tvUpload"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
-                    android:onClick="@{() -> viewModel.onSelectImage()}"
-                    android:background="@drawable/custom_bg_edit_text_one">
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:onClick="@{() -> viewModel.onSelectImage()}">
 
                     <TextView
                         android:id="@+id/tvImageList"
@@ -948,12 +897,11 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
-                        android:text="@string/Service_image_upload_hint"
+                        android:text="Upload picture"
                         android:textAlignment="center"
                         android:textAllCaps="false"
                         android:textColor="@color/light_grey"
                         android:textSize="15sp" />
-
 
 
                     <RelativeLayout
@@ -965,9 +913,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/custom_bg_edit_text_four">
 
@@ -998,8 +946,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
-                    android:orientation="vertical">
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llPeople"
@@ -1009,43 +956,44 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginEnd="20dp"
-                    android:baselineAligned="false"
                     android:layout_marginRight="20dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
-                <LinearLayout
-                    android:id="@+id/ll_people"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvNoOfPeoples"
-                    style="@style/TextStyle.Menu.Normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:text="@string/service_people"
-                    android:textAlignment="textStart"
-                    android:textAllCaps="false"
-                    android:textColor="@color/light_grey"
-                    android:textSize="13sp" />
+                    <LinearLayout
+                        android:id="@+id/ll_people"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/etNoOfPeoples"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/custom_bg_edit_text_one"
-                    android:hint="@string/service_people_hint"
-                    android:imeOptions="actionNext"
-                    android:inputType="phone"
-                    android:padding="8dp" />
+                        <TextView
+                            android:id="@+id/tvNoOfPeoples"
+                            style="@style/TextStyle.Menu.Normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/service_people"
+                            android:textAlignment="textStart"
+                            android:textAllCaps="false"
+                            android:textColor="@color/light_grey"
+                            android:textSize="13sp" />
 
-                </LinearLayout>
+                        <EditText
+                            android:id="@+id/etNoOfPeoples"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="20dp"
+                            android:background="@drawable/custom_bg_edit_text_one"
+                            android:hint="@string/service_people_hint"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:padding="8dp" />
+
+                    </LinearLayout>
 
 
                     <LinearLayout
@@ -1053,13 +1001,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
+
                         <TextView
                             style="@style/TextStyle.Menu.Normal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start|center_vertical"
                             android:layout_marginTop="10dp"
-                            android:text="@string/service_people"
+                            android:text="Add Image"
                             android:textAlignment="textStart"
                             android:textAllCaps="false"
                             android:textColor="@color/light_grey"
@@ -1114,6 +1063,7 @@
 
             </RelativeLayout>
         </ScrollView>
+
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/address_looking_up"

@@ -89,6 +89,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="travel">Travel</string>
     <string name="supplies">Supplies</string>
+    <string name="shops">Shops</string>
 
     <!--Tourist guide-->
     <string name="t_guide">Tourist Guide</string>
@@ -165,7 +166,7 @@
 
     <!-- Service addition -->
     <string name="service_category">Category</string>
-    <string name="service_title">SERVICES</string>
+    <string name="service_title">Services</string>
     <string name="service_sub_category">Sub Category</string>
     <string name="Service_name">Name</string>
     <string name="name_hint">Please enter name</string>
@@ -546,5 +547,52 @@
         <item>Please select sub category</item>
         <item>@string/tourist_inside</item>
         <item>@string/tourist_outside</item>
+    </string-array>
+
+    <string-array name="item_fruits">
+
+        <item>Apple</item>
+        <item>Banana</item>
+        <item>Mango</item>
+        <item>Orange</item>
+        <item>Cherry</item>
+        <item>Grape</item>
+        <item>Coconut</item>
+        <item>Blueberry</item>
+        <item>Strawberry</item>
+        <item>Pear</item>
+        <item>Watermelon</item>
+
+    </string-array>
+
+    <string-array name="item_price">
+
+        <item>100</item>
+        <item>40</item>
+        <item>55</item>
+        <item>25</item>
+        <item>80</item>
+        <item>120</item>
+        <item>15</item>
+        <item>30</item>
+        <item>70</item>
+        <item>85</item>
+        <item>75</item>
+
+    </string-array>
+
+    <string-array name="item_services">
+
+        <item>Parachute</item>
+        <item>Jet-Ski</item>
+        <item>Diving</item>
+        <item>Surfing</item>
+        <item>Mountaineer</item>
+        <item>Attend Sport</item>
+        <item>Event</item>
+        <item>Ticket</item>
+        <item>Hotel</item>
+        <item>Tourist Guide</item>
+
     </string-array>
 </resources>

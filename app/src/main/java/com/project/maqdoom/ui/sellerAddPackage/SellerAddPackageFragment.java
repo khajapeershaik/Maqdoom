@@ -41,6 +41,7 @@ import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.databinding.FragmentSellerAddPackageBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
+import com.project.maqdoom.ui.services.ServicesDailogFragment;
 
 import org.json.JSONObject;
 
@@ -56,6 +57,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 
@@ -249,8 +252,9 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
         String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
         String country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
-        String city = fragmentSellerAddPackageBinding.spinnerCity.getText().toString();
+        String city = fragmentSellerAddPackageBinding.spinnerCity.getSelectedItem().toString();
         //String language = "activitySellerAddPackageBinding.spinnerLanguage.getSelectedItem().toString()";
+
 
         String category_l_1_ShortName = "";
         if (option == 1) {
@@ -617,6 +621,8 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         sellerAddPackageViewModel.setNavigator(this);
         option = (int) getArguments().getSerializable(GD);
 
+
+
     }
 
     @Override
@@ -628,6 +634,30 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         images = new HashMap<>();
         hashMap = new HashMap<>();
         imageUpload = new HashMap<>();
+        fragmentSellerAddPackageBinding.rlServices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                ServicesDailogFragment editNameDialogFragment = ServicesDailogFragment.newInstance("Some Title");
+                editNameDialogFragment.show(fm, "fragment_edit_name");
+
+
+                /*ServicesDailogFragment fragment1 = new ServicesDailogFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+               // fragment1.show(fragmentTransaction, "fragment_edit_name");
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.clRootView, fragment1);
+                fragmentTransaction.commit();*/
+
+               /* getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .disallowAddToBackStack()
+                        .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                        .add(R.id.clRootView, ServicesDailogFragment.newInstance("fragment_edit_name"), ServicesDailogFragment.TAG)
+                        .commit();*/
+            }
+        });
         reqQueue = Volley.newRequestQueue(getActivity());
         hideKeyboard();
         setSpinner();
@@ -770,7 +800,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                         fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
                         fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
                         fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.VISIBLE);
+                        fragmentSellerAddPackageBinding.relPackageNew.setVisibility(View.VISIBLE);
                         fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.GONE);
                         fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.GONE);
                     }
@@ -808,7 +838,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                     fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.VISIBLE);
-                    fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.relPackageNew.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.GONE);
                     fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.GONE);
                 }
