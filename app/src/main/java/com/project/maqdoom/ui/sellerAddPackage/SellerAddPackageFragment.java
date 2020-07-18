@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -89,6 +90,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         args.putInt(GD, data);
         SellerAddPackageFragment fragment = new SellerAddPackageFragment();
         fragment.setArguments(args);
+
         return fragment;
 
     }
@@ -621,7 +623,13 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         sellerAddPackageViewModel.setNavigator(this);
         option = (int) getArguments().getSerializable(GD);
 
+        ArrayList<String> deals = new ArrayList<>();
+        if (getArguments() != null) {
 
+                deals = getArguments().getStringArrayList("listdata");
+             //   Log.d("finalselection", deals.toString());
+            }
+//                Log.d("finalselection", deals.toString());
 
     }
 
@@ -634,6 +642,12 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         images = new HashMap<>();
         hashMap = new HashMap<>();
         imageUpload = new HashMap<>();
+/*
+        ArrayList<String> deals = new ArrayList<>();
+        if (getArguments() != null) {
+            deals = getArguments().getStringArrayList("listdata");
+//                Log.d("finalselection", deals.toString());
+        }*/
         fragmentSellerAddPackageBinding.rlServices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

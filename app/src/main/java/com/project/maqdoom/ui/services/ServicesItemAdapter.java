@@ -18,6 +18,13 @@ public class ServicesItemAdapter extends RecyclerView.Adapter<ServicesItemAdapte
 
     Context context;
     List<ServicesChecklistItems> servicesChecklistItemsList = new ArrayList<>();
+    private ServicesItemAdapter.onItemclickListener mListener;
+    public interface onItemclickListener {
+        void onItemclickListener(View view,int position,String data);
+    }
+    public void setOnItemClickListener(ServicesItemAdapter.onItemclickListener mListener){
+        this.mListener = mListener;
+    }
 
     public ServicesItemAdapter(Context context, List<ServicesChecklistItems> list) {
         this.context = context;
@@ -41,6 +48,17 @@ public class ServicesItemAdapter extends RecyclerView.Adapter<ServicesItemAdapte
 
         holder.checkBox.setChecked(servicesChecklistItems.isSelected());
         holder.checkBox.setTag(servicesChecklistItemsList.get(position));
+
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mListener.onItemclickListener(view,position,servicesChecklistItemsList.get(position).name);
+            }
+           // void onItemclickListener(View view,int position,ServicesChecklistItems data);
+
+        });
 
       /*  holder.tv_name.setText(fruits.getName());
         holder.tv_price.setText(fruits.getPrice());
@@ -90,4 +108,5 @@ public class ServicesItemAdapter extends RecyclerView.Adapter<ServicesItemAdapte
     public List<ServicesChecklistItems> getFruitsList(){
         return servicesChecklistItemsList;
     }
+
 }
