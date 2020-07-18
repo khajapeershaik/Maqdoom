@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -44,7 +45,6 @@ import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.databinding.FragmentSellerAddPackageBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.services.ServicesChecklistItems;
-import com.project.maqdoom.ui.services.ServicesDailogFragment;
 import com.project.maqdoom.ui.services.ServicesItemAdapter;
 
 import org.json.JSONObject;
@@ -95,6 +95,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         args.putInt(GD, data);
         SellerAddPackageFragment fragment = new SellerAddPackageFragment();
         fragment.setArguments(args);
+
         return fragment;
 
     }
@@ -627,7 +628,13 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         sellerAddPackageViewModel.setNavigator(this);
         option = (int) getArguments().getSerializable(GD);
 
+        ArrayList<String> deals = new ArrayList<>();
+        if (getArguments() != null) {
 
+                deals = getArguments().getStringArrayList("listdata");
+             //   Log.d("finalselection", deals.toString());
+            }
+//                Log.d("finalselection", deals.toString());
 
     }
 
@@ -640,6 +647,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         images = new HashMap<>();
         hashMap = new HashMap<>();
         imageUpload = new HashMap<>();
+
         fragmentSellerAddPackageBinding.rlServices.setOnClickListener(v -> {
 
             ServicesItemAdapter servicesItemAdapter;
@@ -657,6 +665,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                 ServicesChecklistItems servicesChecklistItems = new ServicesChecklistItems(itemServices[i], false);
                 servicesChecklist.add(servicesChecklistItems);
             }
+
             servicesItemAdapter = new ServicesItemAdapter(getActivity(), servicesChecklist);
 
             recyclerServices.setLayoutManager(new GridLayoutManager(getActivity(), 2));

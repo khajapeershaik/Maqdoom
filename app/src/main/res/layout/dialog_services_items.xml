@@ -17,7 +17,6 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/checkBox_select"
         android:text="TextView"
-
         android:textColor="#000" />
 
 
