@@ -34,25 +34,26 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
                 try {
                     // Thread will sleep for 5 seconds
                     sleep(3 * 1000);
-                    if (getDataManager().getCurrentUserLoggedInMode() == DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
-                        getNavigator().openLoginActivity();
-                    } else {
-                        final String userType = getDataManager().getUserType();
-                        if ("0".equalsIgnoreCase(userType)) {
-                            getNavigator().openCustomerHome();
-                        } else {
-                            final String sellerStatus = getDataManager().getSellerStatus();
-                            if("0".equalsIgnoreCase(sellerStatus)){
-                                getNavigator().openSellerSubscription();
-                                //getNavigator().openSellerHome();
-                            }else{
-                                getNavigator().openSellerHome();
-                            }
+//                    if (getDataManager().getCurrentUserLoggedInMode() == DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
+//                        getNavigator().openLoginActivity();
+//                    } else {
+                    final String userType = getDataManager().getUserType();
+//                        if ("0".equalsIgnoreCase(userType)) {
+//                            getNavigator().openCustomerHome();
+//                        } else {
+//                            final String sellerStatus = getDataManager().getSellerStatus();
+//                            if("0".equalsIgnoreCase(sellerStatus)){
+//                                getNavigator().openSellerSubscription();
+//                                //getNavigator().openSellerHome();
+//                            }else{
+//                                getNavigator().openSellerHome();
+//                            }
+//
+//                        }
 
-                        }
-
-                        //getNavigator().openMainActivity();
-                    }
+                    //getNavigator().openMainActivity();
+                    // }
+                    getNavigator().openSellerHome();
                 } catch (Exception e) {
                 }
             }

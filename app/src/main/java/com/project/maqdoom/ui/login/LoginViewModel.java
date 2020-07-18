@@ -69,16 +69,16 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                                                 response.getData().getSeller_subscrption_status(),
                                                 response.getData().getPhone()
                                         );
-                                if("0".equalsIgnoreCase(response.getData().getIs_seller())){
-                                    getNavigator().openCustomerHome();
-                                }else{
-                                    if("0".equalsIgnoreCase(response.getData().getSeller_subscrption_status())){
-                                        getNavigator().openSellerSubscription();
-                                        //getNavigator().openSellerHome();
-                                    }else{
-                                        getNavigator().openSellerHome();
-                                    }
-                                }
+//                                if("0".equalsIgnoreCase(response.getData().getIs_seller())){
+//                                    getNavigator().openCustomerHome();
+//                                }else{
+//                                    if("0".equalsIgnoreCase(response.getData().getSeller_subscrption_status())){
+//                                        getNavigator().openSellerSubscription();
+//                                        //getNavigator().openSellerHome();
+//                                    }else{
+                                getNavigator().openSellerHome();
+                                // }
+                                //  }
 
                             } else {
                                 getNavigator().showErrorAlert(response.getMessage());
