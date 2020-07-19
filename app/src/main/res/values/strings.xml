@@ -545,8 +545,8 @@
     </string-array>
     <string-array name="sub_category_options">
         <item>Please select sub category</item>
-        <item>@string/tourist_inside</item>
-        <item>@string/tourist_outside</item>
+        <item>Domestic</item>
+        <item>International</item>
     </string-array>
 
     <string-array name="item_fruits">

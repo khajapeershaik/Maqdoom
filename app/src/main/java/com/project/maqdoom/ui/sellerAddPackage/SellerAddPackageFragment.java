@@ -259,7 +259,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
         String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
         String country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
-        String city = fragmentSellerAddPackageBinding.spinnerCity.getSelectedItem().toString();
+        String city = fragmentSellerAddPackageBinding.spinnerCity.getText().toString();
         //String language = "activitySellerAddPackageBinding.spinnerLanguage.getSelectedItem().toString()";
 
 
@@ -681,7 +681,8 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             dialogButtonSave.setOnClickListener(v1->{
                 String service = "";
                 for(String name :selectedServiceList){
-                    service = service+", "+name;
+                    service = service+name+", ";
+
                 }
                 fragmentSellerAddPackageBinding.etServices.setText(service);
                 dialog.dismiss();
@@ -830,7 +831,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                         fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
                         fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
                         fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.relPackageNew.setVisibility(View.VISIBLE);
+                        fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.VISIBLE);
                         fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.GONE);
                         fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.GONE);
                     }
@@ -868,7 +869,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                     fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.VISIBLE);
-                    fragmentSellerAddPackageBinding.relPackageNew.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.GONE);
                     fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.GONE);
                 }

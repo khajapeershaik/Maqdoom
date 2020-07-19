@@ -1,6 +1,7 @@
 package com.project.maqdoom.ui.services;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class ServicesItemAdapter extends RecyclerView.Adapter<ServicesItemAdapter.FruitHolder>{
 
-    Context context;
+    private Context context;
     List<ServicesChecklistItems> servicesChecklistItemsList = new ArrayList<>();
     private ServicesItemAdapter.onItemclickListener mListener;
     public interface onItemclickListener {
@@ -36,6 +37,9 @@ public class ServicesItemAdapter extends RecyclerView.Adapter<ServicesItemAdapte
 
         View view  = LayoutInflater.from(context).inflate(R.layout.dialog_services_items,parent,false);
 
+
+
+
         return new FruitHolder(view);
     }
 
@@ -49,6 +53,8 @@ public class ServicesItemAdapter extends RecyclerView.Adapter<ServicesItemAdapte
         holder.checkBox.setChecked(servicesChecklistItems.isSelected());
         holder.checkBox.setTag(servicesChecklistItemsList.get(position));
 
+        ServicesChecklistItems country = (ServicesChecklistItems) holder.checkBox.getTag();
+        country.setSelected(holder.checkBox.isChecked());
 
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
