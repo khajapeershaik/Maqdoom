@@ -253,7 +253,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         String whatsApp = fragmentSellerAddPackageBinding.etWhatsApp.getText().toString();
         String location = fragmentSellerAddPackageBinding.etLocation.getText().toString();
         String price = fragmentSellerAddPackageBinding.etPrice.getText().toString();
-        //String includes = "activitySellerAddPackageBinding.etPackageIncludes.getText().toString();";
+ //       String includes = fragmentSellerAddPackageBinding.etPackageDetails.getText().toString();
         String numberOfPeople = fragmentSellerAddPackageBinding.etNoOfPeoples.getText().toString();
         String moreDetails = fragmentSellerAddPackageBinding.etMore.getText().toString();
 
@@ -485,7 +485,11 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                             } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
                                 category_l_2_ShortName = "CUS";
                             }
-                            sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, selectedCategory, phone, "", location, whatsApp, price, numberOfPeople, moreDetails, "", "", addId,imageUpload);
+                            String service ="";
+                            if(fragmentSellerAddPackageBinding.etServices.getText().toString().length()>1){
+                                service = fragmentSellerAddPackageBinding.etServices.getText().toString();
+                            }
+                            sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, service, name, selectedCategory, phone, "", location, whatsApp, price, numberOfPeople, moreDetails, "", "", addId,imageUpload);
                         } else {
                             Toast toast = Toast.makeText(getActivity(), "Please add Package", Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -627,15 +631,6 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         super.onCreate(savedInstanceState);
         sellerAddPackageViewModel.setNavigator(this);
         option = (int) getArguments().getSerializable(GD);
-
-        ArrayList<String> deals = new ArrayList<>();
-        if (getArguments() != null) {
-
-                deals = getArguments().getStringArrayList("listdata");
-             //   Log.d("finalselection", deals.toString());
-            }
-//                Log.d("finalselection", deals.toString());
-
     }
 
     @Override
@@ -681,7 +676,12 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             dialogButtonSave.setOnClickListener(v1->{
                 String service = "";
                 for(String name :selectedServiceList){
-                    service = service+", "+name;
+
+                    if(selectedServiceList.size()>1) {
+                        service = service + ", " + name;
+                    }else {
+                        service = name;
+                    }
                 }
                 fragmentSellerAddPackageBinding.etServices.setText(service);
                 dialog.dismiss();
