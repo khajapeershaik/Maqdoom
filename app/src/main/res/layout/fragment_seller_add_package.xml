@@ -826,7 +826,7 @@
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/custom_bg_edit_text_one"
-                    android:onClick="@{() -> viewModel.onSelectImage()}">
+                    android:onClick="@{() -> viewModel.onSelectLicenseImage()}">
 
                     <TextView
                         android:id="@+id/tvLicence"
@@ -876,11 +876,22 @@
 
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:id="@+id/rlLicenseSelected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlUploadPic"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical"></LinearLayout>
+
                 <RelativeLayout
                     android:id="@+id/rlLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlUploadPic"
+                    android:layout_below="@+id/rlLicenseSelected"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"

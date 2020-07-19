@@ -36,9 +36,9 @@ public interface SellerAddPackageNavigator {
 
     void deletePackage(String value);
 
-    void pickImage();
+    void pickImage(Boolean isLicense);
 
-    void getFirstResult(JSONObject data);
+    void getFirstResult(JSONObject data, Boolean isLicense);
 
     void returnResult(JSONObject data);
 

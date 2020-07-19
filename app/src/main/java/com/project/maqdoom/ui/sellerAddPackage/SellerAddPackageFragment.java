@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -61,8 +60,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -138,12 +135,19 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
     }
 
     @Override
-    public void pickImage() {
-        new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(SellerAddPackageFragment.this).limit(4).show();
+    public void pickImage(Boolean isLicense) {
+        if(!isLicense) {
+            //Upload images
+            new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(SellerAddPackageFragment.this).limit(4).show();
+       }else {
+            //Upload license
+            new GligarPicker().requestCode(31).withFragment(SellerAddPackageFragment.this).limit(4).show();
+
+        }
     }
 
     @Override
-    public void getFirstResult(JSONObject data) {
+    public void getFirstResult(JSONObject data, Boolean isLicense) {
         if ("success".equalsIgnoreCase(data.optString("response"))) {
             final int layoutId = new Random().nextInt(61) + 20;
             images.put(layoutId, pathsList[0]);
@@ -162,17 +166,32 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             params.setMargins(20, 15, 20, 10);
             imageView.setLayoutParams(params);
             imageView.setId(layoutId);
-            btnFlightClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragmentSellerAddPackageBinding.rlImageSelected.removeView(getActivity().findViewById(layoutId));
-                    if (images.containsKey(layoutId)) {
-                        images.remove(layoutId);
-                    }
+            if(isLicense){
 
-                }
-            });
-            fragmentSellerAddPackageBinding.rlImageSelected.addView(imageView);
+                btnFlightClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragmentSellerAddPackageBinding.rlLicenseSelected.removeView(getActivity().findViewById(layoutId));
+                        if (images.containsKey(layoutId)) {
+                            images.remove(layoutId);
+                        }
+
+                    }
+                });
+                fragmentSellerAddPackageBinding.rlLicenseSelected.addView(imageView);
+            }else {
+                btnFlightClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragmentSellerAddPackageBinding.rlImageSelected.removeView(getActivity().findViewById(layoutId));
+                        if (images.containsKey(layoutId)) {
+                            images.remove(layoutId);
+                        }
+
+                    }
+                });
+                fragmentSellerAddPackageBinding.rlImageSelected.addView(imageView);
+            }
             addId = data.optString("add_id");
             imageUpload.put(data.optString("add_id"), data.optString("path"));
             if (pathsList.length > 1) {
@@ -235,8 +254,12 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             case 30: {
                 System.out.println("Arun 2");
                 pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT);
-                addImage(pathsList);
+                addImage(pathsList,false);
                 break;
+            }
+            case 31:{
+                pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT);
+                addImage(pathsList,true);
             }
         }
     }
@@ -676,9 +699,8 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             dialogButtonSave.setOnClickListener(v1->{
                 String service = "";
                 for(String name :selectedServiceList){
-<<<<<<< HEAD
 
-                    if(selectedServiceList.size()>1) {
+                    if(!service.equalsIgnoreCase("")) {
                         service = service + ", " + name;
                     }else {
                         service = name;
@@ -750,8 +772,8 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         }
 
     }
-    private void addImage(String[] data) {
-        sellerAddPackageViewModel.InitialMediaUploadRequest(reqQueue, getActivity(), data[0], "", Integer.toString(1));
+    private void addImage(String[] data,Boolean isLicense) {
+        sellerAddPackageViewModel.InitialMediaUploadRequest(reqQueue, getActivity(), data[0], "", Integer.toString(1),isLicense);
     }
     private void addToList(String option) {
 

@@ -180,7 +180,7 @@ public class SellerAddPackageViewModel extends BaseViewModel<SellerAddPackageNav
                     getNavigator().handleError(throwable);
                 }));
     }
-    public void InitialMediaUploadRequest(RequestQueue reqQueue,Context context, String path,String addId,String imageIndex) {
+    public void InitialMediaUploadRequest(RequestQueue reqQueue, Context context, String path, String addId, String imageIndex, Boolean isLicense) {
         System.out.println("Arun -path :"+path);
         System.out.println("Arun -addId :"+addId);
         System.out.println("Arun -imageIndex :"+imageIndex);
@@ -193,7 +193,7 @@ public class SellerAddPackageViewModel extends BaseViewModel<SellerAddPackageNav
                     try {
                         if ("success".equalsIgnoreCase(response.optString("response"))){
                             //getNavigator().showErrorAlert(response.optString("response"));
-                            getNavigator().getFirstResult(response);
+                            getNavigator().getFirstResult(response,isLicense);
                         }else {
                             getNavigator().showErrorAlert(response.getString("response"));
                         }
@@ -349,6 +349,11 @@ public class SellerAddPackageViewModel extends BaseViewModel<SellerAddPackageNav
     }
 
     public void onSelectImage() {
-        getNavigator().pickImage();
+        Boolean isLicense = false;
+        getNavigator().pickImage(isLicense);
+    }
+    public void onSelectLicenseImage() {
+        Boolean isLicense =true;
+        getNavigator().pickImage(isLicense);
     }
 }

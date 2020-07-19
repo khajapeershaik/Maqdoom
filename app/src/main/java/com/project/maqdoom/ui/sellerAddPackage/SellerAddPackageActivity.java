@@ -487,12 +487,12 @@ public class SellerAddPackageActivity extends BaseActivity<ActivitySellerAddPack
     }
 
     @Override
-    public void pickImage() {
+    public void pickImage(Boolean isLicense) {
         new GligarPicker().requestCode(PICKER_REQUEST_CODE).withActivity(this).limit(5).show();
     }
 
     @Override
-    public void getFirstResult(JSONObject data) {
+    public void getFirstResult(JSONObject data, Boolean isLicense) {
         if ("success".equalsIgnoreCase(data.optString("response"))) {
             final int layoutId = new Random().nextInt(61) + 20;
             images.put(layoutId, pathsList[0]);
@@ -601,7 +601,7 @@ public class SellerAddPackageActivity extends BaseActivity<ActivitySellerAddPack
         switch (requestCode) {
             case 30: {
                 pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT);
-                addImage(pathsList);
+                addImage(pathsList,false);
                 break;
             }
         }
@@ -736,8 +736,8 @@ public class SellerAddPackageActivity extends BaseActivity<ActivitySellerAddPack
 
     }
 
-    private void addImage(String[] data) {
-        sellerAddPackageViewModel.InitialMediaUploadRequest(reqQueue, getApplicationContext(), data[0], "", Integer.toString(1));
+    private void addImage(String[] data,Boolean isLicense) {
+        sellerAddPackageViewModel.InitialMediaUploadRequest(reqQueue, getApplicationContext(), data[0], "", Integer.toString(1), isLicense);
     }
 
     private void addLanguage(String value, int id) {
