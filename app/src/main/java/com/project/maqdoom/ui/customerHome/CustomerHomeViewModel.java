@@ -61,6 +61,10 @@ public class CustomerHomeViewModel extends BaseViewModel<CustomerHomeNavigator> 
         getNavigator().openCustomerHome();
     }
 
+    public void showShopDetailHome(){
+        getNavigator().openShopDetailHome();
+    }
+
     public void showSuppliesHome(){
         getNavigator().openSuppliesHome();
     }

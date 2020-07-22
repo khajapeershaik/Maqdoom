@@ -11,25 +11,18 @@
  * limitations under the License.
  */
 
-package com.project.maqdoom.ui.customerHome;
+package com.project.maqdoom.ui.shopsAddPackage;
+
+import com.project.maqdoom.ui.customerTouristGuide.TouristGuideFragmentModule;
+import com.project.maqdoom.ui.customerTouristGuide.TouristGuidesFragment;
+
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
 
 
+@Module
+public abstract class ShopDetailFragmentProvider {
 
-public interface CustomerHomeNavigator {
-
-    void handleError(Throwable throwable);
-
-    void openLoginActivity();
-
-    void openNotification();
-
-    void openChat();
-
-    void openProfile();
-
-    void openCustomerHome();
-
-    void openShopDetailHome();
-
-    void openSuppliesHome();
+    @ContributesAndroidInjector(modules = ShopDetailFragmentModule.class)
+    abstract ShopsAddFragment provideTouristGuideFragmentFactory();
 }

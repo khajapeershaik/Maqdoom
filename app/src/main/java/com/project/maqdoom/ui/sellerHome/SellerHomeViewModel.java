@@ -68,6 +68,10 @@ public class SellerHomeViewModel extends BaseViewModel<SellerHomeNavigator> {
     public void showSuppliesHome(){
         getNavigator().openSuppliesHome();
     }
+    public void showShopDetailHome(){
+        getNavigator().openShopDetailHome();
+    }
+
     public void onNavMenuCreated() {
         final String currentUserName = getDataManager().getCurrentUserName();
         if (!TextUtils.isEmpty(currentUserName)) {

@@ -45,6 +45,7 @@ import com.project.maqdoom.ui.login.LoginActivity;
 import com.project.maqdoom.ui.notification.NotificationFragment;
 import com.project.maqdoom.ui.profile.ProfileFragment;
 import com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageFragment;
+import com.project.maqdoom.ui.shopsAddPackage.ShopsAddFragment;
 
 import javax.inject.Inject;
 
@@ -53,6 +54,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
+
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -164,6 +166,11 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
     }
 
     @Override
+    public void openShopDetailHome() {
+        showShopDetail();
+    }
+
+    @Override
     public void openDialog() {
         //OptionDialog.newInstance().show(getSupportFragmentManager());
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -194,6 +201,7 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -333,6 +341,7 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
                 .commit();
     }
 
+
     private void showHome() {
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
@@ -345,6 +354,15 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
                 .disallowAddToBackStack()
                 .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                 .add(R.id.clRootView, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
+                .commit();
+    }
+
+    private void showShopDetail() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .add(R.id.clRootView, ShopsAddFragment.newInstance(), ShopsAddFragment.TAG)
                 .commit();
     }
 
