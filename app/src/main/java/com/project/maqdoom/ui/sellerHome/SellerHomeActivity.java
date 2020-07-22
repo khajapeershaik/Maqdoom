@@ -45,6 +45,7 @@ import com.project.maqdoom.ui.login.LoginActivity;
 import com.project.maqdoom.ui.notification.NotificationFragment;
 import com.project.maqdoom.ui.profile.ProfileFragment;
 import com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageFragment;
+import com.project.maqdoom.ui.shops.ShopsFragment;
 
 import javax.inject.Inject;
 
@@ -152,10 +153,14 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
 
     }
 
-
     @Override
     public void openCustomerHome() {
         showTouristGuide();
+    }
+
+    @Override
+    public void openShopsHome() {
+        showShops();
     }
 
     @Override
@@ -345,6 +350,15 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
                 .disallowAddToBackStack()
                 .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                 .add(R.id.clRootView, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
+                .commit();
+    }
+
+    private void showShops() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .add(R.id.clRootView, ShopsFragment.newInstance(), ShopsFragment.TAG)
                 .commit();
     }
 

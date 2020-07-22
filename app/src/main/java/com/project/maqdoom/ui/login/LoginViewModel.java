@@ -76,11 +76,12 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 //                                        getNavigator().openSellerSubscription();
 //                                        //getNavigator().openSellerHome();
 //                                    }else{
-                                getNavigator().openSellerHome();
-                                // }
-                                //  }
+                                    getNavigator().openSellerHome();
+                                    // }
+                                    //  }
 
-                            } else {
+
+                                } else {
                                 getNavigator().showErrorAlert(response.getMessage());
                             }
                         } else {

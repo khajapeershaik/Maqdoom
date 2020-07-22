@@ -42,8 +42,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -172,7 +170,7 @@ public class AppApiHelper implements ApiHelper {
             jsonObject.put("language", request.getLanguage());
             JSONArray jsonArray = new JSONArray();
             JSONObject obj = null;
-            if(request.getImage_list() != null){
+            if (request.getImage_list() != null) {
                 for (String value : request.getImage_list().values()) {
                     obj = new JSONObject();
                     try {
@@ -197,8 +195,8 @@ public class AppApiHelper implements ApiHelper {
                     jsonArray.put(obj);
                 }*/
             }
-            jsonObject.put("image_path",jsonArray);
-            System.out.println("Arun json --"+jsonObject.toString());
+            jsonObject.put("image_path", jsonArray);
+            System.out.println("Arun json --" + jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

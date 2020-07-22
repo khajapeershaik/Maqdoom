@@ -101,6 +101,10 @@ public final class TravelCategoryGroupResponse {
         private String language;
 
         @Expose
+        @SerializedName("services")
+        private String services;
+
+        @Expose
         @SerializedName("city")
         private String city;
 
@@ -151,6 +155,9 @@ public final class TravelCategoryGroupResponse {
 
         }
 
+        public String getServices() {
+            return services;
+        }
         public String getAdd_id() {
             return add_id;
         }

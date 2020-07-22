@@ -177,6 +177,7 @@
     <string name="Cancel">Cancel</string>
     <string name="Ok">Ok</string>
     <string name="sure_delete">Do you sure want to Delete?</string>
+    <string name="shops">Shops</string>
     <string-array name="country_list">
         <item>Please select Country</item>
         <item>Afghanistan</item>

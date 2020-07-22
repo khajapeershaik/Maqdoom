@@ -29,6 +29,8 @@ public interface SellerHomeNavigator {
 
     void openCustomerHome();
 
+    void openShopsHome();
+
     void openSuppliesHome();
 
     void openDialog();

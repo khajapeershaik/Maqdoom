@@ -52,6 +52,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
     LinearLayoutManager mLayoutManager;
     @Inject
     ViewModelProviderFactory factory;
+
     private InsideCountryViewModel insideCountryViewModel;
     Spinner country,price;
     public static InsideCountryFragment newInstance() {

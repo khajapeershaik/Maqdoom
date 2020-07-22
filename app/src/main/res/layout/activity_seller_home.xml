@@ -87,12 +87,21 @@
                         android:layout_centerVertical="true">
 
                     </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
                     <RelativeLayout
                         android:id="@+id/rl_travel_parent"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:layout_above="@+id/view">
+
                         <RelativeLayout
                             android:id="@+id/rl_travel"
                             android:layout_width="wrap_content"
@@ -150,6 +159,74 @@
                             android:textColor="@color/light_blue"
                             android:textSize="14sp" />
                     </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_shops_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_above="@+id/view">
+
+                            <RelativeLayout
+                                android:id="@+id/rl_shops"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:onClick="@{() -> viewModel.showShopsHome()}"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <ImageView
+                                        android:id="@+id/iv_shop_pic"
+                                        android:layout_width="150dp"
+                                        android:layout_height="150dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_gravity="top|center"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/supplies_dash_bg" />
+
+                                    <LinearLayout
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="bottom|center"
+                                        android:layout_marginTop="130dp"
+                                        android:background="@drawable/round_shape"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginTop="5dp"
+                                            android:background="@mipmap/ic_arrow_forward">
+
+                                        </ImageView>
+                                    </LinearLayout>
+                                </FrameLayout>
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/tvShops"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/rl_shops"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginLeft="20dp"
+                                android:padding="2dp"
+                                android:text="@string/shops"
+                                android:textAllCaps="false"
+                                style="@style/TextStyle.Menu.Normal"
+                                android:textColor="@color/light_blue"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
                     <!-- Layout 2 -->
                     <RelativeLayout
                         android:id="@+id/rl_supplies_parent"

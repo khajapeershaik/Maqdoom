@@ -36,6 +36,8 @@ import com.project.maqdoom.ui.sellerHome.SellerHomeActivity;
 import com.project.maqdoom.ui.sellerHome.option.OptionDialogProvider;
 import com.project.maqdoom.ui.sellerPackagePayment.SellerPackagePaymentActivity;
 import com.project.maqdoom.ui.sellerPackages.SellerPackageActivity;
+import com.project.maqdoom.ui.shops.ShopsFragmentModule;
+import com.project.maqdoom.ui.shops.ShopsFrgamentProvoder;
 import com.project.maqdoom.ui.splash.SplashActivity;
 import com.project.maqdoom.ui.touristGuideDetails.TouristGuideDetailsFragmentProvider;
 import com.project.maqdoom.ui.touristPackageDetails.TouristPackageDetailsFragmentProvider;
@@ -72,7 +74,9 @@ public abstract class ActivityBuilder {
             CustomerCruiseSuppliesFragmentProvider.class,
             NotificationFragmentProvider.class,
             FriendsFragmentProvider.class,
-            ProfileFragmentProvider.class
+            ProfileFragmentProvider.class,
+            ShopsFrgamentProvoder.class
+
     })
     abstract CustomerHomeActivity bindCustomerHomeActivity();
 
@@ -92,7 +96,8 @@ public abstract class ActivityBuilder {
             ProfileFragmentProvider.class,
             SellerAddPackageFragmentProvider.class,
             FriendsFragmentProvider.class,
-            OptionDialogProvider.class
+            OptionDialogProvider.class,
+            ShopsFrgamentProvoder.class
     })
     abstract SellerHomeActivity bindSellerHomeActivity();
 

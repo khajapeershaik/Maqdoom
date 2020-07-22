@@ -35,6 +35,7 @@ import com.project.maqdoom.ui.sellerHome.SellerHomeViewModel;
 import com.project.maqdoom.ui.sellerHome.option.OptionViewModel;
 import com.project.maqdoom.ui.sellerPackagePayment.SellerPackagePaymentViewModel;
 import com.project.maqdoom.ui.sellerPackages.SellerPackageViewModel;
+import com.project.maqdoom.ui.shops.ShopsViewModel;
 import com.project.maqdoom.ui.splash.SplashViewModel;
 import com.project.maqdoom.ui.touristGuideDetails.TouristGuideDetailsViewModel;
 import com.project.maqdoom.ui.touristPackageDetails.TouristPackageDetailsViewModel;
@@ -135,6 +136,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(OptionViewModel.class)) {
             //noinspection unchecked
             return (T) new OptionViewModel(dataManager, schedulerProvider);
+        }
+        else if (modelClass.isAssignableFrom(ShopsViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ShopsViewModel(dataManager, schedulerProvider);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
