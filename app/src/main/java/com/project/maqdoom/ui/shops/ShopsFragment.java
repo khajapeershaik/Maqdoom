@@ -144,7 +144,7 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
         timerObj.schedule(timerTaskObj, 0, 1000);
     }
 
-    private void observeShopsData(){
+    private void observeShopsData() {
         shopsViewModel.getShopsListLiveData().observe(this, adds -> {
             mBlogAdapter.addItems(adds);
             mBlogAdapter.notifyDataSetChanged();
@@ -160,10 +160,7 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
         ArrayList<String> countyList = new ArrayList<>();
         ArrayList<String> priceList = new ArrayList<>();
         ArrayList<String> cityList = new ArrayList<>();
-        ArrayList<String> serviceList = new ArrayList<>();
-        serviceList.add("Parachute");
-        serviceList.add("Diving");
-        serviceList.add("Mountaineer");
+        ArrayList<String> serviceList = new ArrayList<>();;
 
         LiveData<List<TravelCategoryGroupResponse.Adds>> countryData = shopsViewModel.getShopsListLiveData();
         if (countryData != null) {
@@ -178,7 +175,14 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                         && (countryData.getValue().get(i).getCity().trim().length() > 0)) {
                     cityList.add(countryData.getValue().get(i).getCity());
                 }
-
+                if (!serviceList.contains(countryData.getValue().get(i).getServices()) && countryData.getValue().get(i).getServices() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getServices().trim())) {
+                    List<String> list = Arrays.asList(countryData.getValue().get(i).getServices().split(","));
+                    for(String s:list){
+                        if(!serviceList.contains(s)){
+                            serviceList.add(s);
+                        }
+                    }
+                }
             }
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
@@ -198,7 +202,7 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                     if (arg2 != 0) {
                         String selected = country.getItemAtPosition(arg2).toString();
                         updateList(1, selected);
-                    }else {
+                    } else {
                         mBlogAdapter.clearItems();
                         observeShopsData();
                     }
@@ -224,7 +228,7 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                     if (arg2 != 0) {
                         String selected = city.getItemAtPosition(arg2).toString();
                         updateList(2, selected);
-                    }else {
+                    } else {
                         mBlogAdapter.clearItems();
                         observeShopsData();
                     }
@@ -250,7 +254,7 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                     if (arg2 != 0) {
                         String selected = price.getItemAtPosition(arg2).toString();
                         updateList(3, selected);
-                    }else {
+                    } else {
                         mBlogAdapter.clearItems();
                         observeShopsData();
                     }
@@ -278,7 +282,7 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                     if (arg2 != 0) {
                         String selected = service.getItemAtPosition(arg2).toString();
                         updateList(4, selected);
-                    }else {
+                    } else {
                         mBlogAdapter.clearItems();
                         observeShopsData();
                     }
