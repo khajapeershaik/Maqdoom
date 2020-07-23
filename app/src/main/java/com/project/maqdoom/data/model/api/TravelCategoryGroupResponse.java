@@ -16,6 +16,7 @@ package com.project.maqdoom.data.model.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -244,5 +245,19 @@ public final class TravelCategoryGroupResponse {
                 return path;
             }
         }
+
+        public static Comparator<Adds> PRICE = new Comparator<Adds>() {
+            @Override
+            public int compare(Adds o1, Adds o2) {
+                try {
+                    Float o1_Price = Float.parseFloat(o1.price);
+                    Float o2_Price = Float.parseFloat(o2.price);
+
+                    return o1_Price > o2_Price ? 1 : (o1_Price < o2_Price ? -1 : 0);
+                }catch (Exception e){
+                    return 0;
+                }
+            }
+        };
     }
 }

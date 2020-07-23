@@ -1,6 +1,7 @@
 package com.project.maqdoom.ui.shops;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import com.project.maqdoom.ui.customerTouristGroups.insideCountry.InsideCountryA
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -168,9 +170,9 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                 if (!countyList.contains(countryData.getValue().get(i).getCountry()) && countryData.getValue().get(i).getCountry() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getCountry().trim())) {
                     countyList.add(countryData.getValue().get(i).getCountry());
                 }
-                if (!priceList.contains(countryData.getValue().get(i).getPrice()) && countryData.getValue().get(i).getPrice() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getPrice().trim())) {
-                    priceList.add(countryData.getValue().get(i).getPrice());
-                }
+//                if (!priceList.contains(countryData.getValue().get(i).getPrice()) && countryData.getValue().get(i).getPrice() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getPrice().trim())) {
+//                    priceList.add(countryData.getValue().get(i).getPrice());
+//                }
                 if (!cityList.contains(countryData.getValue().get(i).getCity()) && countryData.getValue().get(i).getCity() != null
                         && (countryData.getValue().get(i).getCity().trim().length() > 0)) {
                     cityList.add(countryData.getValue().get(i).getCity());
@@ -184,6 +186,8 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                     }
                 }
             }
+            priceList.add("Low-High");
+            priceList.add("High-Low");
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
             cityList.add(0, "City");
@@ -354,13 +358,14 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                 }
             }
         } else if (type == 3) {
-
             if (filteredData.size() > 1) {
-                for (int i = 0; i < filteredData.size(); i++) {
-                    if (value.equalsIgnoreCase(filteredData.get(i).getPrice())) {
-                        filteredData.add(filteredData.get(i));
-                    }
+                Collections.sort(filteredData, TravelCategoryGroupResponse.Adds.PRICE);
+                if (value.equalsIgnoreCase("Low-High")) {
+                    Log.v("filteredData", "" + filteredData);
+                } else {
+                    Collections.reverse(filteredData);
                 }
+
                 mBlogAdapter.clearItems();
                 mBlogAdapter.notifyDataSetChanged();
                 mBlogAdapter.addItems(filteredData);
@@ -368,9 +373,13 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                 LiveData<List<TravelCategoryGroupResponse.Adds>> data = shopsViewModel.getShopsListLiveData();
                 if (data != null) {
                     for (int i = 0; i < data.getValue().size(); i++) {
-                        if (value.equalsIgnoreCase(data.getValue().get(i).getPrice())) {
-                            filteredData.add(data.getValue().get(i));
-                        }
+                        filteredData.add(data.getValue().get(i));
+                    }
+                    Collections.sort(filteredData, TravelCategoryGroupResponse.Adds.PRICE);
+                    if (value.equalsIgnoreCase("Low-High")) {
+                        Log.v("filteredData", "" + filteredData);
+                    } else {
+                        Collections.reverse(filteredData);
                     }
                     mBlogAdapter.clearItems();
                     mBlogAdapter.notifyDataSetChanged();
