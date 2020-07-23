@@ -41,6 +41,7 @@ import com.project.maqdoom.ui.friends.FriendsFragment;
 import com.project.maqdoom.ui.login.LoginActivity;
 import com.project.maqdoom.ui.notification.NotificationFragment;
 import com.project.maqdoom.ui.profile.ProfileFragment;
+import com.project.maqdoom.ui.shops.ShopsFragment;
 
 import javax.inject.Inject;
 
@@ -156,6 +157,11 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     @Override
     public void openSuppliesHome() {
         showRentalSupplies();
+    }
+
+    @Override
+    public void openShopsHome() {
+        showShops();
     }
 
     @Override
@@ -316,6 +322,15 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
                 .disallowAddToBackStack()
                 .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                 .add(R.id.clRootView, FriendsFragment.newInstance(), FriendsFragment.TAG)
+                .commit();
+    }
+
+    private void showShops() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .add(R.id.clRootView, ShopsFragment.newInstance(), ShopsFragment.TAG)
                 .commit();
     }
 

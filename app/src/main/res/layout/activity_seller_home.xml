@@ -186,8 +186,8 @@
                                         android:layout_height="150dp"
                                         android:layout_centerHorizontal="true"
                                         android:layout_gravity="top|center"
-                                        android:scaleType="fitCenter"
-                                        android:src="@drawable/supplies_dash_bg" />
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/shops" />
 
                                     <LinearLayout
                                         android:layout_width="40dp"

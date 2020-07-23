@@ -30,4 +30,5 @@ public interface CustomerHomeNavigator {
     void openCustomerHome();
 
     void openSuppliesHome();
+    void openShopsHome();
 }
