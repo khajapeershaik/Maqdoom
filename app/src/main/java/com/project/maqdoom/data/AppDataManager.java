@@ -220,6 +220,17 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public void setLanguage(String language) {
+        mPreferencesHelper.setEmail(language);
+
+    }
+
+    @Override
+    public String getLanguage() {
+        return mPreferencesHelper.getLanguage();
+    }
+
+    @Override
     public void setPhone(String phone) {
         mPreferencesHelper.setPhone(phone);
     }

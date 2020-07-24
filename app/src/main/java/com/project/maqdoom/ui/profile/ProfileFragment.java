@@ -19,6 +19,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
@@ -135,6 +137,22 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentProfileBinding = getViewDataBinding();
+        profileViewModel.getDataManager().setLanguage("en");
+        fragmentProfileBinding.languageSpinner.setItems("English", "Arabic" );
+        fragmentProfileBinding.languageSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+                if(position==1){
+                    profileViewModel.getDataManager().setLanguage("ar");
+
+                }
+                else{
+                    profileViewModel.getDataManager().setLanguage("en");
+
+                }
+            }
+        });
         setUp();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();

@@ -29,9 +29,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.maqdoom.BR;
+import com.project.maqdoom.MaqdoomApp;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.databinding.ActivityLoginBinding;
+import com.project.maqdoom.di.component.AppComponent;
+import com.project.maqdoom.di.component.DaggerAppComponent;
 import com.project.maqdoom.ui.base.BaseActivity;
 import com.project.maqdoom.ui.customerHome.CustomerHomeActivity;
 import com.project.maqdoom.ui.forgotPassword.ForgotPasswordActivity;
@@ -40,6 +43,7 @@ import com.project.maqdoom.ui.sellerHome.SellerHomeActivity;
 import com.project.maqdoom.ui.sellerPackages.SellerPackageActivity;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -149,6 +153,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);
         mAuth = FirebaseAuth.getInstance();
+
+        if(Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")){
+            mLoginViewModel.getDataManager().setLanguage("en");
+        }
+        if(Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("Arabic")){
+            mLoginViewModel.getDataManager().setLanguage("ar");
+        }
+
 
     }
 

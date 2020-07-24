@@ -67,6 +67,7 @@ public class MaqdoomApp extends Application implements HasActivityInjector {
         }
 
         CalligraphyConfig.initDefault(mCalligraphyConfig);
+        setApplicationLanguage(Locale.getDefault().getDisplayLanguage());
     }
 
     public void setApplicationLanguage(String language) {

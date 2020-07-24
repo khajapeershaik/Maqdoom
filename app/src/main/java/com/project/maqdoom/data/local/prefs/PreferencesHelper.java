@@ -47,6 +47,10 @@ public interface PreferencesHelper {
 
     String getEmail();
 
+    void setLanguage(String language);
+
+    String getLanguage();
+
     void setPhone(String phone);
 
     String getPhone();

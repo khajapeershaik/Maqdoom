@@ -47,6 +47,9 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_SELLER_STATUS = "PREF_KEY_SELLER_STATUS";
 
+    private static final String PREF_KEY_USER_SELECTED_LANGUAGE = "PREF_KEY_USER_SELECTED_LANGUAGE";
+
+
     private final SharedPreferences mPrefs;
 
     @Inject
@@ -128,6 +131,17 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public String getEmail() {
         return mPrefs.getString(PREF_KEY_USER_LOGGED_IN_EMAIL, null);
+    }
+
+    @Override
+    public void setLanguage(String language) {
+        mPrefs.edit().putString(PREF_KEY_USER_SELECTED_LANGUAGE, language).apply();
+
+    }
+
+    @Override
+    public String getLanguage() {
+        return mPrefs.getString(PREF_KEY_USER_SELECTED_LANGUAGE, null);
     }
 
     @Override

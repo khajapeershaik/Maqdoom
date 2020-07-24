@@ -15,6 +15,7 @@ package com.project.maqdoom.ui.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.crashlytics.internal.common.CrashlyticsCore;
 import com.project.maqdoom.BR;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.Locale;
 
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> implements SplashNavigator {
@@ -93,6 +95,10 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSplashViewModel.setNavigator(this);
+        String language =Locale.getDefault().getDisplayLanguage();
+        Log.d("language",language);
+        String locale = getApplicationContext().getResources().getConfiguration().locale.getDisplayName();
+        Log.d("language",locale);
         mSplashViewModel.startSeeding();
     }
 }
