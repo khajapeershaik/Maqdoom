@@ -17,10 +17,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
@@ -28,6 +28,8 @@ import com.project.maqdoom.databinding.FragmentProfileBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragment;
 import com.project.maqdoom.ui.login.LoginActivity;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -137,20 +139,33 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentProfileBinding = getViewDataBinding();
-        profileViewModel.getDataManager().setLanguage("en");
-        fragmentProfileBinding.languageSpinner.setItems("English", "Arabic" );
-        fragmentProfileBinding.languageSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+        ArrayList<String> languageList = new ArrayList<>();
+        languageList.add("English");
+        languageList.add("Arabic");
+
+        ArrayAdapter<String> spinnerLanguageAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                languageList);
+        fragmentProfileBinding.languageSpinner.setAdapter(spinnerLanguageAdapter);
+        fragmentProfileBinding.languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int position, long arg3) {
+                // TODO Auto-generated method stub
                 if(position==1){
                     profileViewModel.getDataManager().setLanguage("ar");
-
                 }
                 else{
                     profileViewModel.getDataManager().setLanguage("en");
 
                 }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
             }
         });
         setUp();

@@ -69,6 +69,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                                                 response.getData().getSeller_subscrption_status(),
                                                 response.getData().getPhone()
                                         );
+                                //getDataManager().setLanguage("en");
                                 if("0".equalsIgnoreCase(response.getData().getIs_seller())){
                                     getNavigator().openCustomerHome();
                                 }
