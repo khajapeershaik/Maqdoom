@@ -68,7 +68,9 @@ public class SellerHomeViewModel extends BaseViewModel<SellerHomeNavigator> {
     public void openOptionDialog(){
         getNavigator().openDialog();
     }
-
+    public void onNavBackClick() {
+        getNavigator().goBack();
+    }
     public void showSuppliesHome(){
         getNavigator().openSuppliesHome();
     }

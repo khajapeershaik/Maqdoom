@@ -122,6 +122,8 @@
     <string name="no_of_peoples">No. of Peoples</string>
     <string name="tourist_inside">Tourist Group Inside the Country</string>
     <string name="tourist_outside">Tourist Group Outside the Country</string>
+    <string name="domestic_text">Domestic</string>
+    <string name="international_text">International</string>
 
     <!-- Honeymoon package -->
     <string name="honeymoon_title">Honeymoon</string>

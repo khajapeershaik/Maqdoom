@@ -34,4 +34,7 @@ public interface SellerHomeNavigator {
     void openSuppliesHome();
 
     void openDialog();
+
+    void goBack();
+
 }

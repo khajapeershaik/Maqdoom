@@ -204,6 +204,7 @@
             app:tabGravity="fill"
             android:layout_marginTop="5dp"
             android:layout_below="@+id/optionButtons"
+            app:tabIndicatorGravity="bottom"
             app:tabTextColor="@color/gray"
             app:tabTextAppearance="@style/TextStyle.Menu.Normal"
             app:tabSelectedTextColor="@color/black"

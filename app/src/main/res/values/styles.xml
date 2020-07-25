@@ -214,6 +214,7 @@
         <item name="android:spinnerMode">dropdown</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">20dp</item>
+        <item name="android:gravity">center</item>
         <item name="android:dropDownVerticalOffset">@dimen/x10</item>
         <item name="android:popupBackground">@color/white</item>
         <item name="android:background">@drawable/spinner_arrow</item>

@@ -93,8 +93,8 @@ public class TouristGroupFragment extends BaseFragment<FragmentTouristGroupBindi
         TouristGroupPagerAdapter mPagerAdapter = new TouristGroupPagerAdapter(getFragmentManager());
         mPagerAdapter.setCount(2);
         fragmentTouristGroupBinding.feedViewPager.setAdapter(mPagerAdapter);
-        fragmentTouristGroupBinding.tabLayout.addTab(fragmentTouristGroupBinding.tabLayout.newTab().setText(getString(R.string.tourist_inside)));
-        fragmentTouristGroupBinding.tabLayout.addTab(fragmentTouristGroupBinding.tabLayout.newTab().setText(getString(R.string.tourist_outside)));
+        fragmentTouristGroupBinding.tabLayout.addTab(fragmentTouristGroupBinding.tabLayout.newTab().setText(getString(R.string.domestic_text)));
+        fragmentTouristGroupBinding.tabLayout.addTab(fragmentTouristGroupBinding.tabLayout.newTab().setText(getString(R.string.international_text)));
 
 
         //fragmentTouristGroupBinding.feedViewPager.setOffscreenPageLimit(fragmentTouristGroupBinding.tabLayout.getTabCount());

@@ -196,6 +196,11 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
     }
 
     @Override
+    public void goBack() {
+
+    }
+
+    @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
     }

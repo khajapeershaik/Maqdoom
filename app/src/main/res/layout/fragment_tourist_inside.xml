@@ -44,17 +44,37 @@
             android:id="@+id/ll_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/optionButtons"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
             android:orientation="horizontal"
-            android:weightSum="2">
-
+            android:weightSum="4">
             <LinearLayout
                 android:id="@+id/ll_country"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerCity"
+                    style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:prompt="@string/s_city" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_city"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -65,16 +85,18 @@
                     android:id="@+id/spinnerCountry"
                     style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:prompt="@string/s_country" />
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:prompt="@string/s_city" />
+
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_price"
+                android:id="@+id/ll_language"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -85,16 +107,33 @@
                     android:id="@+id/spinnerPrice"
                     style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:prompt="@string/s_language" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_service"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerService"
+                    style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:prompt="@string/s_city" />
 
 
             </LinearLayout>
-
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"

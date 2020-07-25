@@ -523,4 +523,7 @@
         <item>@string/tourist_inside</item>
         <item>@string/tourist_outside</item>
     </string-array>
+
+    <string name="domestic_text">Domestic</string>
+    <string name="international_text">International</string>
 </resources>

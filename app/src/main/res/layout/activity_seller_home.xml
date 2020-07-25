@@ -42,22 +42,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <RelativeLayout
                     android:id="@+id/top_bar"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@color/navigation_bg">
+
+
+                    <ImageButton
+                        android:id="@+id/dashboardBackBtn"
+                        style="@style/Button.ImageButton"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/back_btn"
+                        android:onClick="@{() -> viewModel.onNavBackClick()}" />
+
                     <TextView
+                        style="@style/TextStyle.Menu.Normal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        style="@style/TextStyle.Menu.Normal"
                         android:gravity="center"
                         android:text="@string/dashboard"
                         android:textColor="@color/white"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"
+                        android:visibility="gone" />
+
                     <ImageButton
                         android:id="@+id/navBackBtn"
                         style="@style/Button.ImageButton"
@@ -67,18 +86,20 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_marginTop="15dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginBottom="15dp"
-                        android:onClick="@{() -> viewModel.openOptionDialog()}"
-                        android:background="@drawable/edit" />
+                        android:background="@drawable/edit"
+                        android:onClick="@{() -> viewModel.openOptionDialog()}" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/tg_background">
+
                     <View
                         android:id="@+id/view"
                         android:layout_width="match_parent"
@@ -92,88 +113,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
-                    <RelativeLayout
-                        android:id="@+id/rl_travel_parent"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_above="@+id/view">
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <RelativeLayout
-                            android:id="@+id/rl_travel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:onClick="@{() -> viewModel.showCustomerHome()}"
-                            android:orientation="vertical">
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/iv_travel_pic"
-                                    android:layout_width="150dp"
-                                    android:layout_height="150dp"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_gravity="top|center"
-                                    android:scaleType="fitCenter"
-                                    android:src="@drawable/supplies_dash_bg" />
-
-                                <LinearLayout
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="bottom|center"
-                                    android:layout_marginTop="130dp"
-                                    android:background="@drawable/round_shape"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_marginTop="5dp"
-                                        android:background="@mipmap/ic_arrow_forward">
-
-                                    </ImageView>
-                                </LinearLayout>
-                            </FrameLayout>
-                        </RelativeLayout>
-
-                        <TextView
-                            android:id="@+id/tvTravel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/rl_travel"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:padding="2dp"
-                            android:text="@string/travel"
-                            android:textAllCaps="false"
-                            style="@style/TextStyle.Menu.Normal"
-                            android:textColor="@color/light_blue"
-                            android:textSize="14sp" />
-                    </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/rl_shops_parent"
+                            android:id="@+id/rl_travel_parent"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:layout_above="@+id/view">
+                            android:layout_weight="1">
 
                             <RelativeLayout
-                                android:id="@+id/rl_shops"
+                                android:id="@+id/rl_travel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:onClick="@{() -> viewModel.showShopsHome()}"
+                                android:onClick="@{() -> viewModel.showCustomerHome()}"
                                 android:orientation="vertical">
 
                                 <FrameLayout
@@ -181,13 +137,12 @@
                                     android:layout_height="wrap_content">
 
                                     <ImageView
-                                        android:id="@+id/iv_shop_pic"
-                                        android:layout_width="150dp"
-                                        android:layout_height="150dp"
-                                        android:layout_centerHorizontal="true"
+                                        android:id="@+id/iv_travel_pic"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
                                         android:layout_gravity="top|center"
-                                        android:scaleType="fitXY"
-                                        android:src="@drawable/shops" />
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/travel" />
 
                                     <LinearLayout
                                         android:layout_width="40dp"
@@ -210,7 +165,75 @@
                             </RelativeLayout>
 
                             <TextView
+                                android:id="@+id/tvTravel"
+                                style="@style/TextStyle.Menu.Normal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/rl_travel"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginLeft="20dp"
+                                android:drawableStart="@drawable/travel_img"
+                                android:drawablePadding="10dp"
+                                android:gravity="center"
+                                android:padding="2dp"
+                                android:text="@string/travel"
+                                android:textAllCaps="false"
+                                android:textColor="@color/light_blue"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_shops_parent"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/rl_shops"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:onClick="@{() -> viewModel.showShopsHome()}"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <ImageView
+                                        android:id="@+id/iv_shop_pic"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="left|center"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/shops" />
+
+                                    <LinearLayout
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="bottom|center"
+                                        android:layout_marginBottom="20dp"
+                                        android:background="@drawable/round_shape"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginTop="5dp"
+                                            android:background="@mipmap/ic_arrow_forward">
+
+                                        </ImageView>
+                                    </LinearLayout>
+                                </FrameLayout>
+                            </RelativeLayout>
+
+                            <TextView
                                 android:id="@+id/tvShops"
+                                style="@style/TextStyle.Menu.Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/rl_shops"
@@ -218,10 +241,13 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="20dp"
                                 android:layout_marginLeft="20dp"
+                                android:layout_marginTop="10dp"
+                                android:drawableStart="@drawable/shops_img"
+                                android:drawablePadding="10dp"
+                                android:gravity="center"
                                 android:padding="2dp"
                                 android:text="@string/shops"
                                 android:textAllCaps="false"
-                                style="@style/TextStyle.Menu.Normal"
                                 android:textColor="@color/light_blue"
                                 android:textSize="14sp" />
                         </RelativeLayout>
@@ -233,6 +259,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view">
+
                         <RelativeLayout
                             android:id="@+id/rl_supplies"
                             android:layout_width="match_parent"
@@ -247,18 +274,18 @@
 
                                 <ImageView
                                     android:id="@+id/iv_supply_pic"
-                                    android:layout_width="150dp"
-                                    android:layout_height="150dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_gravity="top|center"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/travel_dash_bg" />
+                                    android:src="@drawable/suppliers" />
 
                                 <LinearLayout
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="bottom|center"
-                                    android:layout_marginTop="130dp"
+                                    android:layout_marginTop="10dp"
                                     android:background="@drawable/round_shape"
                                     android:orientation="vertical">
 
@@ -276,6 +303,7 @@
 
                         <TextView
                             android:id="@+id/tvSupplies"
+                            style="@style/TextStyle.Menu.Normal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/rl_supplies"
@@ -283,11 +311,14 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="20dp"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:drawableStart="@drawable/supplies_img"
+                            android:drawablePadding="10dp"
+                            android:gravity="center"
                             android:padding="2dp"
                             android:text="@string/supplies"
                             android:textAllCaps="false"
                             android:textColor="@color/light_blue"
-                            style="@style/TextStyle.Menu.Normal"
                             android:textSize="14sp" />
                     </RelativeLayout>
 
