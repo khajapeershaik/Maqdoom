@@ -125,13 +125,11 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
         fragmentTouristInsideBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
         fragmentTouristInsideBinding.blogRecyclerView.setAdapter(mBlogAdapter);
 
-        Timer timerObj = new Timer();
-        TimerTask timerTaskObj = new TimerTask() {
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
+        if (getActivity() != null) {
+            Timer timerObj = new Timer();
+            TimerTask timerTaskObj = new TimerTask() {
+                public void run() {
+                    getActivity().runOnUiThread(() -> {
                         LiveData<List<TravelCategoryGroupResponse.Adds>> countryData = insideCountryViewModel.getTravelListLiveData();
                         if (countryData.getValue() != null) {
                             setSpinner();
@@ -139,12 +137,12 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                             timerObj.purge();
                         }
 
-                    }
-                });
+                    });
 
-            }
-        };
+                }
+            };
         timerObj.schedule(timerTaskObj, 0, 1000);
+        }
     }
 
     private void setSpinner() {

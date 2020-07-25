@@ -139,26 +139,28 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
         fragmentTouristFamilyBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
         fragmentTouristFamilyBinding.blogRecyclerView.setAdapter(mBlogAdapter);
 
-        Timer timerObj = new Timer();
-        TimerTask timerTaskObj = new TimerTask() {
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
+        if (getActivity() != null) {
+            Timer timerObj = new Timer();
+            TimerTask timerTaskObj = new TimerTask() {
+                public void run() {
+                    getActivity().runOnUiThread(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        LiveData<List<TravelCategoryResponse.Adds>> countryData = familyTripViewModel.getTravelListLiveData();
-                        if (countryData.getValue() != null) {
-                            setSpinner();
-                            timerObj.cancel();
-                            timerObj.purge();
+                        @Override
+                        public void run() {
+                            LiveData<List<TravelCategoryResponse.Adds>> countryData = familyTripViewModel.getTravelListLiveData();
+                            if (countryData.getValue() != null) {
+                                setSpinner();
+                                timerObj.cancel();
+                                timerObj.purge();
+                            }
+
                         }
+                    });
 
-                    }
-                });
-
-            }
-        };
-        timerObj.schedule(timerTaskObj, 0, 1000);
+                }
+            };
+            timerObj.schedule(timerTaskObj, 0, 1000);
+        }
 
     }
     private void showHome() {

@@ -119,31 +119,33 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
 
     private void setUp() {
 
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        fragmentShopsBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
-        fragmentShopsBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        fragmentShopsBinding.blogRecyclerView.setAdapter(mBlogAdapter);
-        observeShopsData();
-        Timer timerObj = new Timer();
-        TimerTask timerTaskObj = new TimerTask() {
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-
-                    @Override
+        try {
+            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            fragmentShopsBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
+            fragmentShopsBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            fragmentShopsBinding.blogRecyclerView.setAdapter(mBlogAdapter);
+            observeShopsData();
+            if (getActivity() != null) {
+                Timer timerObj = new Timer();
+                TimerTask timerTaskObj = new TimerTask() {
                     public void run() {
-                        LiveData<List<TravelCategoryGroupResponse.Adds>> countryData = shopsViewModel.getShopsListLiveData();
-                        if (countryData.getValue() != null) {
-                            setSpinner();
-                            timerObj.cancel();
-                            timerObj.purge();
-                        }
+                        getActivity().runOnUiThread(() -> {
+                            LiveData<List<TravelCategoryGroupResponse.Adds>> countryData = shopsViewModel.getShopsListLiveData();
+                            if (countryData.getValue() != null) {
+                                setSpinner();
+                                timerObj.cancel();
+                                timerObj.purge();
+                            }
+
+                        });
 
                     }
-                });
-
+                };
+                timerObj.schedule(timerTaskObj, 0, 1000);
             }
-        };
-        timerObj.schedule(timerTaskObj, 0, 1000);
+        }catch (Exception e){
+
+        }
     }
 
     private void observeShopsData() {

@@ -154,23 +154,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);
         mAuth = FirebaseAuth.getInstance();
-
-        if(Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("English")){
-            mLoginViewModel.getDataManager().setLanguage("en");
-            Locale locale = new Locale("en");
-            Configuration config = getBaseContext().getResources().getConfiguration();
-            config.locale = locale;
-            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        }
-        if(Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("Arabic")){
-            mLoginViewModel.getDataManager().setLanguage("ar");
-            Locale locale = new Locale("ar");
-            Configuration config = getBaseContext().getResources().getConfiguration();
-            config.locale = locale;
-            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        }
-
-
     }
 
     private void registerForChat(){

@@ -13,7 +13,10 @@
 
 package com.project.maqdoom.ui.splash;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -41,6 +44,11 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     ViewModelProviderFactory factory;
 
     private SplashViewModel mSplashViewModel;
+
+    private SharedPreferences sharedpreferences;
+    public static final String LANGUAGE_REFERENCE = "language_preference" ;
+    public static final String LANGUAGE_KEY = "language";
+
 
     @Override
     public int getBindingVariable() {
@@ -95,10 +103,27 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSplashViewModel.setNavigator(this);
-        String language =Locale.getDefault().getDisplayLanguage();
-        Log.d("language",language);
-        String locale = getApplicationContext().getResources().getConfiguration().locale.getDisplayName();
-        Log.d("language",locale);
+
+        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        updateLocale(langPreference);
+
         mSplashViewModel.startSeeding();
+    }
+
+    private void updateLocale(String en) {
+        Locale locale = new Locale(en);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        saveLanguagePreference(en);
+        Log.v("data",""+sharedpreferences.getString(LANGUAGE_KEY,"en"));
+    }
+
+    private void saveLanguagePreference(String lan){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(LANGUAGE_KEY, lan);
+        editor.commit();
     }
 }

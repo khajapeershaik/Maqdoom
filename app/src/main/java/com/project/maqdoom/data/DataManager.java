@@ -52,4 +52,5 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
             return mType;
         }
     }
+    void updateDefaultLanguage(String language);
 }

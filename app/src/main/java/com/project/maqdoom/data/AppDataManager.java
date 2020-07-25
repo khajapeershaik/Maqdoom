@@ -93,13 +93,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<TravelCategoryResponse> doTravelCategoryApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request, String userType,String userId) {
-        return mApiHelper.doTravelCategoryApiCall(request,userType,userId);
+    public Single<TravelCategoryResponse> doTravelCategoryApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request, String userType, String userId) {
+        return mApiHelper.doTravelCategoryApiCall(request, userType, userId);
     }
 
     @Override
-    public Single<TravelCategoryGroupResponse> doTravelCategoryGroupApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request, String userType,String userId) {
-        return mApiHelper.doTravelCategoryGroupApiCall(request,userType,userId);
+    public Single<TravelCategoryGroupResponse> doTravelCategoryGroupApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request, String userType, String userId) {
+        return mApiHelper.doTravelCategoryGroupApiCall(request, userType, userId);
     }
 
     @Override
@@ -210,13 +210,18 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public String getEmail() {
+        return mPreferencesHelper.getEmail();
+    }
+
+    @Override
     public void setEmail(String email) {
         mPreferencesHelper.setEmail(email);
     }
 
     @Override
-    public String getEmail() {
-        return mPreferencesHelper.getEmail();
+    public String getLanguage() {
+        return mPreferencesHelper.getLanguage();
     }
 
     @Override
@@ -226,8 +231,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public String getLanguage() {
-        return mPreferencesHelper.getLanguage();
+    public String getPhone() {
+        return mPreferencesHelper.getPhone();
     }
 
     @Override
@@ -236,18 +241,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public String getPhone() {
-        return mPreferencesHelper.getPhone();
+    public String getCreatedDate() {
+        return mPreferencesHelper.getCreatedDate();
     }
 
     @Override
     public void setCreatedDate(String date) {
         mPreferencesHelper.setCreatedDate(date);
-    }
-
-    @Override
-    public String getCreatedDate() {
-        return mPreferencesHelper.getCreatedDate();
     }
 
     @Override
@@ -304,6 +304,11 @@ public class AppDataManager implements DataManager {
         setUserType(user);
         setSellerStatus(sellerStatus);
         setPhone(phone);
+    }
+
+    @Override
+    public void updateDefaultLanguage(String language) {
+        setLanguage(language);
     }
 
 

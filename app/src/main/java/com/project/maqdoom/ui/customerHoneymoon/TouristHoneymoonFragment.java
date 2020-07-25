@@ -146,26 +146,28 @@ public class TouristHoneymoonFragment extends BaseFragment<FragmentHoneymoonBind
         fragmentHoneymoonBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
         fragmentHoneymoonBinding.blogRecyclerView.setAdapter(mBlogAdapter);
 
-        Timer timerObj = new Timer();
-        TimerTask timerTaskObj = new TimerTask() {
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
+        if (getActivity() != null) {
+            Timer timerObj = new Timer();
+            TimerTask timerTaskObj = new TimerTask() {
+                public void run() {
+                    getActivity().runOnUiThread(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        LiveData<List<TravelCategoryResponse.Adds>> countryData = honeymoonViewModel.getTravelListLiveData();
-                        if (countryData.getValue() != null) {
-                            setSpinner();
-                            timerObj.cancel();
-                            timerObj.purge();
+                        @Override
+                        public void run() {
+                            LiveData<List<TravelCategoryResponse.Adds>> countryData = honeymoonViewModel.getTravelListLiveData();
+                            if (countryData.getValue() != null) {
+                                setSpinner();
+                                timerObj.cancel();
+                                timerObj.purge();
+                            }
+
                         }
+                    });
 
-                    }
-                });
-
-            }
-        };
-        timerObj.schedule(timerTaskObj, 0, 1000);
+                }
+            };
+            timerObj.schedule(timerTaskObj, 0, 1000);
+        }
     }
     private void showHome() {
         for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {

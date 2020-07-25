@@ -116,26 +116,32 @@ public class CustomerRentalSuppliesFragment extends BaseFragment<FragmentRentalS
         fragmentRentalSuppliesBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
         fragmentRentalSuppliesBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
         fragmentRentalSuppliesBinding.blogRecyclerView.setAdapter(mBlogAdapter);
-        Timer timerObj = new Timer();
-        TimerTask timerTaskObj = new TimerTask() {
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-
-                    @Override
+        if (getActivity() != null) {
+            try {
+                Timer timerObj = new Timer();
+                TimerTask timerTaskObj = new TimerTask() {
                     public void run() {
-                        LiveData<List<TravelCategoryResponse.Adds>> countryData = customerRentalSuppliesViewModel.getTravelListLiveData();
-                        if (countryData.getValue() != null) {
-                            setSpinner();
-                            timerObj.cancel();
-                            timerObj.purge();
-                        }
+                        getActivity().runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                LiveData<List<TravelCategoryResponse.Adds>> countryData = customerRentalSuppliesViewModel.getTravelListLiveData();
+                                if (countryData.getValue() != null) {
+                                    setSpinner();
+                                    timerObj.cancel();
+                                    timerObj.purge();
+                                }
+
+                            }
+                        });
 
                     }
-                });
+                };
+                timerObj.schedule(timerTaskObj, 0, 1000);
+            } catch (Exception e) {
 
             }
-        };
-        timerObj.schedule(timerTaskObj, 0, 1000);
+        }
     }
     private void setSpinner() {
         country = fragmentRentalSuppliesBinding.spinnerCity;

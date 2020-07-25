@@ -120,12 +120,11 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/profile_icon" />
 
-                    <androidx.appcompat.widget.AppCompatSpinner
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:id="@+id/languageSpinner"
+                        android:id="@+id/languageButton"
                         android:layout_alignParentEnd="true" />
 
                     <TextView

@@ -115,27 +115,28 @@ public class CustomerCruiseSuppliesFragment extends BaseFragment<FragmentCruiseS
         fragmentCruiseSuppliesBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
         fragmentCruiseSuppliesBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
         fragmentCruiseSuppliesBinding.blogRecyclerView.setAdapter(mBlogAdapter);
+        if (getActivity() != null) {
+            Timer timerObj = new Timer();
+            TimerTask timerTaskObj = new TimerTask() {
+                public void run() {
+                    getActivity().runOnUiThread(new Runnable() {
 
-        Timer timerObj = new Timer();
-        TimerTask timerTaskObj = new TimerTask() {
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            LiveData<List<TravelCategoryResponse.Adds>> countryData = customerRentalSuppliesViewModel.getTravelListLiveData();
+                            if (countryData.getValue() != null) {
+                                setSpinner();
+                                timerObj.cancel();
+                                timerObj.purge();
+                            }
 
-                    @Override
-                    public void run() {
-                        LiveData<List<TravelCategoryResponse.Adds>> countryData = customerRentalSuppliesViewModel.getTravelListLiveData();
-                        if (countryData.getValue() != null) {
-                            setSpinner();
-                            timerObj.cancel();
-                            timerObj.purge();
                         }
+                    });
 
-                    }
-                });
-
-            }
-        };
-        timerObj.schedule(timerTaskObj, 0, 1000);
+                }
+            };
+            timerObj.schedule(timerTaskObj, 0, 1000);
+        }
     }
     private void setSpinner() {
         country = fragmentCruiseSuppliesBinding.spinnerCity;
