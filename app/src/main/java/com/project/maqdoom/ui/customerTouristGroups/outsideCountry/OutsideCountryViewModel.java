@@ -48,7 +48,7 @@ public class OutsideCountryViewModel extends BaseViewModel<OutsideCountryNavigat
                 .subscribe(response -> {
                     if (response != null && response.getData() != null) {
                         for(int i=0;i<response.getData().size(); i++){
-                            if(!"OC".equalsIgnoreCase(response.getData().get(i).getLevel3_category())){
+                            if(!"International".equalsIgnoreCase(response.getData().get(i).getLevel3_category())){
                                 response.getData().remove(i);
                             }
                         }

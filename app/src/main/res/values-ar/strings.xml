@@ -526,4 +526,6 @@
 
     <string name="domestic_text">Domestic</string>
     <string name="international_text">International</string>
+    <string name="city">City</string>
+    <string name="service">Service</string>
 </resources>

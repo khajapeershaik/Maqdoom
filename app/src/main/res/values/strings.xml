@@ -205,6 +205,8 @@
     <string name="Cancel">Cancel</string>
     <string name="Ok">Ok</string>
     <string name="sure_delete">Do you sure want to Delete?</string>
+    <string name="city">City</string>
+    <string name="service">Service</string>
     <string-array name="country_list">
         <item>Please select Country</item>
         <item>Afghanistan</item>
