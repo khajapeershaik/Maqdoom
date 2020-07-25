@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -153,7 +154,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
             Timer timerObj = new Timer();
             TimerTask timerTaskObj = new TimerTask() {
                 public void run() {
-                    getActivity().runOnUiThread(new Runnable() {
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {

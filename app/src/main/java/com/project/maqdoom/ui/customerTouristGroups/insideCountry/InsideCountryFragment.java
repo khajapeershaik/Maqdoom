@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -129,7 +130,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
             Timer timerObj = new Timer();
             TimerTask timerTaskObj = new TimerTask() {
                 public void run() {
-                    getActivity().runOnUiThread(() -> {
+                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                         LiveData<List<TravelCategoryGroupResponse.Adds>> countryData = insideCountryViewModel.getTravelListLiveData();
                         if (countryData.getValue() != null) {
                             setSpinner();

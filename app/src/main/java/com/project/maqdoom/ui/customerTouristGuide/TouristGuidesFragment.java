@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -156,7 +157,7 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
                 Timer timerObj = new Timer();
                 TimerTask timerTaskObj = new TimerTask() {
                     public void run() {
-                        getActivity().runOnUiThread(new Runnable() {
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {

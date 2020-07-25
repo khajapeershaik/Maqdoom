@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -129,7 +130,7 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                 Timer timerObj = new Timer();
                 TimerTask timerTaskObj = new TimerTask() {
                     public void run() {
-                        getActivity().runOnUiThread(() -> {
+                        Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                             LiveData<List<TravelCategoryGroupResponse.Adds>> countryData = shopsViewModel.getShopsListLiveData();
                             if (countryData.getValue() != null) {
                                 setSpinner();
