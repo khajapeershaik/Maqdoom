@@ -13,11 +13,14 @@
 
 package com.project.maqdoom.ui.splash;
 
+import android.content.res.Configuration;
 import android.util.Log;
 
 import com.project.maqdoom.data.DataManager;
 import com.project.maqdoom.ui.base.BaseViewModel;
 import com.project.maqdoom.utils.rx.SchedulerProvider;
+
+import java.util.Locale;
 
 
 public class SplashViewModel extends BaseViewModel<SplashNavigator> {
@@ -28,6 +31,7 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
 
     public void startSeeding() {
         decideNextActivity();
+
     }
 
     private void decideNextActivity() {
@@ -40,7 +44,8 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
                         getNavigator().openLoginActivity();
                     } else {
                     final String userType = getDataManager().getUserType();
-                    Log.v("userType",userType);
+
+                        Log.v("userType",userType);
                         if ("0".equalsIgnoreCase(userType)) {
                             getNavigator().openCustomerHome();
                        }

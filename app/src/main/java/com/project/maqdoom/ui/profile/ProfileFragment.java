@@ -13,12 +13,25 @@
 
 package com.project.maqdoom.ui.profile;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.maqdoom.BR;
@@ -28,14 +41,20 @@ import com.project.maqdoom.databinding.FragmentProfileBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragment;
 import com.project.maqdoom.ui.login.LoginActivity;
+import com.project.maqdoom.ui.splash.SplashActivity;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 
@@ -46,6 +65,11 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     ViewModelProviderFactory factory;
     private ProfileViewModel profileViewModel;
     FragmentProfileBinding fragmentProfileBinding;
+    private String defaultLanguage;
+    private SharedPreferences sharedpreferences;
+    public static final String LANGUAGE_REFERENCE = "language_preference" ;
+    public static final String LANGUAGE_KEY = "language";
+
 
     public static ProfileFragment newInstance() {
         Bundle args = new Bundle();
@@ -140,38 +164,78 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         super.onViewCreated(view, savedInstanceState);
         fragmentProfileBinding = getViewDataBinding();
 
-        ArrayList<String> languageList = new ArrayList<>();
-        languageList.add("English");
-        languageList.add("Arabic");
+        sharedpreferences = getActivity().getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
 
-        ArrayAdapter<String> spinnerLanguageAdapter = new ArrayAdapter<String>(
-                getActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
-                languageList);
-        fragmentProfileBinding.languageSpinner.setAdapter(spinnerLanguageAdapter);
-        fragmentProfileBinding.languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int position, long arg3) {
-                // TODO Auto-generated method stub
-                if(position==1){
-                    profileViewModel.getDataManager().setLanguage("ar");
-                }
-                else{
-                    profileViewModel.getDataManager().setLanguage("en");
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
 
-                }
+            if (langPreference.equalsIgnoreCase("en")) {
+                defaultLanguage = "English";
+            } else {
+                defaultLanguage = "Arabic";
             }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
 
-            }
+        fragmentProfileBinding.languageButton.setText(defaultLanguage);
+        fragmentProfileBinding.languageButton.setOnClickListener(view1 -> {
+            showLanguages();
         });
         setUp();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         //onBackPressed();
+    }
+
+    private void updateLocale(String en) {
+        Locale locale = new Locale(en);
+        Configuration config = getResources().getConfiguration();
+        config.locale = locale;
+        getResources().updateConfiguration(config,getResources().getDisplayMetrics());
+        saveLanguagePreference(en);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+       startActivity(new Intent(getActivity(), SplashActivity.class));
+//        if (Build.VERSION.SDK_INT >= 26) {
+//            ft.setReorderingAllowed(false);
+//        }
+//        startActivity(getActivity().getIntent());
+//        ft.detach(this).attach(this).commit();
+//        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+    }
+
+    private void saveLanguagePreference(String lan){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(LANGUAGE_KEY, lan);
+        editor.commit();
+    }
+
+    public void showLanguages() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        final View customLayout = getLayoutInflater().inflate(R.layout.layout_profile_language_selector, null);
+        alertDialog.setView(customLayout);
+        AlertDialog OptionDialog = alertDialog.create();
+        OptionDialog.show();
+        ListView llLanguageList = customLayout.findViewById(R.id.lv_language);
+        String[] languageArray = {"English","Arabic"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1
+                ,languageArray);
+        llLanguageList.setAdapter(adapter);
+        llLanguageList.setOnItemClickListener((adapterView, view, i, l) -> {
+
+            if(i==1){
+                profileViewModel.getDataManager().setLanguage("ar");
+                Log.v("selected","ar");
+                fragmentProfileBinding.languageButton.setText("Arabic");
+                updateLocale("ar");
+            }
+            else{
+                profileViewModel.getDataManager().setLanguage("en");
+                Log.v("selected","en");
+                fragmentProfileBinding.languageButton.setText("English");
+                updateLocale("en");
+            }
+            OptionDialog.dismiss();
+        });
+        ImageButton close = customLayout.findViewById(R.id.navClose);
+        close.setOnClickListener(view -> OptionDialog.dismiss());
     }
 
     private void removeFragment() {

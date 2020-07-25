@@ -15,6 +15,8 @@ package com.project.maqdoom.ui.sellerHome;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -46,6 +48,8 @@ import com.project.maqdoom.ui.notification.NotificationFragment;
 import com.project.maqdoom.ui.profile.ProfileFragment;
 import com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageFragment;
 import com.project.maqdoom.ui.shops.ShopsFragment;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -236,6 +240,7 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
     protected void onResume() {
         super.onResume();
         //setUpFCM();
+
     }
 
     @Override
@@ -287,7 +292,6 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
         setupBottomNavigation();
         sellerHomeViewModel.onNavMenuCreated();
     }
-
 
     private void setupBottomNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
