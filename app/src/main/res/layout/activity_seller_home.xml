@@ -199,15 +199,13 @@
                                 android:onClick="@{() -> viewModel.showShopsHome()}"
                                 android:orientation="vertical">
 
-                                <FrameLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+
 
                                     <ImageView
                                         android:id="@+id/iv_shop_pic"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="left|center"
+                                        android:layout_gravity="start|center"
                                         android:scaleType="fitXY"
                                         android:src="@drawable/shops" />
 
@@ -216,6 +214,8 @@
                                         android:layout_height="40dp"
                                         android:layout_gravity="bottom|center"
                                         android:layout_marginBottom="20dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_alignBottom="@+id/iv_shop_pic"
                                         android:background="@drawable/round_shape"
                                         android:orientation="vertical">
 
@@ -228,7 +228,6 @@
 
                                         </ImageView>
                                     </LinearLayout>
-                                </FrameLayout>
                             </RelativeLayout>
 
                             <TextView
