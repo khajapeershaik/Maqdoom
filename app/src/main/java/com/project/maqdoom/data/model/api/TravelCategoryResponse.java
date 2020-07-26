@@ -16,6 +16,7 @@ package com.project.maqdoom.data.model.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -97,6 +98,10 @@ public final class TravelCategoryResponse {
         private String country;
 
         @Expose
+        @SerializedName("services")
+        private String services;
+
+        @Expose
         @SerializedName("language")
         private String language;
 
@@ -150,6 +155,10 @@ public final class TravelCategoryResponse {
 
             return add_id.equals(adds.add_id);
 
+        }
+
+        public String getServices() {
+            return services;
         }
 
         public String getAdd_id() {
@@ -239,6 +248,20 @@ public final class TravelCategoryResponse {
                 return path;
             }
         }
+
+        public static Comparator<TravelCategoryResponse.Adds> PRICE = new Comparator<TravelCategoryResponse.Adds>() {
+            @Override
+            public int compare(TravelCategoryResponse.Adds o1, TravelCategoryResponse.Adds o2) {
+                try {
+                    Float o1_Price = Float.parseFloat(o1.getPrice());
+                    Float o2_Price = Float.parseFloat(o2.getPrice());
+
+                    return o1_Price > o2_Price ? 1 : (o1_Price < o2_Price ? -1 : 0);
+                }catch (Exception e){
+                    return 0;
+                }
+            }
+        };
     }
 
 

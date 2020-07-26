@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -129,7 +130,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
             Timer timerObj = new Timer();
             TimerTask timerTaskObj = new TimerTask() {
                 public void run() {
-                    getActivity().runOnUiThread(() -> {
+                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                         LiveData<List<TravelCategoryGroupResponse.Adds>> countryData = insideCountryViewModel.getTravelListLiveData();
                         if (countryData.getValue() != null) {
                             setSpinner();
@@ -145,6 +146,13 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
         }
     }
 
+    private void observeData() {
+        insideCountryViewModel.getTravelListLiveData().observe(this, adds -> {
+            mBlogAdapter.addItems(adds);
+            mBlogAdapter.notifyDataSetChanged();
+        });
+    }
+
     private void setSpinner() {
         country = fragmentTouristInsideBinding.spinnerCountry;
         price = fragmentTouristInsideBinding.spinnerPrice;
@@ -155,7 +163,6 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
 
         ArrayList<String> cityList = new ArrayList<>();
         ArrayList<String> serviceList = new ArrayList<>();
-        ;
 
 
         LiveData<List<TravelCategoryGroupResponse.Adds>> countryData = insideCountryViewModel.getTravelListLiveData();
@@ -163,9 +170,6 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
             for (int i = 0; i < countryData.getValue().size(); i++) {
                 if (!countyList.contains(countryData.getValue().get(i).getCountry()) && countryData.getValue().get(i).getCountry() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getCountry().trim())) {
                     countyList.add(countryData.getValue().get(i).getCountry());
-                }
-                if (!priceList.contains(countryData.getValue().get(i).getPrice()) && countryData.getValue().get(i).getPrice() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getPrice().trim())) {
-                    priceList.add(countryData.getValue().get(i).getPrice());
                 }
                 if (!cityList.contains(countryData.getValue().get(i).getCity()) && countryData.getValue().get(i).getCity() != null
                         && (countryData.getValue().get(i).getCity().trim().length() > 0)) {
@@ -180,6 +184,9 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     }
                 }
             }
+            priceList.add("Low-High");
+            priceList.add("High-Low");
+
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
             cityList.add(0, "City");
@@ -199,6 +206,12 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                         String selected = country.getItemAtPosition(arg2).toString();
                         updateList(1, selected);
                     }
+                    else {
+                        mBlogAdapter.clearItems();
+                        observeData();
+
+                    }
+
                 }
 
                 @Override
@@ -222,8 +235,11 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     if (arg2 != 0) {
                         String selected = city.getItemAtPosition(arg2).toString();
                         updateList(2, selected);
-                    } else {
+                    }
+                    else {
                         mBlogAdapter.clearItems();
+                        observeData();
+
                     }
                 }
 
@@ -247,10 +263,12 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     if (arg2 != 0) {
                         String selected = price.getItemAtPosition(arg2).toString();
                         updateList(3, selected);
-                    } else {
-                        mBlogAdapter.clearItems();
                     }
+                    else {
+                        mBlogAdapter.clearItems();
+                        observeData();
 
+                    }
                 }
 
                 @Override
@@ -274,8 +292,10 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     if (arg2 != 0) {
                         String selected = service.getItemAtPosition(arg2).toString();
                         updateList(4, selected);
-                    } else {
+                    }
+                    else {
                         mBlogAdapter.clearItems();
+                        observeData();
                     }
                 }
 

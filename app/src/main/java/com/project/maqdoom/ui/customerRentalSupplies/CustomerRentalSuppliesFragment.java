@@ -30,6 +30,7 @@ import com.project.maqdoom.ui.customerSuppliesCruises.CustomerCruiseSuppliesFrag
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -121,7 +122,7 @@ public class CustomerRentalSuppliesFragment extends BaseFragment<FragmentRentalS
                 Timer timerObj = new Timer();
                 TimerTask timerTaskObj = new TimerTask() {
                     public void run() {
-                        getActivity().runOnUiThread(new Runnable() {
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {
