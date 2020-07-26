@@ -27,6 +27,12 @@ public final class RegistrationRequest {
     public static class ServerRegistrationRequest {
 
         @Expose
+        @SerializedName("language")
+        private String language;
+
+
+
+        @Expose
         @SerializedName("name")
         private String name;
 
@@ -46,7 +52,9 @@ public final class RegistrationRequest {
         @SerializedName("is_seller")
         private String is_seller;
 
-        public ServerRegistrationRequest(String name,String email, String password,String confirmPassword,String isSeller) {
+
+        public ServerRegistrationRequest(String language, String name, String email, String password, String confirmPassword, String isSeller) {
+            this.language=language;
             this.name = name;
             this.email = email;
             this.password = password;
@@ -92,5 +100,14 @@ public final class RegistrationRequest {
         public String getIs_seller() {
             return is_seller;
         }
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
+        }
+
     }
 }
