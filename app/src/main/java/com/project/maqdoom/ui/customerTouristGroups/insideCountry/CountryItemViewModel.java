@@ -13,6 +13,11 @@
 
 package com.project.maqdoom.ui.customerTouristGroups.insideCountry;
 
+import android.util.Log;
+
+import com.androidnetworking.error.ANError;
+import com.project.maqdoom.data.DataManager;
+import com.project.maqdoom.data.model.api.DeleteAddRequest;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryResponse;
 
@@ -21,6 +26,8 @@ import org.json.JSONObject;
 import java.util.List;
 
 import androidx.databinding.ObservableField;
+import androidx.lifecycle.ViewModel;
+import io.reactivex.disposables.CompositeDisposable;
 
 
 public class CountryItemViewModel {
@@ -40,6 +47,9 @@ public class CountryItemViewModel {
     public final ObservableField<String> price;
 
     private final TravelCategoryGroupResponse.Adds mAdds;
+
+    private CompositeDisposable compositeDisposable;
+    private DataManager dataManager ;
 
     public CountryItemViewModel(TravelCategoryGroupResponse.Adds adds, CountryInsideViewModelListener listener) {
 
@@ -61,6 +71,35 @@ public class CountryItemViewModel {
         mListener.onPackageClick();
 
     }
+    public void deleteButtonClicked(){
+        mListener.onDeleteButtonClick(mAdds.getAdd_id());
+    }
+    public void editButtonClicked(){
+        new Thread(() -> {
+            try{
+                List<TravelCategoryGroupResponse.Adds.Images> img = mAdds.getImage_path();
+                String listString = "";
+                for(int i=0;i<img.size();i++){
+                    listString += img.get(i).getPath() + "\t";
+                }
+                JSONObject item = new JSONObject();
+                item.put("id", mAdds.getAdd_id());
+                item.put("package_include", mAdds.getPackage_include());
+                item.put("package", mAdds.getTourist_package());
+                item.put("price", mAdds.getPrice());
+                item.put("details", mAdds.getMore_details());
+                item.put("whatsApp", mAdds.getWhatsapp_phone());
+                item.put("phone", mAdds.getPhone());
+                item.put("images", listString);
+                mListener.onEditButtonClick(item.toString());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }).start();
+
+    }
+
     public void onItemClick() {
         new Thread(() -> {
             try{
@@ -91,5 +130,9 @@ public class CountryItemViewModel {
         void onItemClick(String blogUrl);
 
         void onPackageClick();
+
+        void onDeleteButtonClick(String appId);
+
+        void onEditButtonClick(String blogUrl);
     }
 }

@@ -14,6 +14,8 @@
 package com.project.maqdoom.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.project.maqdoom.data.local.db.DbHelper;
@@ -68,6 +70,11 @@ public class AppDataManager implements DataManager {
 
     private final PreferencesHelper mPreferencesHelper;
 
+    private SharedPreferences sharedpreferences;
+    public static final String LANGUAGE_REFERENCE = "language_preference" ;
+    public static final String LANGUAGE_KEY = "language";
+
+
     @Inject
     public AppDataManager(Context context, DbHelper dbHelper, PreferencesHelper preferencesHelper, ApiHelper apiHelper, Gson gson) {
         mContext = context;
@@ -89,11 +96,18 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Single<RegistrationResponse> doServerRegistrationApiCall(RegistrationRequest.ServerRegistrationRequest request) {
+        sharedpreferences = mContext.getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        request.setLanguage(langPreference);
         return mApiHelper.doServerRegistrationApiCall(request);
     }
 
     @Override
     public Single<TravelCategoryResponse> doTravelCategoryApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request, String userType, String userId) {
+        sharedpreferences = mContext.getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        request.setLanguage(langPreference);
+        Log.v("request",request.dataString());
         return mApiHelper.doTravelCategoryApiCall(request, userType, userId);
     }
 
@@ -109,6 +123,9 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Single<EditProfileResponse> doEditProfileApiCall(EditProfileRequest.ServerEditProfileRequest request) {
+        sharedpreferences = mContext.getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        request.setLanguage(langPreference);
         return mApiHelper.doEditProfileApiCall(request);
     }
 

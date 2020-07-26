@@ -13,22 +13,32 @@
 
 package com.project.maqdoom.ui.customerTouristGroups.insideCountry;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.androidnetworking.error.ANError;
 import com.project.maqdoom.R;
+import com.project.maqdoom.ViewModelProviderFactory;
+import com.project.maqdoom.data.model.api.DeleteAddRequest;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
 import com.project.maqdoom.databinding.ItemBlogEmptyViewBinding;
 import com.project.maqdoom.databinding.ItemTouristGroupInsideViewBinding;
 import com.project.maqdoom.ui.base.BaseViewHolder;
 import com.project.maqdoom.ui.custom.EmptyItemViewModel;
 import com.project.maqdoom.ui.touristPackageDetails.TouristPackageDetailsFragment;
+import com.project.maqdoom.ui.touristPackageDetails.TouristPackageDetailsViewModel;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -94,6 +104,7 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyDataSetChanged();
     }
 
+
     public void clearItems() {
         mResponseList.clear();
     }
@@ -107,11 +118,13 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         void onRetryClick();
     }
 
-    public class BlogViewHolder extends BaseViewHolder implements CountryItemViewModel.CountryInsideViewModelListener {
+    public class BlogViewHolder extends BaseViewHolder implements CountryItemViewModel.CountryInsideViewModelListener, PackageDeleteListener{
 
         private ItemTouristGroupInsideViewBinding mBinding;
 
         private CountryItemViewModel mBlogItemViewModel;
+        @Inject
+        ViewModelProviderFactory factory;
 
         public BlogViewHolder(ItemTouristGroupInsideViewBinding binding) {
             super(binding.getRoot());
@@ -121,7 +134,9 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @Override
         public void onBind(int position) {
             final TravelCategoryGroupResponse.Adds adds = mResponseList.get(position);
-            mBlogItemViewModel = new CountryItemViewModel(adds, this);
+
+           // mBlogItemViewModel =
+           mBlogItemViewModel = new CountryItemViewModel(adds, this);
             mBinding.setViewModel(mBlogItemViewModel);
 
             // Immediate Binding
@@ -177,6 +192,37 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 mBinding.llIncl.setVisibility(View.GONE);
             }
         }
+
+        @Override
+        public void onDeleteButtonClick(String id) {
+            AlertDialog.Builder builder = new AlertDialog.Builder((itemView.getContext()), R.style.CustomDialogTheme);
+            builder.setTitle((itemView.getContext()).getResources().getString(R.string.app_name));
+            builder.setMessage((itemView.getContext()).getResources().getString(R.string.sure_delete));
+            String positiveText = (itemView.getContext()).getString(R.string.Ok);
+            String negativeText = (itemView.getContext()).getString(R.string.Cancel);
+            builder.setPositiveButton(positiveText,
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                   //     PackageDeleteListener.onDeleteButtonClick
+                       notifyDataSetChanged();
+                    });
+            builder.setNegativeButton(negativeText, (dialogInterface, i) -> dialogInterface.dismiss());
+            AlertDialog dialog = builder.create();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+        }
+
+        @Override
+        public void onEditButtonClick(String data) {
+            FragmentManager manager = ((AppCompatActivity)itemView.getContext()).getSupportFragmentManager();
+            manager
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .add(R.id.parentLayout, TouristPackageDetailsFragment.newInstance(data), TouristPackageDetailsFragment.TAG)
+                    .commit();
+        }
+
+
     }
 
     public class EmptyViewHolder extends BaseViewHolder implements EmptyItemViewModel.BlogEmptyItemViewModelListener {
@@ -198,5 +244,9 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onRetryClick() {
             mListener.onRetryClick();
         }
+    }
+    public interface PackageDeleteListener {
+
+        void onDeleteButtonClick(String appId);
     }
 }

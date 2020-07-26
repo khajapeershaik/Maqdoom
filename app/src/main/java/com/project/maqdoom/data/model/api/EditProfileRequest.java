@@ -46,12 +46,24 @@ public final class EditProfileRequest {
         @SerializedName("notifications")
         private String notifications;
 
+        @Expose
+        @SerializedName("language")
+        private String language;
+
         public ServerEditProfileRequest(String user_id, String email, String name, String phone, String notifications) {
             this.user_id = user_id;
             this.email = email;
             this.name = name;
             this.phone = phone;
             this.notifications = notifications;
+        }
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
         }
 
         public String getUser_id() {
