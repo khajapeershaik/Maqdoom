@@ -15,6 +15,7 @@ package com.project.maqdoom.ui.registration;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -36,6 +37,9 @@ public class RegistrationActivity extends BaseActivity<ActivityRegistrationBindi
     ViewModelProviderFactory factory;
     private RegistrationViewModel registrationViewModel;
     private ActivityRegistrationBinding activityRegistrationBinding;
+    private SharedPreferences sharedpreferences;
+    public static final String LANGUAGE_REFERENCE = "language_preference" ;
+    public static final String LANGUAGE_KEY = "language";
 
     public static Intent newIntent(Context context) {
         return new Intent(context, RegistrationActivity.class);
@@ -68,6 +72,10 @@ public class RegistrationActivity extends BaseActivity<ActivityRegistrationBindi
         String email = activityRegistrationBinding.etEmail.getText().toString().trim();
         String password = activityRegistrationBinding.etPassword.getText().toString().trim();
         String re_password = activityRegistrationBinding.etRePassword.getText().toString().trim();
+        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+
         if (registrationViewModel.isEmailAndPasswordValid(name,email, password,re_password)) {
             if(!password.equals(re_password) ){
                 Toast.makeText(this, getString(R.string.password_mismatch), Toast.LENGTH_SHORT).show();
@@ -84,7 +92,7 @@ public class RegistrationActivity extends BaseActivity<ActivityRegistrationBindi
                         type="1";
                     }
 
-                    registrationViewModel.registration(name,email, password,re_password,type);
+                    registrationViewModel.registration(langPreference,name,email, password,re_password,type);
                 }
 
             }
@@ -116,5 +124,7 @@ public class RegistrationActivity extends BaseActivity<ActivityRegistrationBindi
         super.onCreate(savedInstanceState);
         activityRegistrationBinding = getViewDataBinding();
         registrationViewModel.setNavigator(this);
+        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+
     }
 }

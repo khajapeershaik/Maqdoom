@@ -50,7 +50,7 @@ public class RegistrationViewModel extends BaseViewModel<RegistrationNavigator> 
         return true;
     }
 
-    public void registration(String name, String email, String password, String confirmPassword, String isSeller) {
+    public void registration(String language,String name, String email, String password, String confirmPassword, String isSeller) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .doServerRegistrationApiCall(new RegistrationRequest.ServerRegistrationRequest(name, email, password, confirmPassword, isSeller))

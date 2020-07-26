@@ -92,6 +92,7 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Single<RegistrationResponse> doServerRegistrationApiCall(RegistrationRequest.ServerRegistrationRequest request) {
         JSONObject jsonObject = new JSONObject();
+
         try {
             jsonObject.put("language", request.getLanguage());
             jsonObject.put("name", request.getName());
