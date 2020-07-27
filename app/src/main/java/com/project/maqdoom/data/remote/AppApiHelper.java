@@ -72,6 +72,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Single<MaqDoomLoginResponse> doServerLoginApiCall(MaqdoomLoginRequest.ServerLoginRequest request) {
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("email", request.getEmail());
@@ -119,6 +120,7 @@ public class AppApiHelper implements ApiHelper {
                 jsonObject.put("user_id", userId);
             }
             jsonObject.put("level2_category", request.getLevel2_category());
+            jsonObject.put("language", request.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -215,6 +217,7 @@ public class AppApiHelper implements ApiHelper {
     public Single<EditProfileResponse> doEditProfileApiCall(EditProfileRequest.ServerEditProfileRequest request) {
         JSONObject jsonObject = new JSONObject();
         try {
+            jsonObject.put("language",request.getLanguage());
             jsonObject.put("user_id", request.getUser_id());
             jsonObject.put("name", request.getName());
             jsonObject.put("email", request.getEmail());

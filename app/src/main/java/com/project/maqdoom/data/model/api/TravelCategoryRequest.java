@@ -30,7 +30,17 @@ public final class TravelCategoryRequest {
         @SerializedName("level2_category")
         private String level2_category;
 
+        @Expose
+        @SerializedName("language")
+        private String language;
 
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
+        }
 
         public ServerTravelCategoryRequest(String category) {
             this.level2_category = category;
@@ -56,6 +66,11 @@ public final class TravelCategoryRequest {
 
         public String getLevel2_category() {
             return level2_category;
+        }
+
+        public String dataString()
+        {
+            return level2_category + " " + language;
         }
     }
 }

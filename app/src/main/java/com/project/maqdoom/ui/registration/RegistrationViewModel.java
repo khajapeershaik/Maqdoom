@@ -53,7 +53,7 @@ public class RegistrationViewModel extends BaseViewModel<RegistrationNavigator> 
     public void registration(String language,String name, String email, String password, String confirmPassword, String isSeller) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .doServerRegistrationApiCall(new RegistrationRequest.ServerRegistrationRequest(language,name, email, password, confirmPassword, isSeller))
+                .doServerRegistrationApiCall(new RegistrationRequest.ServerRegistrationRequest(name, email, password, confirmPassword, isSeller))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
