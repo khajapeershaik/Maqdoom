@@ -63,6 +63,7 @@ public class MaqdoomApp extends Application implements HasActivityInjector {
 
         AndroidNetworking.initialize(getApplicationContext());
         if (BuildConfig.DEBUG) {
+            AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.HEADERS);
             AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY);
         }
 

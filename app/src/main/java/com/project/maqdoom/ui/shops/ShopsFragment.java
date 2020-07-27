@@ -7,11 +7,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
+import com.project.maqdoom.data.model.api.DeleteAddRequest;
+import com.project.maqdoom.data.model.api.DeleteAddResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
+import com.project.maqdoom.data.remote.api_rest.ApiClient;
+import com.project.maqdoom.data.remote.api_rest.ApiInterface;
 import com.project.maqdoom.databinding.FragmentShopsDetailBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerTouristGroups.insideCountry.InsideCountryAdapter;
@@ -28,11 +33,14 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, ShopsViewModel> implements ShopsNavigator {
 
@@ -147,12 +155,54 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
         }catch (Exception e){
 
         }
+        mBlogAdapter.setOnDeleteListener(appId -> onDeleteButtonClick(appId));
     }
 
     private void observeShopsData() {
         shopsViewModel.getShopsListLiveData().observe(this, adds -> {
             mBlogAdapter.addItems(adds);
             mBlogAdapter.notifyDataSetChanged();
+        });
+    }
+    public void onDeleteButtonClick(String appId) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomDialogTheme);
+        builder.setTitle((getActivity().getResources().getString(R.string.app_name)));
+        builder.setMessage((getActivity().getResources().getString(R.string.sure_delete)));
+        String positiveText = getActivity().getString(R.string.Ok);
+        String negativeText = getActivity().getString(R.string.Cancel);
+        builder.setPositiveButton(positiveText,
+                (dialog, which) -> {
+                    Log.v("InsideFragment", appId);
+                    deleteAdd(appId);
+                    dialog.dismiss();
+                });
+        builder.setNegativeButton(negativeText, (dialogInterface, i) -> dialogInterface.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    public void deleteAdd(String id) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<DeleteAddResponse> deleteRequest = apiService.deleteAdd(new DeleteAddRequest.ServerDeleteAddRequest(id));
+        deleteRequest.enqueue(new retrofit2.Callback<DeleteAddResponse>() {
+            @Override
+            public void onResponse(Call<DeleteAddResponse> call, Response<DeleteAddResponse> response) {
+                Log.v("response",response.toString());
+                if (response.isSuccessful()) {
+                    if ("fail".equals(response.body().getResponse())) {
+                        Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
+                    } else {
+                        mBlogAdapter.clearItems();
+                        observeShopsData();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<DeleteAddResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
+            }
         });
     }
 

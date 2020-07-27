@@ -13,6 +13,7 @@
 
 package com.project.maqdoom.ui.customerTouristGroups.insideCountry;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,7 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<TravelCategoryGroupResponse.Adds> mResponseList;
 
     private TravelGroupAdapterListener mListener;
+    private AddsDeleteListener mDeleteListener;
 
     private boolean status = false;
 
@@ -114,11 +116,17 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public interface TravelGroupAdapterListener {
-
         void onRetryClick();
     }
 
-    public class BlogViewHolder extends BaseViewHolder implements CountryItemViewModel.CountryInsideViewModelListener, PackageDeleteListener{
+    public interface AddsDeleteListener {
+        void deleteAdd(String appId);
+    }
+    public void setOnDeleteListener(AddsDeleteListener listener) {
+        this.mDeleteListener = listener;
+    }
+
+    public class BlogViewHolder extends BaseViewHolder implements CountryItemViewModel.CountryInsideViewModelListener{
 
         private ItemTouristGroupInsideViewBinding mBinding;
 
@@ -195,21 +203,7 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onDeleteButtonClick(String id) {
-            AlertDialog.Builder builder = new AlertDialog.Builder((itemView.getContext()), R.style.CustomDialogTheme);
-            builder.setTitle((itemView.getContext()).getResources().getString(R.string.app_name));
-            builder.setMessage((itemView.getContext()).getResources().getString(R.string.sure_delete));
-            String positiveText = (itemView.getContext()).getString(R.string.Ok);
-            String negativeText = (itemView.getContext()).getString(R.string.Cancel);
-            builder.setPositiveButton(positiveText,
-                    (dialog, which) -> {
-                        dialog.dismiss();
-                   //     PackageDeleteListener.onDeleteButtonClick
-                       notifyDataSetChanged();
-                    });
-            builder.setNegativeButton(negativeText, (dialogInterface, i) -> dialogInterface.dismiss());
-            AlertDialog dialog = builder.create();
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.show();
+            mDeleteListener.deleteAdd(id);
         }
 
         @Override
@@ -221,8 +215,6 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     .add(R.id.parentLayout, TouristPackageDetailsFragment.newInstance(data), TouristPackageDetailsFragment.TAG)
                     .commit();
         }
-
-
     }
 
     public class EmptyViewHolder extends BaseViewHolder implements EmptyItemViewModel.BlogEmptyItemViewModelListener {
@@ -244,9 +236,5 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onRetryClick() {
             mListener.onRetryClick();
         }
-    }
-    public interface PackageDeleteListener {
-
-        void onDeleteButtonClick(String appId);
     }
 }

@@ -19,12 +19,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
+import com.project.maqdoom.data.model.api.DeleteAddRequest;
+import com.project.maqdoom.data.model.api.DeleteAddResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
-import com.project.maqdoom.data.model.api.TravelCategoryResponse;
+import com.project.maqdoom.data.remote.api_rest.ApiClient;
+import com.project.maqdoom.data.remote.api_rest.ApiInterface;
 import com.project.maqdoom.databinding.FragmentTouristInsideBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 
@@ -40,10 +44,13 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBinding, InsideCountryViewModel>
         implements InsideCountryNavigator, InsideCountryAdapter.TravelGroupAdapterListener {
@@ -56,9 +63,8 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
     LinearLayoutManager mLayoutManager;
     @Inject
     ViewModelProviderFactory factory;
-
-    private InsideCountryViewModel insideCountryViewModel;
     Spinner country, price, city, service;
+    private InsideCountryViewModel insideCountryViewModel;
 
     public static InsideCountryFragment newInstance() {
         Bundle args = new Bundle();
@@ -97,6 +103,46 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
     @Override
     public void onRetryClick() {
         insideCountryViewModel.fetchData();
+    }
+
+    public void onDeleteButtonClick(String appId) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomDialogTheme);
+        builder.setTitle((getActivity().getResources().getString(R.string.app_name)));
+        builder.setMessage((getActivity().getResources().getString(R.string.sure_delete)));
+        String positiveText = getActivity().getString(R.string.Ok);
+        String negativeText = getActivity().getString(R.string.Cancel);
+        builder.setPositiveButton(positiveText,
+                (dialog, which) -> {
+                    Log.v("InsideFragment", appId);
+                    deleteAdd(appId);
+                    dialog.dismiss();
+                });
+        builder.setNegativeButton(negativeText, (dialogInterface, i) -> dialogInterface.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    public void deleteAdd(String id) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<DeleteAddResponse> deleteRequest = apiService.deleteAdd(new DeleteAddRequest.ServerDeleteAddRequest(id));
+        deleteRequest.enqueue(new retrofit2.Callback<DeleteAddResponse>() {
+            @Override
+            public void onResponse(Call<DeleteAddResponse> call, Response<DeleteAddResponse> response) {
+                if (response.isSuccessful()) {
+                    if ("fail".equals(response.body().getResponse())) {
+                        Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
+                    } else {
+                        mBlogAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<DeleteAddResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -142,8 +188,9 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
 
                 }
             };
-        timerObj.schedule(timerTaskObj, 0, 1000);
+            timerObj.schedule(timerTaskObj, 0, 1000);
         }
+        mBlogAdapter.setOnDeleteListener(appId -> onDeleteButtonClick(appId));
     }
 
     private void observeData() {
@@ -176,9 +223,9 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     cityList.add(countryData.getValue().get(i).getCity());
                 }
                 if (!serviceList.contains(countryData.getValue().get(i).getServices()) && countryData.getValue().get(i).getServices() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getServices().trim())) {
-                    List<String> list = Arrays.asList(countryData.getValue().get(i).getServices().split(","));
-                    for(String s:list){
-                        if(!serviceList.contains(s)){
+                    String[] list = countryData.getValue().get(i).getServices().split(",");
+                    for (String s : list) {
+                        if (!serviceList.contains(s)) {
                             serviceList.add(s);
                         }
                     }
@@ -205,8 +252,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     if (arg2 != 0) {
                         String selected = country.getItemAtPosition(arg2).toString();
                         updateList(1, selected);
-                    }
-                    else {
+                    } else {
                         mBlogAdapter.clearItems();
                         observeData();
 
@@ -235,8 +281,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     if (arg2 != 0) {
                         String selected = city.getItemAtPosition(arg2).toString();
                         updateList(2, selected);
-                    }
-                    else {
+                    } else {
                         mBlogAdapter.clearItems();
                         observeData();
 
@@ -263,8 +308,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     if (arg2 != 0) {
                         String selected = price.getItemAtPosition(arg2).toString();
                         updateList(3, selected);
-                    }
-                    else {
+                    } else {
                         mBlogAdapter.clearItems();
                         observeData();
 
@@ -292,8 +336,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     if (arg2 != 0) {
                         String selected = service.getItemAtPosition(arg2).toString();
                         updateList(4, selected);
-                    }
-                    else {
+                    } else {
                         mBlogAdapter.clearItems();
                         observeData();
                     }
