@@ -89,6 +89,8 @@
     <string name="dashboard">لوحة القيادة</string>
     <string name="travel">السفر</string>
     <string name="supplies">اللوازم</string>
+    <string name="shops">المحلات</string>
+
 
     <!--Tourist guide-->
     <string name="t_guide">مرشد سياحي</string>
@@ -165,6 +167,33 @@
 
     <!-- Service addition -->
 
+
+    <!-- Service addition -->
+    <string name="service_category">الفئة</string>
+    <string name="service_title">الخدمات</string>
+    <string name="service_sub_category">فئة فرعية</string>
+    <string name="Service_name">الاسم</string>
+    <string name="name_hint">الرجاء ادخال الاسم</string>
+    <string name="Service_phone">الهاتف</string>
+    <string name="phone_hint">رقم الهاتف</string>
+    <string name="Service_wp">واتس اب</string>
+    <string name="whats_app_hint">رقم الهاتف المستخدم للواتس اب</string>
+    <string name="Service_language">Language</string>
+    <string name="Service_image">Add image</string>
+    <string name="Service_more">More details</string>
+    <string name="Service_image_upload_hint">Upload images here</string>
+    <string name="add_service">إضافة خدمة</string>
+    <string name="service_price">السعر</string>
+    <string name="service_location">الموقع</string>
+    <string name="location_hint">إضافة موقع</string>
+    <string name="location_price">إضافة سعر</string>
+    <string name="service_includes">Package Includes</string>
+    <string name="service_includes_hint">Add includes</string>
+    <string name="service_people">عدد الأشخاص</string>
+    <string name="service_people_hint">ادخل الرقم</string>
+    <string name="fill_all_error">Please enter all required fields</string>
+
+
     <!--Dialog -->
     <string name="select_option">حدد اختيارا</string>
     <string name="select_country_option">Please select Country</string>
@@ -177,70 +206,81 @@
     <string name="Cancel">Cancel</string>
     <string name="Ok">Ok</string>
     <string name="sure_delete">Do you sure want to Delete?</string>
-    <string name="shops">Shops</string>
     <string-array name="country_list">
         <item>Please select Country</item>
-        <item>Afghanistan</item>
-        <item>Albania</item>
-        <item>Algeria</item>
-        <item>American Samoa</item>
-        <item>Andorra</item>
-        <item>Angola</item>
-        <item>Anguilla</item>
-        <item>Antarctica</item>
-        <item>Antigua and Barbuda</item>
-        <item>Argentina</item>
-        <item>Armenia</item>
-        <item>Aruba</item>
-        <item>Australia</item>
-        <item>Austria</item>
-        <item>Azerbaijan</item>
-        <item>Bahrain</item>
-        <item>Bangladesh</item>
-        <item>Barbados</item>
-        <item>Belarus</item>
-        <item>Belgium</item>
-        <item>Belize</item>
-        <item>Benin</item>
-        <item>Bermuda</item>
-        <item>Bhutan</item>
-        <item>Bolivia</item>
-        <item>Bosnia and Herzegovina</item>
-        <item>Botswana</item>
-        <item>Bouvet Island</item>
-        <item>Brazil</item>
-        <item>British Indian Ocean Territory</item>
-        <item>British Virgin Islands</item>
-        <item>Brunei</item>
-        <item>Bulgaria</item>
-        <item>Burkina Faso</item>
-        <item>Burundi</item>
-        <item>Cambodia</item>
-        <item>Cameroon</item>
-        <item>Canada</item>
-        <item>Cape Verde</item>
-        <item>Cayman Islands</item>
-        <item>Central African Republic</item>
-        <item>Chad</item>
-        <item>Chile</item>
-        <item>China</item>
-        <item>Christmas Island</item>
-        <item>Cocos (Keeling) Islands</item>
-        <item>Colombia</item>
-        <item>Comoros</item>
-        <item>Congo</item>
-        <item>Cook Islands</item>
-        <item>Costa Rica</item>
-        <item>Cote d\'Ivoire</item>
-        <item>Croatia</item>
-        <item>Cuba</item>
-        <item>Cyprus</item>
-        <item>Czech Republic</item>
-        <item>Democratic Republic of the Congo</item>
-        <item>Denmark</item>
-        <item>Djibouti</item>
-        <item>Dominica</item>
-        <item>Dominican Republic</item>
+        <item>أفغانستان</item>
+        <item>البانيا</item>
+        <item>الجزائر</item>
+        <item>ساموا الأمريكية</item>
+        <item>أندورا</item>
+        <item>أنغولا</item>
+        <item>أنغيلا</item>
+        <item>أنتاركتيكا</item>
+        <item>أنتيغوا وبربودا</item>
+        <item>الأرجنتين</item>
+        <item>أرمينا</item>
+        <item>أروبا</item>
+        <item>استراليا</item>
+        <item>النمسا</item>
+        <item>أذربيجان</item>
+        <item>البحرين</item>
+        <item>بنغلاديش</item>
+        <item>بربادوس</item>
+        <item>روسيا البيضاء</item>
+        <item>بلجيكا</item>
+        <item>بليز</item>
+        <item>بنين</item>
+        <item>برمودا</item>
+        <item>بوتان</item>
+        <item>بوليفيا</item>
+        <item>البوسنة والهرسك</item>
+        <item>بوتسوانا</item>
+        <item>جزيرة بوفيت</item>
+        <item>البرازيل</item>
+        <item>إقليم المحيط البريطاني الهندي</item>
+        <item>جزر فيرجن البريطانية</item>
+        <item>بروناي</item>
+        <item>بلغاريا</item>
+        <item>بوركينا فاسو</item>
+        <item>بوروندي</item>
+        <item>كمبوديا</item>
+        <item>الكاميرون</item>
+        <item>كندا</item>
+        <item>الرأس الأخضر</item>
+        <item>جزر كايمان</item>
+        <item>جمهورية افريقيا الوسطى</item>
+        <item>تشاد</item>
+        <item>تشيلي</item>
+        <item>الصين</item>
+        <item>جزيرة الكريسماس</item>
+        <item>جزر كوكوس (كيلنج)</item>
+        <item>كولومبيا</item>
+        <item>جزر القمر</item>
+        <item>الكونغو</item>
+        <item>جزر كوك
+</item>
+        <item>كوستا ريكا
+</item>
+        <item>كوت ديفوار
+</item>
+        <item>كرواتيا
+</item>
+        <item>كوبا
+</item>
+        <item>قبرص
+</item>
+        <item>جمهورية التشيك
+</item>
+        <item>جمهورية الكونغو الديموقراطية
+</item>
+        <item>الدنمارك
+</item>
+        <item>جيبوتي
+</item>
+        <item>دومينيكا
+</item>
+        <item>جمهورية الدومنيكان
+</item>
         <item>East Timor</item>
         <item>Ecuador</item>
         <item>Egypt</item>
