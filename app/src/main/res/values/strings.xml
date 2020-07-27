@@ -584,6 +584,10 @@
 
     </string-array>
 
+    <string name="str_upload">Upload the picture of licence</string>
+    <string name="str_upload_pic">Upload picture</string>
+
+
     <string-array name="item_services">
 
         <item>Parachute</item>
