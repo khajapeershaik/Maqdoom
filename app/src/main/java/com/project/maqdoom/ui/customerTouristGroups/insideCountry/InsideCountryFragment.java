@@ -236,8 +236,8 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
 
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
-            cityList.add(0, "City");
-            serviceList.add(0, "Service");
+            cityList.add(0, getString(R.string.s_city));
+            serviceList.add(0, getString(R.string.service));
             //Country spinner
             ArrayAdapter<String> spinnerCountryAdapter = new ArrayAdapter<>(
                     getActivity(),

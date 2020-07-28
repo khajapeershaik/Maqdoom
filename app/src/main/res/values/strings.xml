@@ -201,7 +201,7 @@
 
     <string name="save">Save</string>
     <string name="Cancel">Cancel</string>
-    <string name="Ok">Ok</string>
+    <string name="Ok">OK</string>
     <string name="sure_delete">Do you sure want to Delete?</string>
     <string name="city">City</string>
     <string name="service">Service</string>
@@ -586,6 +586,8 @@
 
     <string name="str_upload">Upload the picture of licence</string>
     <string name="str_upload_pic">Upload picture</string>
+    <string name="str_chat">Chat</string>
+    <string name="str_travel_agent">Travel Agent Name</string>
 
 
     <string-array name="item_services">

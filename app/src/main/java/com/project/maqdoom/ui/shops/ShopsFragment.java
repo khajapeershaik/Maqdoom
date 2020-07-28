@@ -87,7 +87,7 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
     }
 
     private void showHome() {
-        for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
     }
@@ -243,8 +243,8 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
             priceList.add("High-Low");
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
-            cityList.add(0, "City");
-            serviceList.add(0, "Service");
+            cityList.add(0, getString(R.string.s_city));
+            serviceList.add(0, getString(R.string.service));
 
             ArrayAdapter<String> spinnerCountryAdapter = new ArrayAdapter<>(
                     getActivity(),

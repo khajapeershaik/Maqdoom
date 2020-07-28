@@ -33,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/tg_background"
+        android:focusable="true"
         android:clickable="true">
 
         <RelativeLayout
@@ -65,7 +66,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:gravity="center"
-                android:text="Chat"
+                android:text="@string/str_chat"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 

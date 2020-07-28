@@ -560,4 +560,6 @@
     <string name="city">المدينة</string>
     <string name="service">خدمات</string>
     <string name="edit">Edit</string>
+    <string name="str_chat">دردشة</string>
+    <string name="str_travel_agent">اسم وكيل السفر</string>
 </resources>

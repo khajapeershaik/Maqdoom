@@ -221,7 +221,7 @@ public class TouristHoneymoonFragment extends BaseFragment<FragmentHoneymoonBind
 
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
-            cityList.add(0, getString(R.string.city));
+            cityList.add(0, getString(R.string.s_city));
             serviceList.add(0, getString(R.string.service));
 
 
@@ -451,7 +451,7 @@ public class TouristHoneymoonFragment extends BaseFragment<FragmentHoneymoonBind
 
     }
     private void onBackPressed() {
-        getView().setOnKeyListener((v, keyCode, event) -> {
+        Objects.requireNonNull(getView()).setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     showHome();

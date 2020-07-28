@@ -45,6 +45,7 @@ import com.project.maqdoom.ui.splash.SplashActivity;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -102,6 +103,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
     @Override
     public void goToTouristGroup() {
+        assert getFragmentManager() != null;
         getFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
@@ -113,7 +115,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
     @Override
     public void logout() {
-        for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
         startActivity(LoginActivity.newIntent(this.getActivity()));
@@ -282,7 +284,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     }
 
     private void showHome() {
-        for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
     }

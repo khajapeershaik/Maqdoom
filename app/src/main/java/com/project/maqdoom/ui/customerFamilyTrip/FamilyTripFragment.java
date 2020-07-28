@@ -94,11 +94,12 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
 
     @Override
     public void goToTouristGroup() {
-        for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
             if (fragment instanceof TouristGroupFragment){
                 this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
+        assert getFragmentManager() != null;
         getFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
@@ -108,6 +109,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
 
     @Override
     public void goToTouristGuide() {
+        assert getFragmentManager() != null;
         getFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
@@ -117,6 +119,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
 
     @Override
     public void goToTouristHoneymoon() {
+        assert getFragmentManager() != null;
         getFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
@@ -175,7 +178,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
 
     }
     private void showHome() {
-        for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
     }
@@ -441,7 +444,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
 
     }
     private void onBackPressed() {
-        getView().setOnKeyListener(new View.OnKeyListener() {
+        Objects.requireNonNull(getView()).setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
