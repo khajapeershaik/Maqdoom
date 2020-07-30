@@ -18,6 +18,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,11 +44,13 @@ import com.project.maqdoom.ui.friends.FriendsFragment;
 import com.project.maqdoom.ui.login.LoginActivity;
 import com.project.maqdoom.ui.notification.NotificationFragment;
 import com.project.maqdoom.ui.profile.ProfileFragment;
+import com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageFragment;
 import com.project.maqdoom.ui.shops.ShopsFragment;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
@@ -154,6 +159,9 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
         showTouristGuide();
     }
 
+
+
+
     @Override
     public void openSuppliesHome() {
         showRentalSupplies();
@@ -163,6 +171,8 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     public void openShopsHome() {
         showShops();
     }
+
+
 
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
@@ -338,4 +348,6 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     public Fragment currentFragment() {
         return getSupportFragmentManager().findFragmentById(R.id.clRootView);
     }
+
+
 }

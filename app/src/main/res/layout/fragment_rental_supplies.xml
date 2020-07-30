@@ -152,50 +152,67 @@
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="4">
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_city"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinnerCity"
-                    style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginEnd="10dp"
+                    android:background="@drawable/spinner_arrow"
                     android:layout_marginRight="10dp"
                     android:prompt="@string/s_city" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/downarrow" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_language"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinnerLanguage"
-                    style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
+                    android:background="@drawable/spinner_arrow"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:prompt="@string/s_language" />
-            </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/downarrow" />
+            </RelativeLayout>
         </LinearLayout>
 
         <RelativeLayout

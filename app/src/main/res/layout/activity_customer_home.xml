@@ -21,7 +21,7 @@
 
         <variable
             name="viewModel"
-            type="com.project.maqdoom.ui.sellerHome.SellerHomeViewModel" />
+            type="com.project.maqdoom.ui.customerHome.CustomerHomeViewModel" />
 
     </data>
 
@@ -46,7 +46,8 @@
                 <RelativeLayout
                     android:id="@+id/top_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:background="@color/navigation_bg">
 
 
@@ -62,7 +63,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
                         android:background="@drawable/back_btn"
-                        android:onClick="@{() -> viewModel.onNavBackClick()}" />
+                       />
 
                     <TextView
                         style="@style/TextStyle.Menu.Normal"
@@ -77,21 +78,6 @@
                         android:textSize="17sp"
                         android:visibility="gone" />
 
-                    <ImageButton
-                        android:id="@+id/navBackBtn"
-                        style="@style/Button.ImageButton"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="15dp"
-                        android:background="@drawable/edit"
-                        android:onClick="@{() -> viewModel.openOptionDialog()}" />
 
                 </RelativeLayout>
 

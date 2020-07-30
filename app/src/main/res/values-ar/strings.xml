@@ -45,7 +45,7 @@
     <string name="email">البريد الإلكتروني</string>
     <string name="password">كلمه السر</string>
     <string name="forgot_password"><u>هل نسيت كلمة المرور؟</u></string>
-    <string name="sign_up"><u>سجل</u></string>
+    <string name="sign_up"><u>تسجيل جديد</u></string>
     <string name="customer">الزبون</string>
     <string name="seller">تاجر</string>
 
@@ -59,7 +59,7 @@
 
     <!-- Reset password -->
     <string name="reset_password">إعادة تعيين كلمة المرور</string>
-    <string name="verification_code">أدخل رمز التحقق هنا</string>
+    <string name="verification_code">ادخل رمز التحقق هناا</string>
 
     <!--Login Validation-->
     <string name="invalid_email_password">يرجى تقديم بريد إلكتروني وكلمة مرور صالحة.</string>
@@ -182,7 +182,7 @@
     <string name="Service_image">إضافة صورة</string>
     <string name="Service_more">تفاصيل اكثر</string>
     <string name="Service_image_upload_hint">Upload images here</string>
-    <string name="add_service">إضافة خدمة</string>
+    <string name="add_service">اضف خدمات</string>
     <string name="service_price">السعر</string>
     <string name="service_location">الموقع</string>
     <string name="location_hint">إضافة موقع</string>
@@ -202,12 +202,12 @@
     <string name="select_category_option">الفئة</string>
     <string name="select_sub_category_option">فئة فرعية</string>
 
-    <string name="save">Save</string>
-    <string name="Cancel">Cancel</string>
-    <string name="Ok">Ok</string>
+    <string name="save">حفظ</string>
+    <string name="Cancel">الغاء</string>
+    <string name="Ok">حسنا</string>
     <string name="sure_delete">Do you sure want to Delete?</string>
     <string-array name="country_list">
-        <item>Please select Country</item>
+        <item>اختر البلد</item>
         <item>أفغانستان</item>
         <item>البانيا</item>
         <item>الجزائر</item>
@@ -559,7 +559,23 @@
     <string name="international_text">دولي</string>
     <string name="city">المدينة</string>
     <string name="service">خدمات</string>
-    <string name="edit">Edit</string>
+    <string name="edit">تحرير</string>
     <string name="str_chat">دردشة</string>
     <string name="str_travel_agent">اسم وكيل السفر</string>
+    <string name="str_low_high">من الأقل الى الأعلى</string>
+    <string name="str_high_low">من الأعلى الى الأقل</string>
+    <string-array name="item_services">
+
+        <item>القفز الحر بالمظلة</item>
+        <item>ركوب الدراجات المائية</item>
+        <item>الغوص</item>
+        <item>ركوب الأمواج</item>
+        <item>تسلق الجبال</item>
+        <item>حضور حدث رياضي</item>
+        <item>حدث رياضي</item>
+        <item>تذكرة</item>
+        <item>فندق</item>
+        <item>مرشد سياحي</item>
+
+    </string-array>
 </resources>

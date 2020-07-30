@@ -180,7 +180,7 @@
     <string name="Service_image">Add image</string>
     <string name="Service_more">More details</string>
     <string name="Service_image_upload_hint">Upload images here</string>
-    <string name="add_service">Add Service</string>
+    <string name="add_service">Add Services</string>
     <string name="service_price">Price</string>
     <string name="service_location">Location</string>
     <string name="location_hint">Add location</string>
@@ -198,6 +198,9 @@
     <string name="select_language_option">Please select  Language</string>
     <string name="select_category_option">Please select  category</string>
     <string name="select_sub_category_option">Please select sub category</string>
+    <string name="str_low_high">Low-High</string>
+    <string name="str_high_low">High-Low</string>
+
 
     <string name="save">Save</string>
     <string name="Cancel">Cancel</string>

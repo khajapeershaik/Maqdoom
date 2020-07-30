@@ -204,93 +204,126 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/optionButtons"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
+            android:baselineAligned="false"
+            android:layout_marginEnd="10dp"
             android:orientation="horizontal"
-            android:weightSum="4">
-            <LinearLayout
+            android:weightSum="8">
+            <RelativeLayout
                 android:id="@+id/ll_country"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinnerCity"
-                    style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginEnd="5dp"
+                    android:background="@drawable/spinner_arrow"
                     android:layout_marginRight="5dp"
                     android:prompt="@string/s_city" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    app:srcCompat="@drawable/downarrow" />
 
 
-            </LinearLayout>
-            <LinearLayout
+            </RelativeLayout>
+            <RelativeLayout
                 android:id="@+id/ll_city"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinnerCountry"
-                    style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
+                    android:background="@drawable/spinner_arrow"
+
                     android:prompt="@string/s_city" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    app:srcCompat="@drawable/downarrow" />
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_language"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinnerPrice"
-                    style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp" />
-            </LinearLayout>
+                    android:background="@drawable/spinner_arrow"
+                    android:prompt="@string/s_language" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/downarrow" />
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_service"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinnerService"
-                    style="@style/Widget.MyApp.HeaderBar.SpinnerCus"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginStart="5dp"
+                    android:background="@drawable/spinner_arrow"
+
                     android:layout_marginLeft="5dp"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="5dp"
+                    android:prompt="@string/s_city" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    app:srcCompat="@drawable/downarrow" />
 
-
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
 
         <RelativeLayout

@@ -180,7 +180,7 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
         alertDialog.setView(customLayout);
         AlertDialog OptionDialog = alertDialog.create();
         OptionDialog.show();
-        LinearLayout travel_layout, supplies_layout;
+        LinearLayout travel_layout, supplies_layout,shops_layout;
         travel_layout = customLayout.findViewById(R.id.travel_layout);
         supplies_layout = customLayout.findViewById(R.id.supplies_layout);
 
@@ -193,7 +193,6 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
             showAddPackageFragment(2);
             OptionDialog.dismiss();
         });
-
 
         ImageButton close = customLayout.findViewById(R.id.navLogout);
         close.setOnClickListener(view -> OptionDialog.dismiss());
