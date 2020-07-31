@@ -198,7 +198,6 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
             OptionDialog.dismiss();
         });
 
-
         ImageButton close = customLayout.findViewById(R.id.navLogout);
         close.setOnClickListener(view -> OptionDialog.dismiss());
     }

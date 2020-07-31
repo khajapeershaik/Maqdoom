@@ -58,6 +58,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Objects;
+
 
 public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, FriendsViewModel> implements FriendsNavigator {
 
@@ -105,6 +107,7 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
 
     @Override
     public void goToTouristGroup() {
+        assert getFragmentManager() != null;
         getFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
@@ -116,7 +119,7 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
 
     @Override
     public void logout() {
-        for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
         startActivity(LoginActivity.newIntent(this.getActivity()));
@@ -393,7 +396,7 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
     }
 
     private void onBackPressed() {
-        getView().setOnKeyListener(new View.OnKeyListener() {
+        Objects.requireNonNull(getView()).setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -408,7 +411,7 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
     }
 
     private void showHome() {
-        for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
     }

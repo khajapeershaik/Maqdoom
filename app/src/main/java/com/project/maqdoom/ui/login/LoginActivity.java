@@ -24,9 +24,12 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
@@ -47,6 +50,7 @@ import com.project.maqdoom.ui.sellerPackages.SellerPackageActivity;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -62,6 +66,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     private LoginViewModel mLoginViewModel;
     private ActivityLoginBinding mActivityLoginBinding;
     private FirebaseAuth mAuth;
+ ///   private FirebaseFirestore fStore;
+    String mPhone;
+   // private CountryCodePicker countryCodePicker;
+    private PhoneAuthCredential credential;
     private DatabaseReference mDatabase;
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -169,6 +177,38 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);
         mAuth = FirebaseAuth.getInstance();
+//        fStore = FirebaseFirestore.getInstance();
+        /*DocumentReference docRef =fStore.collection("users").document(mAuth.getCurrentUser().getUid());
+
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                   // mName = documentSnapshot.getString("first") + " " + documentSnapshot.getString("last");
+                   // mEmail = documentSnapshot.getString("email");
+                    mPhone = mAuth.getCurrentUser().getPhoneNumber();
+
+                   *//* fullName.setText(mName);
+                    email.setText(mEmail);
+                    phone.setText(mPhone);*//*
+                }else {
+                   // Log.d(TAG, "Retrieving Data: Profile Data Not Found ");
+                }
+            }
+        });*/
+
+        /*mActivityLoginBinding.llSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               // String phoneNum = "+"+countryCodePicker.getSelectedCountryCode()+phone.getText().toString();
+                String phoneNum = "+919885254611";
+
+                Log.d("phone", "Phone No.: " + phoneNum);
+                requestPhoneAuth(phoneNum);
+            }
+        });*/
+
     }
 
     private void registerForChat(){
@@ -230,4 +270,60 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
 
     }
+
+    private void requestPhoneAuth(String phoneNumber) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber,60L, TimeUnit.SECONDS,this,
+                new PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+
+                    @Override
+                    public void onCodeAutoRetrievalTimeOut(String s) {
+                        super.onCodeAutoRetrievalTimeOut(s);
+//                        Toast.makeText(Register.this, "OTP Timeout, Please Re-generate the OTP Again.", Toast.LENGTH_SHORT).show();
+//                        resend.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                        super.onCodeSent(s, forceResendingToken);
+                    /*    verificationId = s;
+                        token = forceResendingToken;
+                        verificationOnProgress = true;
+                        progressBar.setVisibility(View.GONE);
+                        state.setVisibility(View.GONE);
+                        next.setText("Verify");
+                        next.setEnabled(true);
+                        optEnter.setVisibility(View.VISIBLE);*/
+                    }
+
+                    @Override
+                    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+
+                        // called if otp is automatically detected by the app
+                        verifyAuth(phoneAuthCredential);
+
+                    }
+
+                    @Override
+                    public void onVerificationFailed(FirebaseException e) {
+                        Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
+    private void verifyAuth(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(LoginActivity.this, "Phone Verified."+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                    //checkUserProfile();
+                }else {
+//                    progressBar.setVisibility(View.GONE);
+//                    state.setVisibility(View.GONE);
+                    Toast.makeText(LoginActivity.this, "Can not Verify phone and Create Account.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
 }

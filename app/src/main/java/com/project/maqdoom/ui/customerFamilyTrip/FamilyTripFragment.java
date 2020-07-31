@@ -102,11 +102,12 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
 
     @Override
     public void goToTouristGroup() {
-        for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
             if (fragment instanceof TouristGroupFragment){
                 this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
+        assert getFragmentManager() != null;
         getFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
@@ -116,6 +117,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
 
     @Override
     public void goToTouristGuide() {
+        assert getFragmentManager() != null;
         getFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
@@ -125,6 +127,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
 
     @Override
     public void goToTouristHoneymoon() {
+        assert getFragmentManager() != null;
         getFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
@@ -231,7 +234,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
         });
     }
     private void showHome() {
-        for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
     }
@@ -266,8 +269,8 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
                 }
 
             }
-            priceList.add("Low-High");
-            priceList.add("High-Low");
+            priceList.add(getString(R.string.str_low_high));
+            priceList.add(getString(R.string.str_high_low));
 
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
@@ -442,7 +445,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
         else if (type == 3) {
             if (filteredData.size() > 1) {
                 Collections.sort(filteredData, TravelCategoryResponse.Adds.PRICE);
-                if (value.equalsIgnoreCase("Low-High")) {
+                if (value.equalsIgnoreCase(getString(R.string.str_low_high))) {
                     Log.v("filteredData", "" + filteredData);
                 } else {
                     Collections.reverse(filteredData);
@@ -458,7 +461,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
                         filteredData.add(data.getValue().get(i));
                     }
                     Collections.sort(filteredData, TravelCategoryResponse.Adds.PRICE);
-                    if (value.equalsIgnoreCase("Low-High")) {
+                    if (value.equalsIgnoreCase(getString(R.string.str_low_high))) {
                         Log.v("filteredData", "" + filteredData);
                     } else {
                         Collections.reverse(filteredData);
@@ -497,7 +500,7 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
 
     }
     private void onBackPressed() {
-        getView().setOnKeyListener(new View.OnKeyListener() {
+        Objects.requireNonNull(getView()).setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {

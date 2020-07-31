@@ -234,13 +234,13 @@ public class OutsideCountryFragment extends BaseFragment<FragmentTouristOutsideB
                     }
                 }
             }
-            priceList.add("Low-High");
-            priceList.add("High-Low");
+            priceList.add(getString(R.string.str_low_high));
+            priceList.add(getString(R.string.str_high_low));
 
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
-            cityList.add(0, "City");
-            serviceList.add(0, "Service");
+            cityList.add(0, getString(R.string.s_city));
+            serviceList.add(0, getString(R.string.service));
             //Country spinner
             ArrayAdapter<String> spinnerCountryAdapter = new ArrayAdapter<>(
                     getActivity(),
@@ -420,7 +420,7 @@ public class OutsideCountryFragment extends BaseFragment<FragmentTouristOutsideB
         }else if (type == 3) {
             if (filteredData.size() > 1) {
                 Collections.sort(filteredData, TravelCategoryGroupResponse.Adds.PRICE);
-                if (value.equalsIgnoreCase("Low-High")) {
+                if (value.equalsIgnoreCase(getString(R.string.str_low_high))) {
                     Log.v("filteredData", "" + filteredData);
                 } else {
                     Collections.reverse(filteredData);
@@ -436,7 +436,7 @@ public class OutsideCountryFragment extends BaseFragment<FragmentTouristOutsideB
                         filteredData.add(data.getValue().get(i));
                     }
                     Collections.sort(filteredData, TravelCategoryGroupResponse.Adds.PRICE);
-                    if (value.equalsIgnoreCase("Low-High")) {
+                    if (value.equalsIgnoreCase(getString(R.string.str_low_high))) {
                         Log.v("filteredData", "" + filteredData);
                     } else {
                         Collections.reverse(filteredData);
