@@ -13,6 +13,8 @@
 
 package com.project.maqdoom.ui.customerSuppliesCruises;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,8 @@ import com.project.maqdoom.databinding.ItemBlogEmptyViewBinding;
 import com.project.maqdoom.databinding.ItemCustomerCruiseViewBinding;
 import com.project.maqdoom.ui.base.BaseViewHolder;
 import com.project.maqdoom.ui.custom.EmptyItemViewModel;
+import com.project.maqdoom.ui.customerRentalSupplies.RentalSuppliesAdapter;
+import com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageFragment;
 import com.project.maqdoom.ui.touristPackageDetails.TouristPackageDetailsFragment;
 
 import java.util.List;
@@ -42,6 +46,9 @@ public class CruiseSuppliesAdapter extends RecyclerView.Adapter<BaseViewHolder> 
     private List<TravelCategoryResponse.Adds> mResponseList;
 
     private TravelGroupAdapterListener mListener;
+
+    private AddsDeleteListener mDeleteListener;
+
 
     private boolean status = false;
 
@@ -106,6 +113,13 @@ public class CruiseSuppliesAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         void onRetryClick();
     }
 
+    public interface AddsDeleteListener {
+        void deleteAdd(String appId);
+    }
+    public void setOnDeleteListener(AddsDeleteListener listener) {
+        this.mDeleteListener = listener;
+    }
+
     public class BlogViewHolder extends BaseViewHolder implements CruiseItemViewModel.GuideViewModelListener {
 
         private ItemCustomerCruiseViewBinding mBinding;
@@ -120,7 +134,13 @@ public class CruiseSuppliesAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         @Override
         public void onBind(int position) {
             final TravelCategoryResponse.Adds adds = mResponseList.get(position);
-            mBlogItemViewModel = new CruiseItemViewModel(adds, this);
+
+            String LANGUAGE_REFERENCE = "language_preference" ;
+            String USER_TYPE_KEY = "userType";
+            SharedPreferences sharedpreferences = (itemView.getContext()).getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+            String userType = sharedpreferences.getString(USER_TYPE_KEY,"0");
+
+            mBlogItemViewModel = new CruiseItemViewModel(adds, this,userType);
             mBinding.setViewModel(mBlogItemViewModel);
 
             mBinding.executePendingBindings();
@@ -172,6 +192,22 @@ public class CruiseSuppliesAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 mBinding.llIncl.setVisibility(View.GONE);
             }
 
+        }
+
+        @Override
+        public void onDeleteButtonClick(String appId) {
+            mDeleteListener.deleteAdd(appId);
+        }
+
+        @Override
+        public void onEditButtonClick(int type,String data) {
+
+            FragmentManager manager = ((AppCompatActivity)itemView.getContext()).getSupportFragmentManager();
+            manager
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .add(R.id.parentLayout, SellerAddPackageFragment.newInstance(type,data), SellerAddPackageFragment.TAG)
+                    .commit();
         }
     }
 

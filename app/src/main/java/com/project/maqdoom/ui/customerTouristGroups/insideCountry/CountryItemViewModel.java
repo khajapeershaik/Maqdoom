@@ -15,19 +15,16 @@ package com.project.maqdoom.ui.customerTouristGroups.insideCountry;
 
 import android.util.Log;
 
-import com.androidnetworking.error.ANError;
-import com.project.maqdoom.data.DataManager;
-import com.project.maqdoom.data.model.api.DeleteAddRequest;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
-import com.project.maqdoom.data.model.api.TravelCategoryResponse;
 
 import org.json.JSONObject;
 
 import java.util.List;
 
 import androidx.databinding.ObservableField;
-import androidx.lifecycle.ViewModel;
-import io.reactivex.disposables.CompositeDisposable;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 
 public class CountryItemViewModel {
@@ -48,10 +45,10 @@ public class CountryItemViewModel {
 
     private final TravelCategoryGroupResponse.Adds mAdds;
 
-    private CompositeDisposable compositeDisposable;
-    private DataManager dataManager ;
+    private String userType;
 
-    public CountryItemViewModel(TravelCategoryGroupResponse.Adds adds, CountryInsideViewModelListener listener) {
+
+    public CountryItemViewModel(TravelCategoryGroupResponse.Adds adds, CountryInsideViewModelListener listener,String user) {
 
         List<TravelCategoryGroupResponse.Adds.Images> img = adds.getImage_path();
         String listString = "";
@@ -66,10 +63,18 @@ public class CountryItemViewModel {
         description = new ObservableField<>(mAdds.getMore_details());
         noOfPeople = new ObservableField<>(mAdds.getPeople_cnt());
         price = new ObservableField<>(mAdds.getPrice());
+        userType = user;
     }
     public void onPackageExpand() {
         mListener.onPackageClick();
-
+    }
+    public int editVisibility(){
+        Log.v("userTypeCountryItem",userType);
+        if(userType.equalsIgnoreCase("1")){
+            return VISIBLE;
+        }else {
+            return GONE;
+        }
     }
     public void deleteButtonClicked(){
         mListener.onDeleteButtonClick(mAdds.getAdd_id());
@@ -91,7 +96,22 @@ public class CountryItemViewModel {
                 item.put("whatsApp", mAdds.getWhatsapp_phone());
                 item.put("phone", mAdds.getPhone());
                 item.put("images", listString);
-                mListener.onEditButtonClick(item.toString());
+                item.put("name",mAdds.getGuide_name());
+                item.put("level1_category",mAdds.getLevel1_category());
+                item.put("level2_category",mAdds.getLevel2_category());
+                item.put("level3_category",mAdds.getLevel3_category());
+                item.put("services",mAdds.getServices());
+                item.put("location",mAdds.getLocation());
+                item.put("no_of_people",mAdds.getPeople_cnt());
+                item.put("licence_pic_url",mAdds.getLicence_pic_url());
+
+                if(mAdds.getLevel1_category().equalsIgnoreCase("TR")){
+                    mListener.onEditButtonClick(1,item.toString());
+                }else{
+                    mListener.onEditButtonClick(2,item.toString());
+                }
+
+
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -133,6 +153,6 @@ public class CountryItemViewModel {
 
         void onDeleteButtonClick(String appId);
 
-        void onEditButtonClick(String blogUrl);
+        void onEditButtonClick(int type ,String blogUrl);
     }
 }

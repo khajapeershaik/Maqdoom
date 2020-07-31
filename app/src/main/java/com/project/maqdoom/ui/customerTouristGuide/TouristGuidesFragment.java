@@ -179,6 +179,8 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
             }
         }
 
+
+
     }
 
     private void setSpinner() {

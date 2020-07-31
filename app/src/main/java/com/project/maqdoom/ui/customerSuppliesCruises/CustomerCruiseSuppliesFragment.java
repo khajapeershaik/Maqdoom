@@ -14,16 +14,22 @@
 package com.project.maqdoom.ui.customerSuppliesCruises;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
+import com.project.maqdoom.data.model.api.DeleteAddRequest;
+import com.project.maqdoom.data.model.api.DeleteAddResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryResponse;
+import com.project.maqdoom.data.remote.api_rest.ApiClient;
+import com.project.maqdoom.data.remote.api_rest.ApiInterface;
 import com.project.maqdoom.databinding.FragmentCruiseSuppliesBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerRentalSupplies.CustomerRentalSuppliesFragment;
@@ -38,11 +44,14 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class CustomerCruiseSuppliesFragment extends BaseFragment<FragmentCruiseSuppliesBinding, CustomerCruiseSuppliesViewModel> implements CustomerCruiseSuppliesNavigator {
@@ -138,6 +147,57 @@ public class CustomerCruiseSuppliesFragment extends BaseFragment<FragmentCruiseS
             };
             timerObj.schedule(timerTaskObj, 0, 1000);
         }
+        mBlogAdapter.setOnDeleteListener(appId -> onDeleteButtonClick(appId));
+    }
+
+    public void onDeleteButtonClick(String appId) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomDialogTheme);
+        builder.setTitle((getActivity().getResources().getString(R.string.app_name)));
+        builder.setMessage((getActivity().getResources().getString(R.string.sure_delete)));
+        String positiveText = getActivity().getString(R.string.Ok);
+        String negativeText = getActivity().getString(R.string.Cancel);
+        builder.setPositiveButton(positiveText,
+                (dialog, which) -> {
+                    Log.v("RentalSuppliesFragment", appId);
+                    deleteAdd(appId);
+                    dialog.dismiss();
+                });
+        builder.setNegativeButton(negativeText, (dialogInterface, i) -> dialogInterface.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    public void deleteAdd(String id) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<DeleteAddResponse> deleteRequest = apiService.deleteAdd(new DeleteAddRequest.ServerDeleteAddRequest(id));
+        deleteRequest.enqueue(new retrofit2.Callback<DeleteAddResponse>() {
+            @Override
+            public void onResponse(Call<DeleteAddResponse> call, Response<DeleteAddResponse> response) {
+                if (response.isSuccessful()) {
+                    if ("fail".equals(response.body().getResponse())) {
+                        Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
+                    } else {
+                        mBlogAdapter.clearItems();
+                        customerRentalSuppliesViewModel.fetchData();
+                        observeData();
+                        fragmentCruiseSuppliesBinding.blogRecyclerView.setAdapter(mBlogAdapter);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<DeleteAddResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void observeData() {
+        customerRentalSuppliesViewModel.getTravelListLiveData().observe(this, adds -> {
+            mBlogAdapter.addItems(adds);
+            mBlogAdapter.notifyDataSetChanged();
+        });
     }
     private void setSpinner() {
         country = fragmentCruiseSuppliesBinding.spinnerCity;

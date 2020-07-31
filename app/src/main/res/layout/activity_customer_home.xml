@@ -21,7 +21,7 @@
 
         <variable
             name="viewModel"
-            type="com.project.maqdoom.ui.sellerHome.SellerHomeViewModel" />
+            type="com.project.maqdoom.ui.customerHome.CustomerHomeViewModel" />
 
     </data>
 
@@ -49,21 +49,6 @@
                     android:layout_height="60dp"
                     android:background="@color/navigation_bg">
 
-
-                    <ImageButton
-                        android:id="@+id/dashboardBackBtn"
-                        style="@style/Button.ImageButton"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:background="@drawable/back_btn"
-                        android:onClick="@{() -> viewModel.onNavBackClick()}" />
-
                     <TextView
                         style="@style/TextStyle.Menu.Normal"
                         android:layout_width="wrap_content"
@@ -74,24 +59,7 @@
                         android:gravity="center"
                         android:text="@string/dashboard"
                         android:textColor="@color/white"
-                        android:textSize="17sp"
-                        android:visibility="gone" />
-
-                    <ImageButton
-                        android:id="@+id/navBackBtn"
-                        style="@style/Button.ImageButton"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="15dp"
-                        android:background="@drawable/edit"
-                        android:onClick="@{() -> viewModel.openOptionDialog()}" />
+                        android:textSize="17sp" />
 
                 </RelativeLayout>
 

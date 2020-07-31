@@ -16,10 +16,10 @@ package com.project.maqdoom.ui.customerTouristGroups.outsideCountry;
 import com.project.maqdoom.data.DataManager;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryRequest;
-import com.project.maqdoom.data.model.api.TravelCategoryResponse;
 import com.project.maqdoom.ui.base.BaseViewModel;
 import com.project.maqdoom.utils.rx.SchedulerProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -29,11 +29,12 @@ import androidx.lifecycle.MutableLiveData;
 public class OutsideCountryViewModel extends BaseViewModel<OutsideCountryNavigator> {
 
     private final MutableLiveData<List<TravelCategoryGroupResponse.Adds>> travelListLiveData;
-
+    private final List<TravelCategoryGroupResponse.Adds> sortedList;
     public OutsideCountryViewModel(DataManager dataManager,
                                    SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         travelListLiveData = new MutableLiveData<>();
+        sortedList = new ArrayList<>();
         fetchData();
     }
 
@@ -48,11 +49,11 @@ public class OutsideCountryViewModel extends BaseViewModel<OutsideCountryNavigat
                 .subscribe(response -> {
                     if (response != null && response.getData() != null) {
                         for(int i=0;i<response.getData().size(); i++){
-                            if(!"International".equalsIgnoreCase(response.getData().get(i).getLevel3_category())){
-                                response.getData().remove(i);
+                            if(response.getData().get(i).getLevel3_category().equalsIgnoreCase("International")){
+                                sortedList.add(response.getData().get(i));
                             }
                         }
-                        travelListLiveData.setValue(response.getData());
+                        travelListLiveData.setValue(sortedList);
                     }
                     setIsLoading(false);
                 }, throwable -> {

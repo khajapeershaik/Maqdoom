@@ -140,6 +140,9 @@ public final class TravelCategoryGroupResponse {
         @Expose
         @SerializedName("image_path")
         private List<Images> image_path;
+        @Expose
+        @SerializedName("licence_pic_url")
+        private String licence_pic_url;
 
         @Override
         public boolean equals(Object o) {
@@ -154,6 +157,10 @@ public final class TravelCategoryGroupResponse {
 
             return add_id.equals(adds.add_id);
 
+        }
+
+        public String getLicence_pic_url() {
+            return licence_pic_url;
         }
 
         public String getServices() {

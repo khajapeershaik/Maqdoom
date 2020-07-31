@@ -14,6 +14,7 @@
 package com.project.maqdoom.ui.customerTouristGroups.insideCountry;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.project.maqdoom.databinding.ItemBlogEmptyViewBinding;
 import com.project.maqdoom.databinding.ItemTouristGroupInsideViewBinding;
 import com.project.maqdoom.ui.base.BaseViewHolder;
 import com.project.maqdoom.ui.custom.EmptyItemViewModel;
+import com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageFragment;
 import com.project.maqdoom.ui.touristPackageDetails.TouristPackageDetailsFragment;
 import com.project.maqdoom.ui.touristPackageDetails.TouristPackageDetailsViewModel;
 
@@ -143,8 +145,13 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             final TravelCategoryGroupResponse.Adds adds = mResponseList.get(position);
 
+            String LANGUAGE_REFERENCE = "language_preference" ;
+            String USER_TYPE_KEY = "userType";
+            SharedPreferences sharedpreferences = (itemView.getContext()).getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+            String userType = sharedpreferences.getString(USER_TYPE_KEY,"0");
+
            // mBlogItemViewModel =
-           mBlogItemViewModel = new CountryItemViewModel(adds, this);
+           mBlogItemViewModel = new CountryItemViewModel(adds, this,userType);
             mBinding.setViewModel(mBlogItemViewModel);
 
             // Immediate Binding
@@ -207,12 +214,13 @@ public class InsideCountryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         @Override
-        public void onEditButtonClick(String data) {
+        public void onEditButtonClick(int type,String data) {
+
             FragmentManager manager = ((AppCompatActivity)itemView.getContext()).getSupportFragmentManager();
             manager
                     .beginTransaction()
                     .disallowAddToBackStack()
-                    .add(R.id.parentLayout, TouristPackageDetailsFragment.newInstance(data), TouristPackageDetailsFragment.TAG)
+                    .add(R.id.parentLayout, SellerAddPackageFragment.newInstance(type,data), SellerAddPackageFragment.TAG)
                     .commit();
         }
     }

@@ -122,6 +122,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Single<AddServiceResponse> doAddPackageEditApiCall(AddServiceRequest.UpdatePackageRequest request) {
+        return mApiHelper.doAddPackageEditApiCall(request);
+    }
+
+    @Override
     public Single<EditProfileResponse> doEditProfileApiCall(EditProfileRequest.ServerEditProfileRequest request) {
         sharedpreferences = mContext.getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");

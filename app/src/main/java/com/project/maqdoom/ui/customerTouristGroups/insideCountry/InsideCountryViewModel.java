@@ -24,6 +24,7 @@ import com.project.maqdoom.data.model.api.TravelCategoryResponse;
 import com.project.maqdoom.ui.base.BaseViewModel;
 import com.project.maqdoom.utils.rx.SchedulerProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -33,11 +34,12 @@ import androidx.lifecycle.MutableLiveData;
 public class InsideCountryViewModel extends BaseViewModel<InsideCountryNavigator> {
 
     private final MutableLiveData<List<TravelCategoryGroupResponse.Adds>> travelListLiveData;
-
+    private final List<TravelCategoryGroupResponse.Adds> sortedList;
     public InsideCountryViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         travelListLiveData = new MutableLiveData<>();
+        sortedList = new ArrayList<>();
         fetchData();
     }
 
@@ -51,14 +53,12 @@ public class InsideCountryViewModel extends BaseViewModel<InsideCountryNavigator
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
                     if (response != null && response.getData() != null) {
-                        Log.e("Arun ","onViewCreated getData");
                         for(int i=0;i<response.getData().size(); i++){
-                            if(!"Domastic".equalsIgnoreCase(response.getData().get(i).getLevel3_category())){
-                                response.getData().remove(i);
-                                Log.e("Arun ","onViewCreated response.getData().remove(i)");
+                            if(response.getData().get(i).getLevel3_category().equalsIgnoreCase("Domestic")){
+                                sortedList.add(response.getData().get(i));
                             }
                         }
-                        travelListLiveData.setValue(response.getData());
+                        travelListLiveData.setValue(sortedList);
                     }
                     setIsLoading(false);
                 }, throwable -> {
@@ -72,4 +72,8 @@ public class InsideCountryViewModel extends BaseViewModel<InsideCountryNavigator
     public LiveData<List<TravelCategoryGroupResponse.Adds>> getTravelListLiveData() {
         return travelListLiveData;
     }
+    public String getUserType(){
+        return getDataManager().getUserType();
+    }
+
 }

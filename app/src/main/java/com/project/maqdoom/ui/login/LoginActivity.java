@@ -15,8 +15,10 @@ package com.project.maqdoom.ui.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -121,10 +123,21 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void openCustomerHome() {
         registerForChat();
+        registerUserType(mLoginViewModel.getDataManager().getUserType());
+        Log.v("userType",mLoginViewModel.getDataManager().getUserType());
         Intent intent = CustomerHomeActivity.newIntent(LoginActivity.this);
         startActivity(intent);
         finish();
 
+    }
+
+    private void registerUserType(String userType) {
+        String LANGUAGE_REFERENCE = "language_preference" ;
+        SharedPreferences sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        String USER_TYPE_KEY = "userType";
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(USER_TYPE_KEY, userType);
+        editor.commit();
     }
 
     @Override
@@ -135,6 +148,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void openSellerHome() {
         registerForChat();
+        registerUserType(mLoginViewModel.getDataManager().getUserType());
+        Log.v("userType",mLoginViewModel.getDataManager().getUserType());
         Intent intent = SellerHomeActivity.newIntent(LoginActivity.this);
         startActivity(intent);
         finish();

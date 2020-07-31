@@ -20,11 +20,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
+import com.project.maqdoom.data.model.api.DeleteAddRequest;
+import com.project.maqdoom.data.model.api.DeleteAddResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryResponse;
+import com.project.maqdoom.data.remote.api_rest.ApiClient;
+import com.project.maqdoom.data.remote.api_rest.ApiInterface;
 import com.project.maqdoom.databinding.FragmentFamilyTripBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerHoneymoon.TouristHoneymoonFragment;
@@ -43,11 +48,14 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, FamilyTripViewModel> implements FamilyTripNavigator {
@@ -172,7 +180,55 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
             };
             timerObj.schedule(timerTaskObj, 0, 1000);
         }
+        mBlogAdapter.setOnDeleteListener(new TouristFamilyAdapter.AddsDeleteListener() {
+            @Override
+            public void deleteAdd(String appId) {
+                onDeleteButtonClick(appId);
+            }
+        });
 
+    }
+    public void onDeleteButtonClick(String appId) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomDialogTheme);
+        builder.setTitle((getActivity().getResources().getString(R.string.app_name)));
+        builder.setMessage((getActivity().getResources().getString(R.string.sure_delete)));
+        String positiveText = getActivity().getString(R.string.Ok);
+        String negativeText = getActivity().getString(R.string.Cancel);
+        builder.setPositiveButton(positiveText,
+                (dialog, which) -> {
+                    Log.v("FamilyFragment", appId);
+                    deleteAdd(appId);
+                    dialog.dismiss();
+                });
+        builder.setNegativeButton(negativeText, (dialogInterface, i) -> dialogInterface.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    public void deleteAdd(String id) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<DeleteAddResponse> deleteRequest = apiService.deleteAdd(new DeleteAddRequest.ServerDeleteAddRequest(id));
+        deleteRequest.enqueue(new retrofit2.Callback<DeleteAddResponse>() {
+            @Override
+            public void onResponse(Call<DeleteAddResponse> call, Response<DeleteAddResponse> response) {
+                if (response.isSuccessful()) {
+                    if ("fail".equals(response.body().getResponse())) {
+                        Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
+                    } else {
+                        mBlogAdapter.clearItems();
+                        familyTripViewModel.fetchData();
+                        observeData();
+                        fragmentTouristFamilyBinding.blogRecyclerView.setAdapter(mBlogAdapter);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<DeleteAddResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
+            }
+        });
     }
     private void showHome() {
         for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
