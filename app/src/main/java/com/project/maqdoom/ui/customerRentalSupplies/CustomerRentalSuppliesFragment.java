@@ -35,6 +35,7 @@ import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerSuppliesCruises.CustomerCruiseSuppliesFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
@@ -215,13 +216,12 @@ public class CustomerRentalSuppliesFragment extends BaseFragment<FragmentRentalS
                 if (!countyList.contains(countryData.getValue().get(i).getCountry()) && countryData.getValue().get(i).getCountry() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getCountry().trim())) {
                     countyList.add(countryData.getValue().get(i).getCountry());
                 }
-                if (!priceList.contains(countryData.getValue().get(i).getPrice()) && countryData.getValue().get(i).getPrice() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getPrice().trim())) {
-                    priceList.add(countryData.getValue().get(i).getPrice());
-                }
 
             }
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
+            priceList.add(getString(R.string.str_low_high));
+            priceList.add(getString(R.string.str_high_low));
             //Country spinner
             ArrayAdapter<String> spinnerCountryAdapter = new ArrayAdapter<>(
                     getActivity(),
@@ -304,11 +304,13 @@ public class CustomerRentalSuppliesFragment extends BaseFragment<FragmentRentalS
 
         } else if (type == 2) {
             if (filteredData.size() > 1) {
-                for (int i = 0; i < filteredData.size(); i++) {
-                    if (value.equalsIgnoreCase(filteredData.get(i).getPrice())) {
-                        filteredData.add(filteredData.get(i));
-                    }
+                Collections.sort(filteredData, TravelCategoryResponse.Adds.PRICE);
+                if (value.equalsIgnoreCase(getString(R.string.str_low_high))) {
+                    Log.v("filteredData", "" + filteredData);
+                } else {
+                    Collections.reverse(filteredData);
                 }
+
                 mBlogAdapter.clearItems();
                 mBlogAdapter.notifyDataSetChanged();
                 mBlogAdapter.addItems(filteredData);
@@ -316,9 +318,13 @@ public class CustomerRentalSuppliesFragment extends BaseFragment<FragmentRentalS
                 LiveData<List<TravelCategoryResponse.Adds>> data = customerRentalSuppliesViewModel.getTravelListLiveData();
                 if (data != null) {
                     for (int i = 0; i < data.getValue().size(); i++) {
-                        if (value.equalsIgnoreCase(data.getValue().get(i).getPrice())) {
-                            filteredData.add(data.getValue().get(i));
-                        }
+                        filteredData.add(data.getValue().get(i));
+                    }
+                    Collections.sort(filteredData, TravelCategoryResponse.Adds.PRICE);
+                    if (value.equalsIgnoreCase(getString(R.string.str_low_high))) {
+                        Log.v("filteredData", "" + filteredData);
+                    } else {
+                        Collections.reverse(filteredData);
                     }
                     mBlogAdapter.clearItems();
                     mBlogAdapter.notifyDataSetChanged();

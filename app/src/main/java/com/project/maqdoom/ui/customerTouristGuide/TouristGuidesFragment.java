@@ -99,37 +99,40 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
                 this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
-        assert getFragmentManager() != null;
-        getFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.parentLayout, TouristGroupFragment.newInstance(), TouristGroupFragment.TAG)
-                .commit();
+        if(getActivity()!=null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.parentLayout, TouristGroupFragment.newInstance(), TouristGroupFragment.TAG)
+                    .commit();
+        }
 
     }
 
     @Override
     public void gotoHoneymoon() {
-        assert getFragmentManager() != null;
-        getFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.parentLayout, TouristHoneymoonFragment.newInstance(), TouristHoneymoonFragment.TAG)
-                .commit();
+        if(getActivity()!=null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.parentLayout, TouristHoneymoonFragment.newInstance(), TouristHoneymoonFragment.TAG)
+                    .commit();
+        }
 
     }
 
     @Override
     public void gotoFamilyTrip() {
-        assert getFragmentManager() != null;
-        getFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.parentLayout, FamilyTripFragment.newInstance(), FamilyTripFragment.TAG)
-                .commit();
+        if(getActivity()!=null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    //.setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.parentLayout, FamilyTripFragment.newInstance(), FamilyTripFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override

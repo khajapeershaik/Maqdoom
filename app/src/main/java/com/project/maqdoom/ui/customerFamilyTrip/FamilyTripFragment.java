@@ -107,32 +107,35 @@ public class FamilyTripFragment extends BaseFragment<FragmentFamilyTripBinding, 
                 this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
-        assert getFragmentManager() != null;
-        getFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.parentLayout, TouristGroupFragment.newInstance(), TouristGroupFragment.TAG)
-                .commit();
+        if(getActivity()!=null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .add(R.id.parentLayout, TouristGroupFragment.newInstance(), TouristGroupFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override
     public void goToTouristGuide() {
-        assert getFragmentManager() != null;
-        getFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.parentLayout, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
-                .commit();
+        if(getActivity()!=null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .add(R.id.parentLayout, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override
     public void goToTouristHoneymoon() {
-        assert getFragmentManager() != null;
-        getFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.parentLayout, TouristHoneymoonFragment.newInstance(), TouristHoneymoonFragment.TAG)
-                .commit();
+        if(getActivity()!=null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .add(R.id.parentLayout, TouristHoneymoonFragment.newInstance(), TouristHoneymoonFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override
