@@ -62,7 +62,7 @@
     <string name="verification_code">Enter verification code here</string>
 
     <!--Login Validation-->
-    <string name="invalid_email_password">Please provide a valid email and password.</string>
+    <string name="invalid_email_password">Please provide a valid email and mobile number.</string>
     <string name="check_box">Please select Customer/Seller</string>
 
     <!--button-->
@@ -591,6 +591,8 @@
     <string name="str_upload_pic">Upload picture</string>
     <string name="str_chat">Chat</string>
     <string name="str_travel_agent">Travel Agent Name</string>
+    <string name="mobileNo">Mobile Number</string>
+    <string name="otp">Enter OTP</string>
 
 
     <string-array name="item_services">

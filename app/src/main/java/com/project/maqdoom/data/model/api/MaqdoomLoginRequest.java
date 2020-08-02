@@ -26,17 +26,46 @@ public final class MaqdoomLoginRequest {
 
     public static class ServerLoginRequest {
 
-        @Expose
-        @SerializedName("email")
-        private String email;
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
+        public String getOtp() {
+            return otp;
+        }
+
+        public void setOtp(String otp) {
+            this.otp = otp;
+        }
 
         @Expose
-        @SerializedName("password")
-        private String password;
+        @SerializedName("phone")
+        private String phone;
 
-        public ServerLoginRequest(String email, String password) {
-            this.email = email;
-            this.password = password;
+        @Expose
+        @SerializedName("otp")
+        private String otp;
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
+        }
+
+        @Expose
+        @SerializedName("language")
+        private String language;
+        public ServerLoginRequest(String language,String phone, String otp) {
+            this.language=language;
+            this.phone = phone;
+            this.otp = otp;
         }
 
         @Override
@@ -50,25 +79,19 @@ public final class MaqdoomLoginRequest {
 
             ServerLoginRequest that = (ServerLoginRequest) object;
 
-            if (email != null ? !email.equals(that.email) : that.email != null) {
+            if (phone != null ? !phone.equals(that.phone) : that.phone != null) {
                 return false;
             }
-            return password != null ? password.equals(that.password) : that.password == null;
+            return otp != null ? otp.equals(that.otp) : that.otp == null;
         }
 
-        @Override
+     /*   @Override
         public int hashCode() {
             int result = email != null ? email.hashCode() : 0;
             result = 31 * result + (password != null ? password.hashCode() : 0);
             return result;
         }
+*/
 
-        public String getEmail() {
-            return email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
     }
 }

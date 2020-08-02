@@ -75,8 +75,10 @@ public class AppApiHelper implements ApiHelper {
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("email", request.getEmail());
-            jsonObject.put("password", request.getPassword());
+            jsonObject.put("language", request.getLanguage());
+            jsonObject.put("phone", request.getPhone());
+            jsonObject.put("otp", request.getOtp());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -97,8 +99,7 @@ public class AppApiHelper implements ApiHelper {
             jsonObject.put("language", request.getLanguage());
             jsonObject.put("name", request.getName());
             jsonObject.put("email", request.getEmail());
-            jsonObject.put("password", request.getPassword());
-            jsonObject.put("confirm_password", request.getConfirm_password());
+            jsonObject.put("phone", request.getPhone());
             jsonObject.put("is_seller", request.getIs_seller());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -322,6 +323,26 @@ public class AppApiHelper implements ApiHelper {
                 .addMultipartParameter("add_id", request.getAdd_id())
                 .build()
                 .getObjectSingle(ImageUploadResponse.class);
+    }
+
+    @Override
+    public Single<SellerPayResponse> dosavePhoneOTP(MaqdoomLoginRequest.ServerLoginRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("language", request.getLanguage());
+            jsonObject.put("phone", request.getPhone());
+            jsonObject.put("otp", request.getOtp());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SAVE_PHONE_OTP)
+                .setContentType("application/json; charset=utf-8")
+                .addHeaders(mApiHeader.getPublicApiHeader())
+                //.addBodyParameter(request)
+                .addJSONObjectBody(jsonObject)
+                .build()
+                .getObjectSingle(SellerPayResponse.class);
     }
 
 

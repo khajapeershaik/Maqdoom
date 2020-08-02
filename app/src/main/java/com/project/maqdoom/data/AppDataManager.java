@@ -160,6 +160,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Single<SellerPayResponse> dosavePhoneOTP(MaqdoomLoginRequest.ServerLoginRequest request) {
+        return mApiHelper.dosavePhoneOTP(request);
+    }
+
+
+
+    @Override
     public String getAccessToken() {
         return mPreferencesHelper.getAccessToken();
     }

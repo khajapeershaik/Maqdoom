@@ -34,13 +34,19 @@ public final class RegistrationRequest {
         @SerializedName("email")
         private String email;
 
-        @Expose
-        @SerializedName("password")
-        private String password;
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
 
         @Expose
-        @SerializedName("confirm_password")
-        private String confirm_password;
+        @SerializedName("phone")
+        private String phone;
+
+
 
         @Expose
         @SerializedName("is_seller")
@@ -50,11 +56,11 @@ public final class RegistrationRequest {
         @SerializedName("language")
         private String language;
 
-        public ServerRegistrationRequest(String name,String email, String password,String confirmPassword,String isSeller) {
+        public ServerRegistrationRequest(String language,String name,String email, String phone,String isSeller) {
+            this.language=language;
             this.name = name;
             this.email = email;
-            this.password = password;
-            this.confirm_password=confirmPassword;
+            this.phone = phone;
             this.is_seller=isSeller;
         }
 
@@ -72,7 +78,7 @@ public final class RegistrationRequest {
             if (email != null ? !email.equals(that.email) : that.email != null) {
                 return false;
             }
-            return password != null ? password.equals(that.password) : that.password == null;
+            return phone != null ? phone.equals(that.phone) : that.phone == null;
         }
 
         public String getLanguage() {
@@ -87,17 +93,11 @@ public final class RegistrationRequest {
             return email;
         }
 
-        public String getPassword() {
-            return password;
-        }
 
         public String getName() {
             return name;
         }
 
-        public String getConfirm_password() {
-            return confirm_password;
-        }
 
         public String getIs_seller() {
             return is_seller;

@@ -41,9 +41,7 @@ import com.project.maqdoom.data.model.api.ImageUploadResponse;
 import io.reactivex.Single;
 
 
-
 public interface ApiHelper {
-
 
 
     Single<LogoutResponse> doLogoutApiCall();
@@ -52,9 +50,9 @@ public interface ApiHelper {
 
     Single<RegistrationResponse> doServerRegistrationApiCall(RegistrationRequest.ServerRegistrationRequest request);
 
-    Single<TravelCategoryResponse> doTravelCategoryApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request, String userType,String userId);
+    Single<TravelCategoryResponse> doTravelCategoryApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request, String userType, String userId);
 
-    Single<TravelCategoryGroupResponse> doTravelCategoryGroupApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request,String userType, String userId);
+    Single<TravelCategoryGroupResponse> doTravelCategoryGroupApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request, String userType, String userId);
 
     Single<AddServiceResponse> doAddPackageApiCall(AddServiceRequest.ServerPackageAddRequest request);
 
@@ -70,7 +68,9 @@ public interface ApiHelper {
 
     Single<SellerPayResponse> doSellerPayApiCall(SellerPayRequest.ServerSellerPayRequest request);
 
-    Single<ImageUploadResponse> doUploadImageApiCall( ImageUploadRequest.ServerUploadImageRequest request);
+    Single<ImageUploadResponse> doUploadImageApiCall(ImageUploadRequest.ServerUploadImageRequest request);
+
+    Single<SellerPayResponse> dosavePhoneOTP(MaqdoomLoginRequest.ServerLoginRequest request);
 
     ApiHeader getApiHeader();
 

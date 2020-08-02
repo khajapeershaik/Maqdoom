@@ -31,9 +31,13 @@ public final class ApiEndPoint {
 
     public static final String ENDPOINT_OPEN_SOURCE = BuildConfig.BASE_URL + "/5926c34212000035026871cd";
 
-    public static final String ENDPOINT_SERVER_LOGIN = BuildConfig.BASE_SERVER_URL + "/login";
+    //public static final String ENDPOINT_SERVER_LOGIN = BuildConfig.BASE_SERVER_URL + "/login";
+    public static final String ENDPOINT_SERVER_LOGIN = BuildConfig.BASE_SERVER_URL + "/loginUser";
 
-    public static final String ENDPOINT_SERVER_REGISTRATION = BuildConfig.BASE_SERVER_URL + "/createUser";
+
+   // public static final String ENDPOINT_SERVER_REGISTRATION = BuildConfig.BASE_SERVER_URL + "/createUser";
+    public static final String ENDPOINT_SERVER_REGISTRATION = BuildConfig.BASE_SERVER_URL + "/saveUser";
+
 
     public static final String ENDPOINT_SERVER_TRAVEL_CATEGORY = BuildConfig.BASE_SERVER_URL + "/getTravelCategoryAdds";
 
@@ -52,6 +56,7 @@ public final class ApiEndPoint {
     public static final String ENDPOINT_SERVER_GET_PAYMENT_DETAILS = BuildConfig.BASE_SERVER_URL + "/SellerPay";
 
     public static final String ENDPOINT_SERVER_IMAGE_UPLOAD = BuildConfig.BASE_SERVER_URL + "/insertAddImage";
+    public static final String ENDPOINT_SAVE_PHONE_OTP = BuildConfig.BASE_SERVER_URL + "/savePhoneOtp";
 
     private ApiEndPoint() {
         // This class is not publicly instantiable

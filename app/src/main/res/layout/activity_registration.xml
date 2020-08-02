@@ -29,21 +29,24 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:id="@+id/activityMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:id="@+id/ll_layout_top"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:scaleType="centerCrop"
                 android:background="@mipmap/registration_new_bg"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:scaleType="centerCrop">
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/ll_layout"
                 android:layout_width="fill_parent"
@@ -66,6 +69,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/TextStyle.Menu.Normal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left|top"
@@ -74,8 +78,8 @@
                             android:layout_marginTop="10dp"
                             android:text="@string/sign_up_header"
                             android:textAllCaps="false"
-                            style="@style/TextStyle.Menu.Normal"
                             android:textSize="25sp" />
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -103,6 +107,7 @@
                                 android:textSize="14sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -131,18 +136,23 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
+                        <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                            android:id="@+id/ccp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:padding="10dp" />
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:hintEnabled="false"
                             android:layout_marginTop="15dp"
                             android:textColorHint="@color/gray"
-                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
-                            app:passwordToggleTint="@color/login_blue"
-                            app:passwordToggleEnabled="true">
+                            app:hintEnabled="false"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etPassword"
+                                android:id="@+id/etMobileNumber"
                                 style="@style/TextStyle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -151,39 +161,9 @@
                                 android:layout_marginRight="20dp"
                                 android:background="@drawable/input_border_bottom"
                                 android:cursorVisible="true"
-                                android:hint="@string/password"
                                 android:gravity="center|left|bottom"
-                                android:inputType="textPassword"
-                                android:maxLength="50"
-                                android:paddingBottom="10dp"
-                                android:textColor="@color/black_effective"
-                                android:textSize="14sp" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:hintEnabled="false"
-                            android:layout_marginTop="15dp"
-                            android:textColorHint="@color/gray"
-                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
-                            app:passwordToggleTint="@color/login_blue"
-                            app:passwordToggleEnabled="true">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etRePassword"
-                                style="@style/TextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginRight="20dp"
-                                android:background="@drawable/input_border_bottom"
-                                android:cursorVisible="true"
-                                android:hint="@string/re_password"
-                                android:gravity="center|left|bottom"
-                                android:inputType="textPassword"
-                                android:maxLength="50"
+                                android:hint="@string/mobileNo"
+                                android:inputType="number"
                                 android:paddingBottom="10dp"
                                 android:textColor="@color/black_effective"
                                 android:textSize="14sp" />
@@ -193,8 +173,8 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
                             android:orientation="horizontal">
 
                             <RadioGroup
@@ -228,6 +208,7 @@
 
                             <TextView
                                 android:id="@+id/tvSignIn"
+                                style="@style/TextStyle.Menu.Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
@@ -239,11 +220,10 @@
                                 android:layout_marginTop="20dp"
                                 android:layout_marginEnd="15dp"
                                 android:layout_marginRight="15dp"
-                                android:text="@string/sign_in_label"
                                 android:onClick="@{() -> viewModel.onSignInClicked()}"
-                                android:textAllCaps="false"
                                 android:padding="2dp"
-                                style="@style/TextStyle.Menu.Normal"
+                                android:text="@string/sign_in_label"
+                                android:textAllCaps="false"
                                 android:textColor="@color/login_blue"
                                 android:textSize="14sp" />
                         </RelativeLayout>
@@ -251,11 +231,13 @@
                 </com.google.android.material.card.MaterialCardView>
 
             </RelativeLayout>
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/ll_layout"
                 android:layout_marginBottom="-40dp">
+
                 <LinearLayout
 
                     android:layout_width="80dp"

@@ -15,10 +15,12 @@ package com.project.maqdoom.ui.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -75,6 +77,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     private CountryCodePicker countryCodePicker;
     private PhoneAuthCredential credential;
     private DatabaseReference mDatabase;
+    private SharedPreferences sharedpreferences;
+    public static final String LANGUAGE_REFERENCE = "language_preference" ;
+    public static final String LANGUAGE_KEY = "language";
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
     }
@@ -102,17 +107,29 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void login() {
-        String email = mActivityLoginBinding.etEmail.getText().toString();
-        String password = mActivityLoginBinding.etPassword.getText().toString();
-        if (mLoginViewModel.isEmailAndPasswordValid(email, password)) {
+
+
+        /*if (mLoginViewModel.isEmailAndPasswordValid(email, otp)) {
             hideKeyboard();
-            mLoginViewModel.login(email, password);
+            mLoginViewModel.login(langPreference,email, otp);
 
         } else {
             Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
-        }
+        }*/
+
+        savePhoneOTP();
+        submitLogin();
     }
 
+    private void submitLogin(){
+        String email = countryCodePicker.getSelectedCountryCode()+ mActivityLoginBinding.etMobileNumber.getText().toString();
+        String otp = mActivityLoginBinding.etOTP.getText().toString();
+
+        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        mLoginViewModel.login(langPreference,email, otp);
+    }
     @Override
     public void openMainActivity() {
 
@@ -168,39 +185,23 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);
         mAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
-        /*DocumentReference docRef =fStore.collection("users").document(mAuth.getCurrentUser().getUid());
+        countryCodePicker=mActivityLoginBinding.ccp;
 
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()){
-                   // mName = documentSnapshot.getString("first") + " " + documentSnapshot.getString("last");
-                   // mEmail = documentSnapshot.getString("email");
-                    mPhone = mAuth.getCurrentUser().getPhoneNumber();
 
-                   *//* fullName.setText(mName);
-                    email.setText(mEmail);
-                    phone.setText(mPhone);*//*
-                }else {
-                   // Log.d(TAG, "Retrieving Data: Profile Data Not Found ");
-                }
-            }
-        });*/
-
-        /*mActivityLoginBinding.llSubmit.setOnClickListener(new View.OnClickListener() {
+       mActivityLoginBinding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               // String phoneNum = "+"+countryCodePicker.getSelectedCountryCode()+phone.getText().toString();
-                String phoneNum = "+919885254611";
+                String phoneNum = "+"+countryCodePicker.getSelectedCountryCode()+mActivityLoginBinding.etMobileNumber.getText().toString();
 
                 Log.d("phone", "Phone No.: " + phoneNum);
                 requestPhoneAuth(phoneNum);
             }
-        });*/
+        });
+        fStore = FirebaseFirestore.getInstance();
+
 
     }
+
 
     private void registerForChat(){
         String email = mLoginViewModel.getDataManager().getEmail();
@@ -276,6 +277,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                     @Override
                     public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                         super.onCodeSent(s, forceResendingToken);
+                        mActivityLoginBinding.otpLayout.setVisibility(View.VISIBLE);
+                    //    savePhoneOTP();
+                      //  mActivityLoginBinding.btnSubmit.setVisibility(View.GONE);
+
                     /*    verificationId = s;
                         token = forceResendingToken;
                         verificationOnProgress = true;
@@ -292,6 +297,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                         // called if otp is automatically detected by the app
                         verifyAuth(phoneAuthCredential);
 
+                        if (phoneAuthCredential.getSmsCode() != null) {
+                            mActivityLoginBinding.etOTP.setText(phoneAuthCredential.getSmsCode());
+                        }
+
                     }
 
                     @Override
@@ -301,6 +310,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                     }
                 });
     }
+
+
+
     private void verifyAuth(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -308,6 +320,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 if(task.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "Phone Verified."+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
                     //checkUserProfile();
+
                 }else {
 //                    progressBar.setVisibility(View.GONE);
 //                    state.setVisibility(View.GONE);
@@ -316,5 +329,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             }
         });
     }
+    private void savePhoneOTP(){
+        String email = countryCodePicker.getSelectedCountryCode()+ mActivityLoginBinding.etMobileNumber.getText().toString();
+        String otp = mActivityLoginBinding.etOTP.getText().toString();
 
+        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        mLoginViewModel.savePhoneOTP(langPreference,email, otp);
+
+    }
 }
