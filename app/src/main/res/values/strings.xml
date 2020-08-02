@@ -591,6 +591,8 @@
     <string name="str_upload_pic">Upload picture</string>
     <string name="str_chat">Chat</string>
     <string name="str_travel_agent">Travel Agent Name</string>
+    <string name="add_images">Add images</string>
+    <string name="upload_pic">Upload the picture of licence</string>
 
 
     <string-array name="item_services">
