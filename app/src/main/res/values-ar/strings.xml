@@ -564,6 +564,10 @@
     <string name="str_travel_agent">اسم وكيل السفر</string>
     <string name="str_low_high">من الأقل الى الأعلى</string>
     <string name="str_high_low">من الأعلى الى الأقل</string>
+    <string name="mobileNo">Mobile Number</string>
+    <string name="otp">Enter OTP</string>
+    <string name="add_images">إضافة صورة</string>
+    <string name="upload_pic">قم بتحميل صورة الترخيص</string>
     <string-array name="item_services">
 
         <item>القفز الحر بالمظلة</item>

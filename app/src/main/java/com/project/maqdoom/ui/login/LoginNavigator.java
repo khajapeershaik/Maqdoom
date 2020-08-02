@@ -33,5 +33,6 @@ public interface LoginNavigator {
 
     void openSellerHome();
 
+
     void openSellerSubscription();
 }

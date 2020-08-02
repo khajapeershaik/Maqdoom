@@ -45,10 +45,10 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         return true;
     }
 
-    public void login(String email, String password) {
+    public void login(String language, String phone, String otp) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .doServerLoginApiCall(new MaqdoomLoginRequest.ServerLoginRequest(email, password))
+                .doServerLoginApiCall(new MaqdoomLoginRequest.ServerLoginRequest(language,phone, otp))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
@@ -71,20 +71,19 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
                                         );
                                 //getDataManager().setLanguage("en");
-                                if("0".equalsIgnoreCase(response.getData().getIs_seller())){
+                                if ("0".equalsIgnoreCase(response.getData().getIs_seller())) {
                                     getNavigator().openCustomerHome();
-                                }
-                              else{
+                                } else {
 //                                    if("0".equalsIgnoreCase(response.getData().getSeller_subscrption_status())){
 //                                        getNavigator().openSellerSubscription();
 //                                        //getNavigator().openSellerHome();
 //                                    }else{
                                     getNavigator().openSellerHome();
                                     // }
-                                   }
+                                }
 
 
-                                } else {
+                            } else {
                                 getNavigator().showErrorAlert(response.getMessage());
                             }
                         } else {
@@ -116,7 +115,39 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 }));
     }
 
+    public void savePhoneOTP(String language, String phone, String otp) {
+        setIsLoading(true);
+        getCompositeDisposable().add(getDataManager()
+                .dosavePhoneOTP(new MaqdoomLoginRequest.ServerLoginRequest(language,phone, otp))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    if ("fail".equals(response.getResponse())) {
+                        getNavigator().showErrorAlert(response.getMessage());
+                    } else {
+                        if (response.getResponse() != null) {
 
+                        } else {
+                            getNavigator().showErrorAlert(response.getMessage());
+                        }
+
+                    }
+                }, throwable -> {
+                    if (throwable instanceof ANError) {
+                        ANError anError = (ANError) throwable;
+                        if (anError.getErrorCode() != 0) {
+
+                        } else {
+                        }
+                    } else {
+                    }
+                    throwable.printStackTrace();
+                    setIsLoading(false);
+                    getNavigator().handleError(throwable);
+                }));
+
+    }
 
     public void onSignUpClick() {
         getNavigator().openSignUp();

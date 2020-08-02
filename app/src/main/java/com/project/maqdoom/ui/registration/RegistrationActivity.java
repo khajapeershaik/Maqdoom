@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.project.maqdoom.BR;
@@ -25,6 +26,7 @@ import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.databinding.ActivityRegistrationBinding;
 import com.project.maqdoom.ui.base.BaseActivity;
 import com.project.maqdoom.ui.login.LoginActivity;
+import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import javax.inject.Inject;
 
@@ -40,6 +42,7 @@ public class RegistrationActivity extends BaseActivity<ActivityRegistrationBindi
     private SharedPreferences sharedpreferences;
     public static final String LANGUAGE_REFERENCE = "language_preference" ;
     public static final String LANGUAGE_KEY = "language";
+    private CountryCodePicker countryCodePicker;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, RegistrationActivity.class);
@@ -70,16 +73,14 @@ public class RegistrationActivity extends BaseActivity<ActivityRegistrationBindi
     public void register() {
         String name = activityRegistrationBinding.etName.getText().toString().trim();
         String email = activityRegistrationBinding.etEmail.getText().toString().trim();
-        String password = activityRegistrationBinding.etPassword.getText().toString().trim();
-        String re_password = activityRegistrationBinding.etRePassword.getText().toString().trim();
+        String phone = countryCodePicker.getSelectedCountryCode()+activityRegistrationBinding.etMobileNumber.getText().toString().trim();
+        Log.d("PhoneNo",phone);
         sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
 
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
 
-        if (registrationViewModel.isEmailAndPasswordValid(name,email, password,re_password)) {
-            if(!password.equals(re_password) ){
-                Toast.makeText(this, getString(R.string.password_mismatch), Toast.LENGTH_SHORT).show();
-            }else{
+        if (registrationViewModel.isEmailAndPasswordValid(name,email, phone)) {
+
                 if (activityRegistrationBinding.radioGroup.getCheckedRadioButtonId() == -1)
                 {
                     Toast.makeText(this, getString(R.string.check_box), Toast.LENGTH_SHORT).show();
@@ -92,10 +93,9 @@ public class RegistrationActivity extends BaseActivity<ActivityRegistrationBindi
                         type="1";
                     }
 
-                    registrationViewModel.registration(langPreference,name,email, password,re_password,type);
+                    registrationViewModel.registration(langPreference,name,email, phone,type);
                 }
 
-            }
 
         } else {
             Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
@@ -125,6 +125,7 @@ public class RegistrationActivity extends BaseActivity<ActivityRegistrationBindi
         activityRegistrationBinding = getViewDataBinding();
         registrationViewModel.setNavigator(this);
         sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        countryCodePicker=activityRegistrationBinding.ccp;
 
     }
 }

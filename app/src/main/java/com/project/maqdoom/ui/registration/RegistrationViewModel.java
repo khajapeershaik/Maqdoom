@@ -30,7 +30,7 @@ public class RegistrationViewModel extends BaseViewModel<RegistrationNavigator> 
         super(dataManager, schedulerProvider);
     }
 
-    public boolean isEmailAndPasswordValid(String name, String email, String password, String re_password) {
+    public boolean isEmailAndPasswordValid(String name, String email, String phone) {
         if (TextUtils.isEmpty(name)) {
             return false;
         }
@@ -40,20 +40,18 @@ public class RegistrationViewModel extends BaseViewModel<RegistrationNavigator> 
         if (!CommonUtils.isEmailValid(email)) {
             return false;
         }
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(phone)) {
             return false;
         }
-        if (TextUtils.isEmpty(re_password)) {
-            return false;
-        }
+
 
         return true;
     }
 
-    public void registration(String language,String name, String email, String password, String confirmPassword, String isSeller) {
+    public void registration(String language,String name, String email, String phone,  String isSeller) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .doServerRegistrationApiCall(new RegistrationRequest.ServerRegistrationRequest(name, email, password, confirmPassword, isSeller))
+                .doServerRegistrationApiCall(new RegistrationRequest.ServerRegistrationRequest(language,name, email, phone, isSeller))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
