@@ -444,12 +444,15 @@
                     android:id="@+id/sv_seperatore"
                     android:layout_width="match_parent"
                     android:layout_below="@+id/ll_layout"
+                    android:visibility="@{viewModel.editVisibility,default=visible}"
                     android:layout_height="0.2dp"
                     android:layout_margin="10dp"
                     android:background="@color/black"/>
                 <LinearLayout
+                    android:id="@+id/ll_editContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.editVisibility,default=visible}"
                     android:layout_below="@+id/sv_seperatore"
                     android:orientation="horizontal"
                     android:padding="10dp"

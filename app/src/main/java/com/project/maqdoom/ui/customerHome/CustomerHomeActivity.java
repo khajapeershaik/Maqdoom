@@ -291,57 +291,69 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     }
 
     private void showTouristGuide() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
-                .commit();
+        if (getApplicationContext() != null){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showRentalSupplies() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, CustomerRentalSuppliesFragment.newInstance(), CustomerRentalSuppliesFragment.TAG)
-                .commit();
+        if (getApplicationContext() != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, CustomerRentalSuppliesFragment.newInstance(), CustomerRentalSuppliesFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showNotification() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, NotificationFragment.newInstance(), NotificationFragment.TAG)
-                .commit();
+        if (getApplicationContext() != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, NotificationFragment.newInstance(), NotificationFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showProfile() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, ProfileFragment.newInstance(), ProfileFragment.TAG)
-                .commit();
+        if (getApplicationContext() != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, ProfileFragment.newInstance(), ProfileFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showChats() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, FriendsFragment.newInstance(), FriendsFragment.TAG)
-                .commit();
+        if (getApplicationContext() != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, FriendsFragment.newInstance(), FriendsFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showShops() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, ShopsFragment.newInstance(), ShopsFragment.TAG)
-                .commit();
+        if (getApplicationContext() != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, ShopsFragment.newInstance(), ShopsFragment.TAG)
+                    .commit();
+        }
     }
 
 

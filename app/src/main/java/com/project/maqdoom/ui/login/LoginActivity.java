@@ -35,9 +35,6 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.MaqdoomApp;
@@ -52,7 +49,6 @@ import com.project.maqdoom.ui.forgotPassword.ForgotPasswordActivity;
 import com.project.maqdoom.ui.registration.RegistrationActivity;
 import com.project.maqdoom.ui.sellerHome.SellerHomeActivity;
 import com.project.maqdoom.ui.sellerPackages.SellerPackageActivity;
-import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -152,10 +148,21 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void openCustomerHome() {
         registerForChat();
+        registerUserType(mLoginViewModel.getDataManager().getUserType());
+        Log.v("userType",mLoginViewModel.getDataManager().getUserType());
         Intent intent = CustomerHomeActivity.newIntent(LoginActivity.this);
         startActivity(intent);
         finish();
 
+    }
+
+    private void registerUserType(String userType) {
+        String LANGUAGE_REFERENCE = "language_preference" ;
+        SharedPreferences sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        String USER_TYPE_KEY = "userType";
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(USER_TYPE_KEY, userType);
+        editor.commit();
     }
 
     @Override
@@ -166,6 +173,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void openSellerHome() {
         registerForChat();
+        registerUserType(mLoginViewModel.getDataManager().getUserType());
+        Log.v("userType",mLoginViewModel.getDataManager().getUserType());
         Intent intent = SellerHomeActivity.newIntent(LoginActivity.this);
         startActivity(intent);
         finish();
@@ -185,6 +194,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);
         mAuth = FirebaseAuth.getInstance();
+//        fStore = FirebaseFirestore.getInstance();
+        /*DocumentReference docRef =fStore.collection("users").document(mAuth.getCurrentUser().getUid());
         countryCodePicker=mActivityLoginBinding.ccp;
 
 

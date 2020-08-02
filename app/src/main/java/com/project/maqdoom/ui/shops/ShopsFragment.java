@@ -195,7 +195,9 @@ public class ShopsFragment extends BaseFragment<FragmentShopsDetailBinding, Shop
                         Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
                     } else {
                         mBlogAdapter.clearItems();
+                        shopsViewModel.fetchData();
                         observeShopsData();
+                        fragmentShopsBinding.blogRecyclerView.setAdapter(mBlogAdapter);
                     }
                 }
             }

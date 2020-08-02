@@ -56,6 +56,8 @@ public interface ApiHelper {
 
     Single<AddServiceResponse> doAddPackageApiCall(AddServiceRequest.ServerPackageAddRequest request);
 
+    Single<AddServiceResponse> doAddPackageEditApiCall(AddServiceRequest.UpdatePackageRequest request);
+
     Single<EditProfileResponse> doEditProfileApiCall(EditProfileRequest.ServerEditProfileRequest request);
 
     Single<DeleteAddResponse> doDeleteAddApiCall(DeleteAddRequest.ServerDeleteAddRequest request);

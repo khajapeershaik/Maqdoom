@@ -183,7 +183,7 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
         LinearLayout travel_layout, supplies_layout,shops_layout;
         travel_layout = customLayout.findViewById(R.id.travel_layout);
         supplies_layout = customLayout.findViewById(R.id.supplies_layout);
-
+        shops_layout =customLayout.findViewById(R.id.shops_layout);
 
         travel_layout.setOnClickListener(view -> {
             showAddPackageFragment(1);
@@ -191,6 +191,10 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
         });
         supplies_layout.setOnClickListener(view -> {
             showAddPackageFragment(2);
+            OptionDialog.dismiss();
+        });
+        shops_layout.setOnClickListener(view -> {
+            showAddPackageFragment(3);
             OptionDialog.dismiss();
         });
 
@@ -338,11 +342,16 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
     }
 
     private void showAddPackageFragment(int type) {
+//        SellerAddPackageFragment fragment = new SellerAddPackageFragment();
+//        Bundle args = new Bundle();
+//        args.putInt(GD, type);
+//        args.putString(DATA_BUNDLE,jsonData);
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .disallowAddToBackStack()
                 .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, SellerAddPackageFragment.newInstance(type), SellerAddPackageFragment.TAG)
+                .add(R.id.clRootView, SellerAddPackageFragment.newInstance(type,""), SellerAddPackageFragment.TAG)
                 .commit();
     }
 
@@ -353,48 +362,58 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
     }
 
     private void showTouristGuide() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
-                .commit();
+        if(getApplicationContext()!=null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showShops() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, ShopsFragment.newInstance(), ShopsFragment.TAG)
-                .commit();
+        if(getApplicationContext()!=null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, ShopsFragment.newInstance(), ShopsFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showRentalSupplies() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, CustomerRentalSuppliesFragment.newInstance(), CustomerRentalSuppliesFragment.TAG)
-                .commit();
+        if(getApplicationContext()!=null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, CustomerRentalSuppliesFragment.newInstance(), CustomerRentalSuppliesFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showNotification() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, NotificationFragment.newInstance(), NotificationFragment.TAG)
-                .commit();
+        if(getApplicationContext()!=null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, NotificationFragment.newInstance(), NotificationFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showProfile() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                .add(R.id.clRootView, ProfileFragment.newInstance(), ProfileFragment.TAG)
-                .commit();
+        if(getApplicationContext()!=null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.clRootView, ProfileFragment.newInstance(), ProfileFragment.TAG)
+                    .commit();
+        }
     }
 
 

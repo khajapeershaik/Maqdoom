@@ -13,6 +13,9 @@
 
 package com.project.maqdoom.ui.customerHoneymoon;
 
+import android.util.Log;
+
+import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryResponse;
 
 import org.json.JSONObject;
@@ -20,6 +23,9 @@ import org.json.JSONObject;
 import java.util.List;
 
 import androidx.databinding.ObservableField;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 
 public class HoneymoonItemViewModel {
@@ -39,8 +45,9 @@ public class HoneymoonItemViewModel {
     public final ObservableField<String> imageUrl;
 
     private final TravelCategoryResponse.Adds mAdds;
+    private String userType;
 
-    public HoneymoonItemViewModel(TravelCategoryResponse.Adds adds, HoneymoonViewModelListener listener) {
+    public HoneymoonItemViewModel(TravelCategoryResponse.Adds adds, HoneymoonViewModelListener listener,String user) {
         List<TravelCategoryResponse.Adds.Images> img = adds.getImage_path();
         String listString = "";
         if(img != null && img.size() >0){
@@ -54,9 +61,61 @@ public class HoneymoonItemViewModel {
         noOfPeople = new ObservableField<>(mAdds.getPeople_cnt());
         price = new ObservableField<>(mAdds.getPrice());
         imageUrl = new ObservableField<>(listString.trim());
+        userType = user;
     }
     public void onPackageExpand() {
         mListener.onPackageClick();
+
+    }
+    public int editVisibility(){
+        Log.v("userTypeHoneymoon",userType);
+        if(userType.equalsIgnoreCase("1")){
+            return VISIBLE;
+        }else {
+            return GONE;
+        }
+    }
+    public void deleteButtonClicked(){
+        mListener.onDeleteButtonClick(mAdds.getAdd_id());
+    }
+
+    public void editButtonClicked(){
+        new Thread(() -> {
+            try{
+                List<TravelCategoryResponse.Adds.Images> img = mAdds.getImage_path();
+                String listString = "";
+                for(int i=0;i<img.size();i++){
+                    listString += img.get(i).getPath() + "\t";
+                }
+                JSONObject item = new JSONObject();
+                item.put("id", mAdds.getAdd_id());
+                item.put("package_include", mAdds.getPackage_include());
+                item.put("package", mAdds.getTourist_package());
+                item.put("price", mAdds.getPrice());
+                item.put("details", mAdds.getMore_details());
+                item.put("whatsApp", mAdds.getWhatsapp_phone());
+                item.put("phone", mAdds.getPhone());
+                item.put("images", listString);
+                item.put("name",mAdds.getGuide_name());
+                item.put("level1_category",mAdds.getLevel1_category());
+                item.put("level2_category",mAdds.getLevel2_category());
+                item.put("level3_category",mAdds.getLevel3_category());
+                item.put("services",mAdds.getServices());
+                item.put("location",mAdds.getLocation());
+                item.put("no_of_people",mAdds.getPeople_cnt());
+                item.put("licence_pic_url",mAdds.getLicence_pic_url());
+
+                if(mAdds.getLevel1_category().equalsIgnoreCase("TR")){
+                    mListener.onEditButtonClick(1,item.toString());
+                }else{
+                    mListener.onEditButtonClick(2,item.toString());
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }).start();
 
     }
     public void onItemClick() {
@@ -89,5 +148,9 @@ public class HoneymoonItemViewModel {
         void onItemClick(String blogUrl);
 
         void onPackageClick();
+
+        void onDeleteButtonClick(String appId);
+
+        void onEditButtonClick(int type ,String blogUrl);
     }
 }

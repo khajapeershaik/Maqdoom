@@ -43,6 +43,8 @@ public final class ApiEndPoint {
 
     public static final String ENDPOINT_SERVER_CREATE_SERVICE = BuildConfig.BASE_SERVER_URL + "/createAdd";
 
+    public static final String ENDPOINT_SERVER_UPDATE_SERVICE = BuildConfig.BASE_SERVER_URL + "/updateAdd";
+
     public static final String ENDPOINT_SERVER_EDIT_PROFILE = BuildConfig.BASE_SERVER_URL + "/editProfile";
 
     public static final String ENDPOINT_SERVER_DELETE_ADD = BuildConfig.BASE_SERVER_URL + "/deleteAdd";

@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@color/white"
-            android:onClick="@{() -> viewModel.onItemClick()}"
             android:orientation="vertical"
             app:cardCornerRadius="7dp"
             app:cardElevation="4dp">
@@ -62,6 +61,7 @@
                     android:id="@+id/ll_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onItemClick()}"
                     android:layout_below="@+id/ll_layout_top"
                     android:orientation="vertical">
 
@@ -436,6 +436,50 @@
 
                     </LinearLayout>
                 </FrameLayout>
+
+                <View
+                    android:id="@+id/sv_seperatore"
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/ll_layout"
+                    android:visibility="@{viewModel.editVisibility,default=visible}"
+                    android:layout_height="0.2dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/black"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sv_seperatore"
+                    android:visibility="@{viewModel.editVisibility,default=visible}"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/delete"
+                        android:textColor="@color/red"
+                        android:onClick="@{() -> viewModel.deleteButtonClicked()}"
+                        android:id="@+id/tv_delete"/>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/edit"
+                        android:onClick="@{() -> viewModel.editButtonClicked()}"
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_edit"/>
+
+                </LinearLayout>
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </FrameLayout>

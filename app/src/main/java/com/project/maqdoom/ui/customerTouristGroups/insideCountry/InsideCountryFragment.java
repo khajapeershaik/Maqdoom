@@ -15,7 +15,9 @@ package com.project.maqdoom.ui.customerTouristGroups.insideCountry;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -31,6 +33,7 @@ import com.project.maqdoom.data.remote.api_rest.ApiClient;
 import com.project.maqdoom.data.remote.api_rest.ApiInterface;
 import com.project.maqdoom.databinding.FragmentTouristInsideBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
+import com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +58,7 @@ import retrofit2.Response;
 public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBinding, InsideCountryViewModel>
         implements InsideCountryNavigator, InsideCountryAdapter.TravelGroupAdapterListener {
 
+    public static final String TAG = InsideCountryFragment.class.getSimpleName();
     @Inject
     InsideCountryAdapter mBlogAdapter;
 
@@ -134,7 +138,10 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                     if ("fail".equals(response.body().getResponse())) {
                         Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
                     } else {
-                        mBlogAdapter.notifyDataSetChanged();
+                        mBlogAdapter.clearItems();
+                        insideCountryViewModel.fetchData();
+                        observeData();
+                        fragmentTouristInsideBinding.blogRecyclerView.setAdapter(mBlogAdapter);
                     }
                 }
             }
@@ -148,6 +155,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.v("inside","onViewCreated");
         fragmentTouristInsideBinding = getViewDataBinding();
         setUp();
     }
@@ -155,6 +163,8 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
     @Override
     public void onResume() {
         super.onResume();
+
+        Log.v("inside","onResume");
     }
 
     @Override
@@ -167,6 +177,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
             System.out.println(fragment);
         }*/
 
+       String userType = insideCountryViewModel.getUserType();
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         fragmentTouristInsideBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
         fragmentTouristInsideBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -215,6 +215,71 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Single<AddServiceResponse> doAddPackageEditApiCall(AddServiceRequest.UpdatePackageRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("add_id", request.getAdd_id());
+            jsonObject.put("user_id", request.getUser_id());
+            jsonObject.put("guide_name", request.getGuide_name());
+            jsonObject.put("level1_category", request.getLevel1_category());
+            jsonObject.put("level2_category", request.getLevel2_category());
+            jsonObject.put("level3_category", request.getLevel3_category());
+            jsonObject.put("package", request.getPackageName());
+            jsonObject.put("package_include", request.getPackage_include());
+            jsonObject.put("phone", request.getPhone());
+            jsonObject.put("country", request.getCountry());
+            jsonObject.put("location", request.getLocation());
+            jsonObject.put("whatsapp_phone", request.getWhatsapp_phone());
+            jsonObject.put("price", request.getPrice());
+            jsonObject.put("people_cnt", request.getPeople_cnt());
+            jsonObject.put("more_details", request.getMore_details());
+            jsonObject.put("city", request.getCity());
+            jsonObject.put("language", request.getLanguage());
+            jsonObject.put("licence_pic_url",request.getLicence_pic_url());
+            jsonObject.put("national_id",request.getNational_id());
+            jsonObject.put("services",request.getService());
+            JSONArray jsonArray = new JSONArray();
+            JSONObject obj = null;
+            if (request.getImage_list() != null) {
+                for (String value : request.getImage_list().values()) {
+                    obj = new JSONObject();
+                    try {
+                        obj.put("image", value);
+
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    jsonArray.put(obj);
+                }
+               /* for(int j=0; j<request.getImage_list().size(); j++)
+                {
+                    obj = new JSONObject();
+                    try {
+                        obj.put("image", request.getImage_list().get(j));
+
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    jsonArray.put(obj);
+                }*/
+            }
+            jsonObject.put("image_path", jsonArray);
+            System.out.println("Arun json --" + jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SERVER_UPDATE_SERVICE)
+                .setContentType("application/json; charset=utf-8")
+                //.addBodyParameter(request)
+                .addJSONObjectBody(jsonObject)
+                .build()
+                .getObjectSingle(AddServiceResponse.class);
+    }
+
+    @Override
     public Single<EditProfileResponse> doEditProfileApiCall(EditProfileRequest.ServerEditProfileRequest request) {
         JSONObject jsonObject = new JSONObject();
         try {

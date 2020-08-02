@@ -50,7 +50,6 @@
                     android:gravity="center_vertical"
                     android:background="@color/navigation_bg">
 
-
                     <ImageButton
                         android:id="@+id/dashboardBackBtn"
                         style="@style/Button.ImageButton"
@@ -77,7 +76,6 @@
                         android:textColor="@color/white"
                         android:textSize="17sp"
                         android:visibility="gone" />
-
 
                 </RelativeLayout>
 

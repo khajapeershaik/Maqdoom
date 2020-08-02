@@ -129,29 +129,35 @@ public class TouristGroupFragment extends BaseFragment<FragmentTouristGroupBindi
 
     @Override
     public void goToTouristGuide() {
-        getFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.parentLayout, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
-                .commit();
+        if(getActivity()!=null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .add(R.id.parentLayout, TouristGuidesFragment.newInstance(), TouristGuidesFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override
     public void gotoHoneymoon() {
-        getFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.parentLayout, TouristHoneymoonFragment.newInstance(), TouristGroupFragment.TAG)
-                .commit();
+        if(getActivity()!=null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .add(R.id.parentLayout, TouristHoneymoonFragment.newInstance(), TouristGroupFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override
     public void gotoFamilyTrip() {
-        getFragmentManager()
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .add(R.id.parentLayout, FamilyTripFragment.newInstance(), FamilyTripFragment.TAG)
-                .commit();
+        if(getActivity()!=null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .add(R.id.parentLayout, FamilyTripFragment.newInstance(), FamilyTripFragment.TAG)
+                    .commit();
+        }
     }
 
     private void showHome() {

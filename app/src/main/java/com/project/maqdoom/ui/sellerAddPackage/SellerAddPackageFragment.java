@@ -41,14 +41,18 @@ import com.opensooq.supernova.gligar.GligarPicker;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
+import com.project.maqdoom.data.model.api.AddServiceRequest;
 import com.project.maqdoom.databinding.FragmentSellerAddPackageBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
+import com.project.maqdoom.ui.sellerHome.SellerHomeActivity;
 import com.project.maqdoom.ui.services.ServicesChecklistItems;
 import com.project.maqdoom.ui.services.ServicesItemAdapter;
+import com.project.maqdoom.ui.splash.SplashActivity;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -60,6 +64,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,10 +73,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPackageBinding, SellerAddPackageViewModel> implements SellerAddPackageNavigator {
 
     public static final String TAG = SellerAddPackageFragment.class.getSimpleName();
-    public static String GD;
-    String guideData = "";
-
+    public static String GD = "gd";
+    public static String DATA_BUNDLE = "bundle";
     private static int option;
+    String guideData = "";
     Spinner category;
     List<String> options, lan;
     String selectedCategory = "";
@@ -79,20 +84,21 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
     java.util.HashMap<String, String> imageUpload;
     int PICKER_REQUEST_CODE = 30;
     String addId = "";
-    String pathsList[];
+    String edtAddId = "";
+    String[] pathsList;
     RequestQueue reqQueue;
-
     @Inject
     ViewModelProviderFactory factory;
-    private SellerAddPackageViewModel sellerAddPackageViewModel;
     FragmentSellerAddPackageBinding fragmentSellerAddPackageBinding;
+    private int isEditRequest = 0;
+    private SellerAddPackageViewModel sellerAddPackageViewModel;
 
-    public static SellerAddPackageFragment newInstance(int data) {
+    public static SellerAddPackageFragment newInstance(int type, String jsonData) {
         Bundle args = new Bundle();
-        args.putInt(GD, data);
+        args.putInt(GD, type);
+        args.putString(DATA_BUNDLE, jsonData);
         SellerAddPackageFragment fragment = new SellerAddPackageFragment();
         fragment.setArguments(args);
-
         return fragment;
 
     }
@@ -136,10 +142,10 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
     @Override
     public void pickImage(Boolean isLicense) {
-        if(!isLicense) {
+        if (!isLicense) {
             //Upload images
             new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(SellerAddPackageFragment.this).limit(4).show();
-       }else {
+        } else {
             //Upload license
             new GligarPicker().requestCode(31).withFragment(SellerAddPackageFragment.this).limit(4).show();
 
@@ -166,29 +172,19 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             params.setMargins(20, 15, 20, 10);
             imageView.setLayoutParams(params);
             imageView.setId(layoutId);
-            if(isLicense){
+            if (isLicense) {
 
-                btnFlightClose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragmentSellerAddPackageBinding.rlLicenseSelected.removeView(getActivity().findViewById(layoutId));
-                        if (images.containsKey(layoutId)) {
-                            images.remove(layoutId);
-                        }
+                btnFlightClose.setOnClickListener(v -> {
+                    fragmentSellerAddPackageBinding.rlLicenseSelected.removeView(getActivity().findViewById(layoutId));
+                    images.remove(layoutId);
 
-                    }
                 });
                 fragmentSellerAddPackageBinding.rlLicenseSelected.addView(imageView);
-            }else {
-                btnFlightClose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragmentSellerAddPackageBinding.rlImageSelected.removeView(getActivity().findViewById(layoutId));
-                        if (images.containsKey(layoutId)) {
-                            images.remove(layoutId);
-                        }
+            } else {
+                btnFlightClose.setOnClickListener(v -> {
+                    fragmentSellerAddPackageBinding.rlImageSelected.removeView(getActivity().findViewById(layoutId));
+                    images.remove(layoutId);
 
-                    }
                 });
                 fragmentSellerAddPackageBinding.rlImageSelected.addView(imageView);
             }
@@ -225,15 +221,10 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             params.setMargins(20, 15, 20, 10);
             imageView.setLayoutParams(params);
             imageView.setId(layoutId);
-            btnFlightClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragmentSellerAddPackageBinding.rlImageSelected.removeView(getActivity().findViewById(layoutId));
-                    if (images.containsKey(layoutId)) {
-                        images.remove(layoutId);
-                    }
+            btnFlightClose.setOnClickListener(v -> {
+                fragmentSellerAddPackageBinding.rlImageSelected.removeView(getActivity().findViewById(layoutId));
+                images.remove(layoutId);
 
-                }
             });
             fragmentSellerAddPackageBinding.rlImageSelected.addView(imageView);
             addId = data.optString("add_id");
@@ -243,6 +234,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             Toast.makeText(getActivity(), "Image upload failed. Please try again", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -254,12 +246,12 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             case 30: {
                 System.out.println("Arun 2");
                 pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT);
-                addImage(pathsList,false);
+                addImage(pathsList, false);
                 break;
             }
-            case 31:{
+            case 31: {
                 pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT);
-                addImage(pathsList,true);
+                addImage(pathsList, true);
             }
         }
     }
@@ -276,28 +268,30 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         String whatsApp = fragmentSellerAddPackageBinding.etWhatsApp.getText().toString();
         String location = fragmentSellerAddPackageBinding.etLocation.getText().toString();
         String price = fragmentSellerAddPackageBinding.etPrice.getText().toString();
- //       String includes = fragmentSellerAddPackageBinding.etPackageDetails.getText().toString();
+        //      String includes = fragmentSellerAddPackageBinding.etPackageDetails.getText().toString();
         String numberOfPeople = fragmentSellerAddPackageBinding.etNoOfPeoples.getText().toString();
         String moreDetails = fragmentSellerAddPackageBinding.etMore.getText().toString();
 
-        String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
-        String country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
-        String city = fragmentSellerAddPackageBinding.spinnerCity.getText().toString();
-        //String language = "activitySellerAddPackageBinding.spinnerLanguage.getSelectedItem().toString()";
 
+        //String language = "activitySellerAddPackageBinding.spinnerLanguage.getSelectedItem().toString()";
 
         String category_l_1_ShortName = "";
         if (option == 1) {
             category_l_1_ShortName = "TR";
         } else if (option == 2) {
             category_l_1_ShortName = "SS";
+        }else if(option ==3){
+            category_l_1_ShortName = "Shops";
         }
 
         if (option == 1) {
             if (fragmentSellerAddPackageBinding.spinnerType.getSelectedItemId() != 0) {
                 if (fragmentSellerAddPackageBinding.spinnerType.getSelectedItemId() == 1) {
                     // Tourist guide
-                    if (sellerAddPackageViewModel.isValidFields(name, phone, whatsApp, moreDetails,city)) {
+                    String country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
+                    String city = fragmentSellerAddPackageBinding.spinnerCity.getText().toString();
+                    if (sellerAddPackageViewModel.isValidFields(name, phone, whatsApp, moreDetails, city)) {
+                        String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
                         if (sellerAddPackageViewModel.validateSpinner(1, category)) {
                             if (sellerAddPackageViewModel.validateSpinner(2, country)) {
                                 //if (sellerAddPackageViewModel.validateSpinner(3, city)) {
@@ -325,7 +319,37 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                         } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
                                             category_l_2_ShortName = "CUS";
                                         }
-                                        sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, "", phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, language,addId,imageUpload);
+                                        if (isEditRequest == 0) {
+                                            sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, "", phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, language, addId, imageUpload);
+                                        } else {
+                                            AddServiceRequest.UpdatePackageRequest updatePackageRequest = new AddServiceRequest.UpdatePackageRequest();
+                                            updatePackageRequest.setAdd_id(edtAddId);
+                                            updatePackageRequest.setUser_id(String.valueOf(sellerAddPackageViewModel.getDataManager().getCurrentUserId()));
+                                            updatePackageRequest.setGuide_name(nameEntered);
+                                            updatePackageRequest.setLevel1_category(category_l_1_ShortName);
+                                            updatePackageRequest.setLevel2_category(category_l_2_ShortName);
+                                            updatePackageRequest.setLevel3_category("");
+                                            updatePackageRequest.setPackageName(name);
+                                            updatePackageRequest.setPackage_include("");
+                                            updatePackageRequest.setPhone(phone);
+                                            updatePackageRequest.setCountry(country);
+                                            updatePackageRequest.setLocation(location);
+                                            updatePackageRequest.setWhatsapp_phone(whatsApp);
+                                            updatePackageRequest.setPrice(price);
+                                            updatePackageRequest.setPeople_cnt(numberOfPeople);
+                                            updatePackageRequest.setMore_details(moreDetails);
+                                            updatePackageRequest.setCity(city);
+                                            updatePackageRequest.setLanguage(language);
+                                            updatePackageRequest.setLicence_pic_url("");
+                                            updatePackageRequest.setNational_id("");
+                                            String service = "";
+                                            if (fragmentSellerAddPackageBinding.etServices.getText().toString().length() > 1) {
+                                                service = fragmentSellerAddPackageBinding.etServices.getText().toString();
+                                            }
+                                            updatePackageRequest.setService(service);
+                                            updatePackageRequest.setImage_list(imageUpload);
+                                            sellerAddPackageViewModel.upDatePackage(updatePackageRequest);
+                                        }
                                     } else {
                                         Toast toast = Toast.makeText(getActivity(), "Please upload image", Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER, 0, 0);
@@ -343,12 +367,12 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                 toast.show();
                             }*/
                             } else {
-                                Toast toast =Toast.makeText(getActivity(), getString(R.string.select_country_option), Toast.LENGTH_SHORT);
+                                Toast toast = Toast.makeText(getActivity(), getString(R.string.select_country_option), Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
                             }
                         } else {
-                            Toast toast =Toast.makeText(getActivity(), getString(R.string.select_category_option), Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getActivity(), getString(R.string.select_category_option), Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
                         }
@@ -359,65 +383,88 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                     }
                 } else if (fragmentSellerAddPackageBinding.spinnerType.getSelectedItemId() == 2) {
                     //Tourist Group
-                    if (sellerAddPackageViewModel.isValid(name, phone, whatsApp, moreDetails, price, numberOfPeople,location)) {
+                    if (sellerAddPackageViewModel.isValid(name, phone, whatsApp, moreDetails, price, numberOfPeople, location)) {
+                        String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
                         if (sellerAddPackageViewModel.validateSpinner(1, category)) {
-                           // if (sellerAddPackageViewModel.validateSpinner(2, country)) {
-                                //if (sellerAddPackageViewModel.validateSpinner(3, city)) {
-                                    String subCategory = fragmentSellerAddPackageBinding.spinnerSubType.getSelectedItem().toString();
-                                    if (sellerAddPackageViewModel.validateSpinner(4, subCategory)) {
-                                        if (!imageUpload.isEmpty()) {
-                                            if (!options.isEmpty()) {
-                                                String category_l_3_ShortName = "";
-                                                if (getString(R.string.tourist_inside).equalsIgnoreCase(subCategory)) {
-                                                    category_l_3_ShortName = "IC";
-                                                } else if (getString(R.string.tourist_outside).equalsIgnoreCase(subCategory)) {
-                                                    category_l_3_ShortName = "OC";
-                                                }
-
-                                                String nameEntered = "";
-
-                                                String category_l_2_ShortName = "";
-                                                if (getString(R.string.t_guide).equalsIgnoreCase(category)) {
-                                                    category_l_2_ShortName = "TG";
-                                                } else if (getString(R.string.group_title).equalsIgnoreCase(category)) {
-                                                    category_l_2_ShortName = "TGP";
-                                                } else if (getString(R.string.honeymoon_title).equalsIgnoreCase(category)) {
-                                                    category_l_2_ShortName = "HM";
-                                                } else if (getString(R.string.family_trip_title).equalsIgnoreCase(category)) {
-                                                    category_l_2_ShortName = "FT";
-                                                } else if (getString(R.string.supplies_menu_1).equalsIgnoreCase(category)) {
-                                                    category_l_2_ShortName = "WT";
-                                                } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
-                                                    category_l_2_ShortName = "CUS";
-                                                }
-                                                sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, category_l_3_ShortName, name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId,imageUpload);
-                                            } else {
-                                                Toast toast = Toast.makeText(getActivity(), "Please add Package", Toast.LENGTH_SHORT);
-                                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                                toast.show();
-                                            }
-
-                                        } else {
-                                            Toast toast = Toast.makeText(getActivity(), "Please upload image", Toast.LENGTH_SHORT);
-                                            toast.setGravity(Gravity.CENTER, 0, 0);
-                                            toast.show();
+                            // if (sellerAddPackageViewModel.validateSpinner(2, country)) {
+                            //if (sellerAddPackageViewModel.validateSpinner(3, city)) {
+                            String subCategory = fragmentSellerAddPackageBinding.spinnerSubType.getSelectedItem().toString();
+                            String country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
+                            String city = fragmentSellerAddPackageBinding.spinnerCity.getText().toString();
+                            if (sellerAddPackageViewModel.validateSpinner(4, subCategory)) {
+                                if (!imageUpload.isEmpty()) {
+                                    if (!options.isEmpty()) {
+                                        String category_l_3_ShortName = "";
+                                        if ("Domestic".equalsIgnoreCase(subCategory)) {
+                                            category_l_3_ShortName = "Domestic";
+                                        } else if ("International".equalsIgnoreCase(subCategory)) {
+                                            category_l_3_ShortName = "International";
                                         }
 
+                                        String nameEntered = "";
+
+                                        String category_l_2_ShortName = "";
+                                        if (getString(R.string.t_guide).equalsIgnoreCase(category)) {
+                                            category_l_2_ShortName = "TG";
+                                        } else if (getString(R.string.group_title).equalsIgnoreCase(category)) {
+                                            category_l_2_ShortName = "TGP";
+                                        } else if (getString(R.string.honeymoon_title).equalsIgnoreCase(category)) {
+                                            category_l_2_ShortName = "HM";
+                                        } else if (getString(R.string.family_trip_title).equalsIgnoreCase(category)) {
+                                            category_l_2_ShortName = "FT";
+                                        } else if (getString(R.string.supplies_menu_1).equalsIgnoreCase(category)) {
+                                            category_l_2_ShortName = "WT";
+                                        } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
+                                            category_l_2_ShortName = "CUS";
+                                        }
+                                        if (isEditRequest == 0) {
+                                            sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, category_l_3_ShortName, name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId, imageUpload);
+                                        } else {
+                                            AddServiceRequest.UpdatePackageRequest updatePackageRequest = new AddServiceRequest.UpdatePackageRequest();
+                                            updatePackageRequest.setAdd_id(edtAddId);
+                                            updatePackageRequest.setUser_id(String.valueOf(sellerAddPackageViewModel.getDataManager().getCurrentUserId()));
+                                            updatePackageRequest.setGuide_name(nameEntered);
+                                            updatePackageRequest.setLevel1_category(category_l_1_ShortName);
+                                            updatePackageRequest.setLevel2_category(category_l_2_ShortName);
+                                            updatePackageRequest.setLevel3_category(category_l_3_ShortName);
+                                            updatePackageRequest.setPackageName(name);
+                                            updatePackageRequest.setPackage_include(selectedCategory);
+                                            updatePackageRequest.setPhone(phone);
+                                            updatePackageRequest.setCountry(country);
+                                            updatePackageRequest.setLocation(location);
+                                            updatePackageRequest.setWhatsapp_phone(whatsApp);
+                                            updatePackageRequest.setPrice(price);
+                                            updatePackageRequest.setPeople_cnt(numberOfPeople);
+                                            updatePackageRequest.setMore_details(moreDetails);
+                                            updatePackageRequest.setCity(city);
+                                            updatePackageRequest.setLanguage("");
+                                            updatePackageRequest.setLicence_pic_url("");
+                                            updatePackageRequest.setNational_id("");
+                                            String service = "";
+                                            if (fragmentSellerAddPackageBinding.etServices.getText().toString().length() > 1) {
+                                                service = fragmentSellerAddPackageBinding.etServices.getText().toString();
+                                            }
+                                            updatePackageRequest.setService(service);
+                                            updatePackageRequest.setImage_list(imageUpload);
+                                            sellerAddPackageViewModel.upDatePackage(updatePackageRequest);
+                                        }
                                     } else {
-                                        Toast toast = Toast.makeText(getActivity(), getString(R.string.select_sub_category_option), Toast.LENGTH_SHORT);
+                                        Toast toast = Toast.makeText(getActivity(), "Please add Package", Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER, 0, 0);
                                         toast.show();
                                     }
-                               /* } else {
-                                    Toast toast = Toast.makeText(getActivity(), getString(R.string.select_city_option), Toast.LENGTH_SHORT);
+
+                                } else {
+                                    Toast toast = Toast.makeText(getActivity(), "Please upload image", Toast.LENGTH_SHORT);
                                     toast.setGravity(Gravity.CENTER, 0, 0);
                                     toast.show();
-                                }*/
-                           /* } else {
-                                Toast toast = Toast.makeText(getActivity(), getString(R.string.select_country_option), Toast.LENGTH_SHORT);
+                                }
+
+                            } else {
+                                Toast toast = Toast.makeText(getActivity(), getString(R.string.select_sub_category_option), Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
-                            }*/
+                            }
 
                         } else {
                             Toast toast = Toast.makeText(getActivity(), getString(R.string.select_category_option), Toast.LENGTH_SHORT);
@@ -431,7 +478,8 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                     }
                 } else {
                     //Others
-                    if (sellerAddPackageViewModel.isValid(name, phone, whatsApp, moreDetails, price, numberOfPeople,location)) {
+                    if (sellerAddPackageViewModel.isValid(name, phone, whatsApp, moreDetails, price, numberOfPeople, location)) {
+                        String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
                         if (sellerAddPackageViewModel.validateSpinner(1, category)) {
                             // if (sellerAddPackageViewModel.validateSpinner(2, country)) {
                             // if (sellerAddPackageViewModel.validateSpinner(3, city)) {
@@ -452,7 +500,38 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                     } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
                                         category_l_2_ShortName = "CUS";
                                     }
-                                    sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, selectedCategory, phone, "", location, whatsApp, price, numberOfPeople, moreDetails, "", "", addId,imageUpload);
+                                    if (isEditRequest == 0) {
+                                        sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, selectedCategory, phone, "", location, whatsApp, price, numberOfPeople, moreDetails, "", "", addId, imageUpload);
+                                    } else {
+
+                                        AddServiceRequest.UpdatePackageRequest updatePackageRequest = new AddServiceRequest.UpdatePackageRequest();
+                                        updatePackageRequest.setAdd_id(edtAddId);
+                                        updatePackageRequest.setUser_id(String.valueOf(sellerAddPackageViewModel.getDataManager().getCurrentUserId()));
+                                        updatePackageRequest.setGuide_name(nameEntered);
+                                        updatePackageRequest.setLevel1_category(category_l_1_ShortName);
+                                        updatePackageRequest.setLevel2_category(category_l_2_ShortName);
+                                        updatePackageRequest.setLevel3_category("");
+                                        updatePackageRequest.setPackageName(name);
+                                        updatePackageRequest.setPackage_include(selectedCategory);
+                                        updatePackageRequest.setPhone(phone);
+                                        updatePackageRequest.setCountry("");
+                                        updatePackageRequest.setLocation(location);
+                                        updatePackageRequest.setWhatsapp_phone(whatsApp);
+                                        updatePackageRequest.setPrice(price);
+                                        updatePackageRequest.setPeople_cnt(numberOfPeople);
+                                        updatePackageRequest.setMore_details(moreDetails);
+                                        updatePackageRequest.setCity("");
+                                        updatePackageRequest.setLanguage("");
+                                        updatePackageRequest.setLicence_pic_url("");
+                                        updatePackageRequest.setNational_id("");
+                                        String service = "";
+                                        if (fragmentSellerAddPackageBinding.etServices.getText().toString().length() > 1) {
+                                            service = fragmentSellerAddPackageBinding.etServices.getText().toString();
+                                        }
+                                        updatePackageRequest.setService(service);
+                                        updatePackageRequest.setImage_list(imageUpload);
+                                        sellerAddPackageViewModel.upDatePackage(updatePackageRequest);
+                                    }
                                 } else {
                                     Toast toast = Toast.makeText(getActivity(), "Please add Package", Toast.LENGTH_SHORT);
                                     toast.setGravity(Gravity.CENTER, 0, 0);
@@ -485,9 +564,10 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                     }
                 }
             }
-        }else{
+        } else if(option == 2) {
             //Others
-            if (sellerAddPackageViewModel.isValid(name, phone, whatsApp, moreDetails, price, numberOfPeople,location)) {
+            if (sellerAddPackageViewModel.isValid(name, phone, whatsApp, moreDetails, price, numberOfPeople, location)) {
+                String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
                 if (sellerAddPackageViewModel.validateSpinner(1, category)) {
                     // if (sellerAddPackageViewModel.validateSpinner(2, country)) {
                     // if (sellerAddPackageViewModel.validateSpinner(3, city)) {
@@ -508,11 +588,38 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                             } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
                                 category_l_2_ShortName = "CUS";
                             }
-                            String service ="";
-                            if(fragmentSellerAddPackageBinding.etServices.getText().toString().length()>1){
+                            String service = "";
+                            if (fragmentSellerAddPackageBinding.etServices.getText().toString().length() > 1) {
                                 service = fragmentSellerAddPackageBinding.etServices.getText().toString();
                             }
-                            sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, service, name, selectedCategory, phone, "", location, whatsApp, price, numberOfPeople, moreDetails, "", "", addId,imageUpload);
+                            if (isEditRequest == 0) {
+                                sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, service, name, selectedCategory, phone, "", location, whatsApp, price, numberOfPeople, moreDetails, "", "", addId, imageUpload);
+                            } else {
+
+                                AddServiceRequest.UpdatePackageRequest updatePackageRequest = new AddServiceRequest.UpdatePackageRequest();
+                                updatePackageRequest.setAdd_id(edtAddId);
+                                updatePackageRequest.setUser_id(String.valueOf(sellerAddPackageViewModel.getDataManager().getCurrentUserId()));
+                                updatePackageRequest.setGuide_name(nameEntered);
+                                updatePackageRequest.setLevel1_category(category_l_1_ShortName);
+                                updatePackageRequest.setLevel2_category(category_l_2_ShortName);
+                                updatePackageRequest.setLevel3_category("");
+                                updatePackageRequest.setPackageName(name);
+                                updatePackageRequest.setPackage_include(selectedCategory);
+                                updatePackageRequest.setPhone(phone);
+                                updatePackageRequest.setCountry("");
+                                updatePackageRequest.setLocation(location);
+                                updatePackageRequest.setWhatsapp_phone(whatsApp);
+                                updatePackageRequest.setPrice(price);
+                                updatePackageRequest.setPeople_cnt(numberOfPeople);
+                                updatePackageRequest.setMore_details(moreDetails);
+                                updatePackageRequest.setCity("");
+                                updatePackageRequest.setLanguage("");
+                                updatePackageRequest.setLicence_pic_url("");
+                                updatePackageRequest.setNational_id("");
+                                updatePackageRequest.setService(service);
+                                updatePackageRequest.setImage_list(imageUpload);
+                                sellerAddPackageViewModel.upDatePackage(updatePackageRequest);
+                            }
                         } else {
                             Toast toast = Toast.makeText(getActivity(), "Please add Package", Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -525,16 +632,72 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                         toast.show();
                     }
 
-
-                        /*}else {
-                            Toast.makeText(this, getString(R.string.select_city_option), Toast.LENGTH_SHORT).show();
-                        }*/
-                    /*} else {
-                        Toast.makeText(this, getString(R.string.select_country_option), Toast.LENGTH_SHORT).show();
-                    }*/
-
                 } else {
                     Toast toast = Toast.makeText(getActivity(), getString(R.string.select_category_option), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            } else {
+                Toast toast = Toast.makeText(getActivity(), getString(R.string.fill_all_error), Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+        } else if(option==3){
+
+            if (sellerAddPackageViewModel.isValid(name, phone, whatsApp, moreDetails, price, numberOfPeople, location)) {
+                String subCategory = fragmentSellerAddPackageBinding.spinnerSubType.getSelectedItem().toString();
+                if (sellerAddPackageViewModel.validateSpinner(5, subCategory)) {
+                    if (!imageUpload.isEmpty()) {
+                        if (!options.isEmpty()) {
+                            String nameEntered = "";
+                            String category_l_2_ShortName = "";
+                            String category_l_3_ShortName = subCategory;
+                            String service = "";
+                            if (fragmentSellerAddPackageBinding.etServices.getText().toString().length() > 1) {
+                                service = fragmentSellerAddPackageBinding.etServices.getText().toString();
+                            }
+                            if (isEditRequest == 0) {
+                                sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, category_l_3_ShortName, name, selectedCategory, phone, "", location, whatsApp, price, numberOfPeople, moreDetails, "", "", addId, imageUpload);
+                            } else {
+
+                                AddServiceRequest.UpdatePackageRequest updatePackageRequest = new AddServiceRequest.UpdatePackageRequest();
+                                updatePackageRequest.setAdd_id(edtAddId);
+                                updatePackageRequest.setUser_id(String.valueOf(sellerAddPackageViewModel.getDataManager().getCurrentUserId()));
+                                updatePackageRequest.setGuide_name(nameEntered);
+                                updatePackageRequest.setLevel1_category(category_l_1_ShortName);
+                                updatePackageRequest.setLevel2_category(category_l_2_ShortName);
+                                updatePackageRequest.setLevel3_category(category_l_3_ShortName);
+                                updatePackageRequest.setPackageName(name);
+                                updatePackageRequest.setPackage_include(selectedCategory);
+                                updatePackageRequest.setPhone(phone);
+                                updatePackageRequest.setCountry("");
+                                updatePackageRequest.setLocation(location);
+                                updatePackageRequest.setWhatsapp_phone(whatsApp);
+                                updatePackageRequest.setPrice(price);
+                                updatePackageRequest.setPeople_cnt(numberOfPeople);
+                                updatePackageRequest.setMore_details(moreDetails);
+                                updatePackageRequest.setCity("");
+                                updatePackageRequest.setLanguage("");
+                                updatePackageRequest.setLicence_pic_url("");
+                                updatePackageRequest.setNational_id("");
+                                updatePackageRequest.setService(service);
+                                updatePackageRequest.setImage_list(imageUpload);
+                                sellerAddPackageViewModel.upDatePackage(updatePackageRequest);
+                            }
+                        } else {
+                            Toast toast = Toast.makeText(getActivity(), "Please add Package", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+
+                    } else {
+                        Toast toast = Toast.makeText(getActivity(), "Please upload image", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+
+                } else {
+                    Toast toast = Toast.makeText(getActivity(), getString(R.string.select_sub_category_option), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 }
@@ -546,9 +709,6 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         }
         ///
 
-
-
-
     }
 
     @Override
@@ -558,7 +718,18 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
     @Override
     public void setSeller() {
+        getBaseActivity().onFragmentDetached(TAG);
+        startActivity(new Intent(getActivity(), SplashActivity.class));
+    }
 
+    private Fragment getVisibleFragment() {
+        FragmentManager fragmentManager = this.getFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment != null && fragment.isVisible())
+                return fragment;
+        }
+        return null;
     }
 
     @Override
@@ -647,13 +818,12 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
     }
 
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sellerAddPackageViewModel.setNavigator(this);
-        option = (int) getArguments().getSerializable(GD);
+        option = getArguments().getInt(GD);
+        guideData = getArguments().getString(DATA_BUNDLE);
     }
 
     @Override
@@ -670,7 +840,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
             ServicesItemAdapter servicesItemAdapter;
             List<ServicesChecklistItems> servicesChecklist = new ArrayList<>();
-            ArrayList<String>selectedServiceList = new ArrayList<>();
+            ArrayList<String> selectedServiceList = new ArrayList<>();
             final Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.dialog_services);
 
@@ -696,13 +866,13 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             dialogButtonCancel.setOnClickListener(v1 -> dialog.dismiss());
 
             Button dialogButtonSave = dialog.findViewById(R.id.btn_submit);
-            dialogButtonSave.setOnClickListener(v1->{
+            dialogButtonSave.setOnClickListener(v1 -> {
                 String service = "";
-                for(String name :selectedServiceList){
+                for (String name : selectedServiceList) {
 
-                    if(!service.equalsIgnoreCase("")) {
+                    if (!service.equalsIgnoreCase("")) {
                         service = service + ", " + name;
-                    }else {
+                    } else {
                         service = name;
                     }
                 }
@@ -713,15 +883,293 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         });
         reqQueue = Volley.newRequestQueue(getActivity());
         hideKeyboard();
-        setSpinner();
-        setUp();
+        setSpinner(option);
 
+        if (!guideData.equalsIgnoreCase("")) {
+            isEditRequest = 1;
+            setUp();
+        }
     }
 
     private void setUp() {
+        try {
+            JSONObject jsonObj = new JSONObject(guideData);
+            edtAddId = jsonObj.optString("id");
+            fragmentSellerAddPackageBinding.etWhatsApp.setText(jsonObj.optString("whatsApp"));
+            fragmentSellerAddPackageBinding.etPhone.setText(jsonObj.optString("phone"));
+            fragmentSellerAddPackageBinding.etName.setText(jsonObj.optString("package"));
+            fragmentSellerAddPackageBinding.etMore.setText(jsonObj.optString("details"));
+            fragmentSellerAddPackageBinding.etPrice.setText(jsonObj.optString("price"));
+            String level1_Category = jsonObj.optString("level1_category");
+            String level2_Category = jsonObj.optString("level2_category");
+            String level3_Category = jsonObj.optString("level3_category");
 
+            if(jsonObj.optString("licence_pic_url").trim().length()>0) {
+                List<String> licenseList = Arrays.asList(jsonObj.optString("licence_pic_url").split(","));
+                addLayout(licenseList, "licenseList");
+            }
+
+            List<String> imList = Arrays.asList(jsonObj.optString("images").split("\t"));
+            addLayout(imList, "imageList");
+            for (int i = 0; i < imList.size(); i++) {
+                imageUpload.put(edtAddId, imList.get(i));
+            }
+            fragmentSellerAddPackageBinding.etServices.setText(jsonObj.optString("services"));
+            fragmentSellerAddPackageBinding.etLocation.setText(jsonObj.optString("location"));
+            fragmentSellerAddPackageBinding.etNoOfPeoples.setText(jsonObj.optString("no_of_people"));
+            List<String> packageList = Arrays.asList(jsonObj.optString("package_include").split(","));
+            options.addAll(packageList);
+            addPackageList(packageList);
+
+            int selectedCategory = 0;
+            if (level1_Category.equalsIgnoreCase("TR")) {
+                option = 1;
+                setSpinner(1);
+                if (level2_Category.equalsIgnoreCase("TG")) {
+                    selectedCategory = 1;
+                } else if (level2_Category.equalsIgnoreCase("TGP")) {
+                    selectedCategory = 2;
+                    if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("Domastic")))) {
+                        fragmentSellerAddPackageBinding.spinnerSubType.setSelection(1);
+                    } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("IC"))) {
+                        fragmentSellerAddPackageBinding.spinnerSubType.setSelection(2);
+                    } else {
+                        fragmentSellerAddPackageBinding.spinnerSubType.setSelection(0);
+                    }
+                } else if (level2_Category.equalsIgnoreCase("HM")) {
+                    selectedCategory = 3;
+                } else if (level2_Category.equalsIgnoreCase("FT")) {
+                    selectedCategory = 4;
+                }
+                fragmentSellerAddPackageBinding.spinnerType.setSelection(selectedCategory);
+
+            } else if(level1_Category.equalsIgnoreCase("SS")){
+                option = 2;
+                setSpinner(2);
+                if (level2_Category.equalsIgnoreCase("WT")) {
+                    selectedCategory = 1;
+                } else if (level2_Category.equalsIgnoreCase("CUS")) {
+                    selectedCategory = 2;
+                }
+                fragmentSellerAddPackageBinding.spinnerType.setSelection(selectedCategory);
+            }
+            else if(level1_Category.equalsIgnoreCase("Shops")){
+                option = 3;
+                setSpinner(3);
+                if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("Domastic")))) {
+                    fragmentSellerAddPackageBinding.spinnerSubType.setSelection(1);
+                } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("IC"))) {
+                    fragmentSellerAddPackageBinding.spinnerSubType.setSelection(2);
+                } else {
+                    fragmentSellerAddPackageBinding.spinnerSubType.setSelection(0);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addPackageList(List<String> packageList) {
+
+        for (int i = 0; i < packageList.size(); i++) {
+            if (packageList.get(i).equalsIgnoreCase(getString(R.string.package_flights))) {
+                fragmentSellerAddPackageBinding.rlFlight.setVisibility(View.VISIBLE);
+            } else if (packageList.get(i).equalsIgnoreCase(getString(R.string.package_hotels))) {
+                fragmentSellerAddPackageBinding.rlHotel.setVisibility(View.VISIBLE);
+            } else if (packageList.get(i).equalsIgnoreCase(getString(R.string.package_meals))) {
+                fragmentSellerAddPackageBinding.rlMeals.setVisibility(View.VISIBLE);
+            } else if (packageList.get(i).equalsIgnoreCase(getString(R.string.package_sight_seeing))) {
+                fragmentSellerAddPackageBinding.rlSS.setVisibility(View.VISIBLE);
+            } else if (packageList.get(i).equalsIgnoreCase(getString(R.string.package_site_visit))) {
+                fragmentSellerAddPackageBinding.rlSV.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private void addLayout(List<String> imList, String listType) {
+
+        for (int i = 0; i < imList.size(); i++) {
+            final int layoutId = new Random().nextInt(61) + 20;
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View imageView = inflater.inflate(R.layout.item_language_view, null);
+            TextView tvOptions = imageView.findViewById(R.id.tvFlight);
+            ImageButton btnFlightClose = imageView.findViewById(R.id.btnFlightClose);
+            try {
+                //File objFile = new File(pathsList[0]);
+                tvOptions.setText(imList.get(i));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(20, 15, 20, 10);
+            imageView.setLayoutParams(params);
+            imageView.setId(layoutId);
+            btnFlightClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listType.equalsIgnoreCase("imageList")) {
+                        fragmentSellerAddPackageBinding.rlImageSelected.removeView(getActivity().findViewById(layoutId));
+                    } else if (listType.equalsIgnoreCase("licenseList")) {
+                        fragmentSellerAddPackageBinding.rlLicenseSelected.removeView(getActivity().findViewById(layoutId));
+                    }
+                    images.remove(layoutId);
+
+                }
+            });
+            if (listType.equalsIgnoreCase("imageList")) {
+                fragmentSellerAddPackageBinding.rlImageSelected.addView(imageView);
+            } else if (listType.equalsIgnoreCase("licenseList")) {
+                fragmentSellerAddPackageBinding.rlLicenseSelected.addView(imageView);
+            }
+
+
+        }
 
     }
+
+    private void setSpinner(int option) {
+        category = fragmentSellerAddPackageBinding.spinnerType;
+        if (option == 1) {
+            initialiseCategorySpinnerTraveler();
+        } else if (option == 2) {
+            initialiseCategorySpinnerSupplier();
+        } else {
+            initiateShopsAddView();
+        }
+    }
+
+    private void initiateShopsAddView() {
+
+        fragmentSellerAddPackageBinding.tvCategory.setVisibility(View.GONE);
+        fragmentSellerAddPackageBinding.spinnerType.setVisibility(View.GONE);
+
+        fragmentSellerAddPackageBinding.tvSubCategory.setVisibility(View.VISIBLE);
+        fragmentSellerAddPackageBinding.spinnerSubType.setVisibility(View.VISIBLE);
+        fragmentSellerAddPackageBinding.tvName.setText("Package Name");
+
+        //country
+        fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
+        fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);
+        //city
+        fragmentSellerAddPackageBinding.tvCity.setVisibility(View.GONE);
+        fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.GONE);
+
+
+        fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
+        fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
+        fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.VISIBLE);
+        fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.VISIBLE);
+        fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.GONE);
+        fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.GONE);
+    }
+
+    private void initialiseCategorySpinnerSupplier() {
+
+        fragmentSellerAddPackageBinding.tvName.setText("Package Name");
+        fragmentSellerAddPackageBinding.tvCity.setVisibility(View.GONE);
+        fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.GONE);
+        ArrayAdapter<String> spinnerSuppliesAdapter = new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.supply_options));
+        category.setAdapter(spinnerSuppliesAdapter);
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                // TODO Auto-generated method stub
+                fragmentSellerAddPackageBinding.tvName.setText("Package Name");
+                //country
+                fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
+                fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);
+                //city
+                fragmentSellerAddPackageBinding.tvCity.setVisibility(View.GONE);
+                fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.GONE);
+
+
+                fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
+                fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
+                fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.VISIBLE);
+                fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.VISIBLE);
+                fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.GONE);
+                fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
+
+    private void initialiseCategorySpinnerTraveler() {
+
+        ArrayAdapter<String> spinnerTravelAdapter = new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.travel_options));
+        category.setAdapter(spinnerTravelAdapter);
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                // TODO Auto-generated method stub
+                if (arg2 == 2) {
+                    fragmentSellerAddPackageBinding.tvSubCategory.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.spinnerSubType.setVisibility(View.VISIBLE);
+                } else {
+                    fragmentSellerAddPackageBinding.tvSubCategory.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.spinnerSubType.setVisibility(View.GONE);
+                }
+                if (arg2 == 1) {
+                    fragmentSellerAddPackageBinding.tvName.setText("Name");
+                    fragmentSellerAddPackageBinding.llLocation.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.VISIBLE);
+
+                    //country
+                    fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.VISIBLE);
+
+                    //city
+                    fragmentSellerAddPackageBinding.tvCity.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.VISIBLE);
+
+
+                } else {
+                    fragmentSellerAddPackageBinding.tvName.setText("Package Name");
+                    //country
+                    fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);
+                    //city
+                    fragmentSellerAddPackageBinding.tvCity.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.GONE);
+
+
+                    fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+    }
+
     private void addLanguage(String value, int id) {
         if (hashMap.isEmpty()) {
             int layoutId = 1000 + id;
@@ -739,9 +1187,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                 @Override
                 public void onClick(View v) {
                     fragmentSellerAddPackageBinding.rlLanguageSelected.removeView(getActivity().findViewById(layoutId));
-                    if (hashMap.containsKey(layoutId)) {
-                        hashMap.remove(layoutId);
-                    }
+                    hashMap.remove(layoutId);
 
                 }
             });
@@ -772,9 +1218,11 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         }
 
     }
-    private void addImage(String[] data,Boolean isLicense) {
-        sellerAddPackageViewModel.InitialMediaUploadRequest(reqQueue, getActivity(), data[0], "", Integer.toString(1),isLicense);
+
+    private void addImage(String[] data, Boolean isLicense) {
+        sellerAddPackageViewModel.InitialMediaUploadRequest(reqQueue, getActivity(), data[0], "", Integer.toString(1), isLicense);
     }
+
     private void addToList(String option) {
 
         if (option.equalsIgnoreCase(getString(R.string.package_flights))) {
@@ -802,109 +1250,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
     private void setPackageData() {
         selectedCategory = TextUtils.join(",", options);
     }
-    private void setSpinner() {
-        category = fragmentSellerAddPackageBinding.spinnerType;
-        if (option == 1) {
-            ArrayAdapter<String> spinnerTravelAdapter = new ArrayAdapter<>(
-                    getActivity(),
-                    android.R.layout.simple_spinner_dropdown_item,
-                    getResources().getStringArray(R.array.travel_options));
-            category.setAdapter(spinnerTravelAdapter);
-            category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                           int arg2, long arg3) {
-                    // TODO Auto-generated method stub
-                    if (arg2 == 2) {
-                        fragmentSellerAddPackageBinding.tvSubCategory.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.spinnerSubType.setVisibility(View.VISIBLE);
-                    } else {
-                        fragmentSellerAddPackageBinding.tvSubCategory.setVisibility(View.GONE);
-                        fragmentSellerAddPackageBinding.spinnerSubType.setVisibility(View.GONE);
-                    }
-                    if (arg2 == 1) {
-                        fragmentSellerAddPackageBinding.tvName.setText("Name");
-                        fragmentSellerAddPackageBinding.llLocation.setVisibility(View.GONE);
-                        fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.GONE);
-                        fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.GONE);
-                        fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.GONE);
-                        fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.VISIBLE);
 
-                        //country
-                        fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.VISIBLE);
-
-                        //city
-                        fragmentSellerAddPackageBinding.tvCity.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.VISIBLE);
-
-
-                    } else {
-                        fragmentSellerAddPackageBinding.tvName.setText("Package Name");
-                        //country
-                        fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
-                        fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);
-                        //city
-                        fragmentSellerAddPackageBinding.tvCity.setVisibility(View.GONE);
-                        fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.GONE);
-
-
-                        fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.VISIBLE);
-                        fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.GONE);
-                        fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.GONE);
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> arg0) {
-                    // TODO Auto-generated method stub
-
-                }
-            });
-        } else {
-            fragmentSellerAddPackageBinding.tvName.setText("Package Name");
-            fragmentSellerAddPackageBinding.tvCity.setVisibility(View.GONE);
-            fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.GONE);
-            ArrayAdapter<String> spinnerSuppliesAdapter = new ArrayAdapter<>(
-                    getActivity(),
-                    android.R.layout.simple_spinner_dropdown_item,
-                    getResources().getStringArray(R.array.supply_options));
-            category.setAdapter(spinnerSuppliesAdapter);
-            category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                           int arg2, long arg3) {
-                    // TODO Auto-generated method stub
-                    fragmentSellerAddPackageBinding.tvName.setText("Package Name");
-                    //country
-                    fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
-                    fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);
-                    //city
-                    fragmentSellerAddPackageBinding.tvCity.setVisibility(View.GONE);
-                    fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.GONE);
-
-
-                    fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
-                    fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
-                    fragmentSellerAddPackageBinding.etNoOfPeoples.setVisibility(View.VISIBLE);
-                    fragmentSellerAddPackageBinding.rlPackage.setVisibility(View.VISIBLE);
-                    fragmentSellerAddPackageBinding.rlLanguage.setVisibility(View.GONE);
-                    fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> arg0) {
-                    // TODO Auto-generated method stub
-
-                }
-            });
-        }
-
-    }
     @Override
     public void onResume() {
         super.onResume();
@@ -924,6 +1270,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         });
 
     }
+
     private void onBackPressed() {
         getView().setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -935,6 +1282,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             return false;
         });
     }
+
     private void showHome() {
         for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();

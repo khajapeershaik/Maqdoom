@@ -180,6 +180,44 @@ public class SellerAddPackageViewModel extends BaseViewModel<SellerAddPackageNav
                     getNavigator().handleError(throwable);
                 }));
     }
+
+    public void upDatePackage(AddServiceRequest.UpdatePackageRequest updatePackageRequest) {
+        setIsLoading(true);
+        getCompositeDisposable().add(getDataManager()
+                .doAddPackageEditApiCall(updatePackageRequest)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(response -> {
+                    setIsLoading(false);
+                    if ("fail".equals(response.getResponse())) {
+                        getNavigator().showErrorAlert(response.getMessage());
+                    } else {
+                        getNavigator().showErrorAlert(response.getMessage());
+                        getNavigator().setSeller();
+                    }
+                }, throwable -> {
+                    if (throwable instanceof ANError) {
+                        ANError anError = (ANError) throwable;
+                        if (anError.getErrorCode() != 0) {
+                            // received ANError from server
+                            // error.getErrorCode() - the ANError code from server
+                            // error.getErrorBody() - the ANError body from server
+                            // error.getErrorDetail() - just a ANError detail
+                            Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                            Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        } else {
+                            // error.getErrorDetail() : connectionError, parseError, requestCancelledError
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        }
+                    } else {
+                        Log.d("TAG", "onError errorMessage : " + throwable.getMessage());
+                    }
+                    throwable.printStackTrace();
+                    setIsLoading(false);
+                    getNavigator().handleError(throwable);
+                }));
+    }
     public void InitialMediaUploadRequest(RequestQueue reqQueue, Context context, String path, String addId, String imageIndex, Boolean isLicense) {
         System.out.println("Arun -path :"+path);
         System.out.println("Arun -addId :"+addId);
