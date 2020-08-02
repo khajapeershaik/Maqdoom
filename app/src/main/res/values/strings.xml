@@ -607,4 +607,9 @@
         <item>Tourist Guide</item>
 
     </string-array>
+
+    <string name="mobileNo">Mobile Number</string>
+    <string name="otp">Enter OTP</string>
+    <string name="add_images">Add Images</string>
+    <string name="upload_pic">Upload licence image </string>
 </resources>
