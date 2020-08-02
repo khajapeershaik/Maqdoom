@@ -223,7 +223,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/spinner_arrow"
                     android:layout_marginRight="5dp"
@@ -251,12 +250,8 @@
                     android:id="@+id/spinnerCountry"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/spinner_arrow"
-
                     android:prompt="@string/s_city" />
                 <ImageView
                     android:layout_width="wrap_content"
@@ -264,6 +259,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
+                    android:paddingLeft="5dp"
                     android:layout_marginEnd="5dp"
                     app:srcCompat="@drawable/downarrow" />
 
@@ -282,7 +278,7 @@
                     android:id="@+id/spinnerPrice"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/spinner_arrow"
                     android:prompt="@string/s_language" />
                 <ImageView
@@ -307,12 +303,8 @@
                     android:id="@+id/spinnerService"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
-                    android:background="@drawable/spinner_arrow"
-
-                    android:layout_marginLeft="5dp"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
+                    android:background="@drawable/spinner_arrow"
                     android:prompt="@string/s_city" />
                 <ImageView
                     android:layout_width="wrap_content"
@@ -322,7 +314,6 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="5dp"
                     app:srcCompat="@drawable/downarrow" />
-
             </RelativeLayout>
         </LinearLayout>
 
