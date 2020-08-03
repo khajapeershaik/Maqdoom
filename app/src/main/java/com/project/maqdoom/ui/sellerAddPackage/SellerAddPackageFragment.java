@@ -144,10 +144,10 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
     public void pickImage(Boolean isLicense) {
         if (!isLicense) {
             //Upload images
-            new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(SellerAddPackageFragment.this).limit(4).show();
+            new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(SellerAddPackageFragment.this).limit(4).disableCamera(true).show();
         } else {
             //Upload license
-            new GligarPicker().requestCode(31).withFragment(SellerAddPackageFragment.this).limit(4).show();
+            new GligarPicker().requestCode(31).withFragment(SellerAddPackageFragment.this).limit(4).disableCamera(true).show();
 
         }
     }
@@ -252,6 +252,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             case 31: {
                 pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT);
                 addImage(pathsList, true);
+                break;
             }
         }
     }
