@@ -73,7 +73,7 @@ public class RegistrationActivity extends BaseActivity<ActivityRegistrationBindi
     public void register() {
         String name = activityRegistrationBinding.etName.getText().toString().trim();
         String email = activityRegistrationBinding.etEmail.getText().toString().trim();
-        String phone = countryCodePicker.getSelectedCountryCode()+activityRegistrationBinding.etMobileNumber.getText().toString().trim();
+        String phone = "+" + countryCodePicker.getSelectedCountryCode()+activityRegistrationBinding.etMobileNumber.getText().toString().trim();
         Log.d("PhoneNo",phone);
         sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
 
