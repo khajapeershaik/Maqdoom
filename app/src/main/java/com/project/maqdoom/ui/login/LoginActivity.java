@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -109,20 +110,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public void login() {
 
         sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
-
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY, "en");
-
         String mobile = mActivityLoginBinding.etMobileNumber.getText().toString();
         String otp = mActivityLoginBinding.etOTP.getText().toString();
-        mLoginViewModel.login(langPreference, mobile, otp);
-/*
-        if (mLoginViewModel.isEmailAndPasswordValid(email, password)) {
-            hideKeyboard();
-            mLoginViewModel.login(langPreference,email, otp);
-
-        } else {
-            Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
-        }*/
+        mLoginViewModel.savePhoneOTP(langPreference,mobile,otp);
     }
 
     @Override
@@ -197,13 +188,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         fStore = FirebaseFirestore.getInstance();
 
 
-        mActivityLoginBinding.btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mActivityLoginBinding.btnSubmit.setOnClickListener(v -> {
+            if(!TextUtils.isEmpty(mActivityLoginBinding.etMobileNumber.getText())) {
                 String phoneNum = "+" + countryCodePicker.getSelectedCountryCode() + mActivityLoginBinding.etMobileNumber.getText().toString();
-
                 Log.d("phone", "Phone No.: " + phoneNum);
                 requestPhoneAuth(phoneNum);
+            }
+            else {
+                mActivityLoginBinding.etMobileNumber.setError("Mandatory");
             }
         });
 
@@ -297,17 +289,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                         next.setEnabled(true);
                         optEnter.setVisibility(View.VISIBLE);*/
                     }
-
                     @Override
                     public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
-                        // called if otp is automatically detected by the app
                         verifyAuth(phoneAuthCredential);
-
-                        if (phoneAuthCredential.getSmsCode() != null) {
-                            mActivityLoginBinding.etOTP.setText(phoneAuthCredential.getSmsCode());
-                        }
-
                     }
 
                     @Override
@@ -324,7 +308,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "Phone Verified."+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-                    //checkUserProfile();
+                    if (credential.getSmsCode() != null) {
+                        mActivityLoginBinding.etOTP.setText(credential.getSmsCode());
+                    }
 
                 }else {
 //                    progressBar.setVisibility(View.GONE);
@@ -333,15 +319,5 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 }
             }
         });
-    }
-    private void savePhoneOTP(){
-        String email = countryCodePicker.getSelectedCountryCode()+ mActivityLoginBinding.etMobileNumber.getText().toString();
-        String otp = mActivityLoginBinding.etOTP.getText().toString();
-
-        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
-
-        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
-        mLoginViewModel.savePhoneOTP(langPreference,email, otp);
-
     }
 }

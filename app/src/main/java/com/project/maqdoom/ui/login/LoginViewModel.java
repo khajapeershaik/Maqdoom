@@ -39,16 +39,13 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         if (!CommonUtils.isEmailValid(email)) {
             return false;
         }
-        if (TextUtils.isEmpty(password)) {
-            return false;
-        }
-        return true;
+        return !TextUtils.isEmpty(password);
     }
 
     public void login(String language, String phone, String otp) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .doServerLoginApiCall(new MaqdoomLoginRequest.ServerLoginRequest(language,phone, otp))
+                .doServerLoginApiCall(new MaqdoomLoginRequest.ServerLoginRequest(language, phone, otp))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
@@ -118,7 +115,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     public void savePhoneOTP(String language, String phone, String otp) {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
-                .dosavePhoneOTP(new MaqdoomLoginRequest.ServerLoginRequest(language,phone, otp))
+                .dosavePhoneOTP(new MaqdoomLoginRequest.ServerLoginRequest(language, phone, otp))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
@@ -126,12 +123,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     if ("fail".equals(response.getResponse())) {
                         getNavigator().showErrorAlert(response.getMessage());
                     } else {
-                        if (response.getResponse() != null) {
-
-                        } else {
-                            getNavigator().showErrorAlert(response.getMessage());
-                        }
-
+                        login(language, phone, otp);
                     }
                 }, throwable -> {
                     if (throwable instanceof ANError) {
