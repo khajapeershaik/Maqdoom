@@ -110,7 +110,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public void login() {
         sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY, "en");
-        String mobile = "+" + countryCodePicker.getSelectedCountryCode() + mActivityLoginBinding.etMobileNumber.getText().toString();
+        String mobile = mActivityLoginBinding.etMobileNumber.getText().toString();
 
         String otp = mActivityLoginBinding.etOTP.getText().toString();
         String number = "+" + countryCodePicker.getSelectedCountryCode()+mobile;
