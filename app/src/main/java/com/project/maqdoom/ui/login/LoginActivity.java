@@ -308,9 +308,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(LoginActivity.this, "Phone Verified."+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(LoginActivity.this, "Phone Verified."+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
                     if (credential.getSmsCode() != null) {
                         mActivityLoginBinding.etOTP.setText(credential.getSmsCode());
+                        mActivityLoginBinding.btnSubmit.setVisibility(View.GONE);
+
                     }
 
                 }else {
