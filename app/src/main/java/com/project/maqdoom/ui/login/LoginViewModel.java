@@ -120,7 +120,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
                     setIsLoading(false);
-                    if ("success".equals(response.getResponse())||"successfully Saved.".equalsIgnoreCase(response.getMessage())) {
+                    if ("success".equals(response.getResponse())) {
                         login(language, phone, otp);
                     }
                 }, throwable -> {

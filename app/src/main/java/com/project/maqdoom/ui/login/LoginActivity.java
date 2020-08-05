@@ -80,6 +80,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public static final String LANGUAGE_KEY = "language";
 
     private FirebaseFirestore fStore;
+    String firebaseOTP = "";
 
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -111,10 +112,13 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY, "en");
         String mobile = mActivityLoginBinding.etMobileNumber.getText().toString();
-
         String otp = mActivityLoginBinding.etOTP.getText().toString();
         String number = "+" + countryCodePicker.getSelectedCountryCode()+mobile;
-        mLoginViewModel.savePhoneOTP(langPreference,number,otp);
+//        if(firebaseOTP.equalsIgnoreCase(otp)) {
+            mLoginViewModel.savePhoneOTP(langPreference, number, otp);
+//        }else {
+//            mActivityLoginBinding.etOTP.setError("Invalid OTP");
+//        }
     }
 
     @Override
@@ -278,17 +282,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                     public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                         super.onCodeSent(s, forceResendingToken);
                         mActivityLoginBinding.otpLayout.setVisibility(View.VISIBLE);
-                        //    savePhoneOTP();
-                        //  mActivityLoginBinding.btnSubmit.setVisibility(View.GONE);
+                        mActivityLoginBinding.llLogin.setVisibility(View.VISIBLE);
+                        mActivityLoginBinding.btnSubmit.setVisibility(View.GONE);
 
-                    /*    verificationId = s;
-                        token = forceResendingToken;
-                        verificationOnProgress = true;
-                        progressBar.setVisibility(View.GONE);
-                        state.setVisibility(View.GONE);
-                        next.setText("Verify");
-                        next.setEnabled(true);
-                        optEnter.setVisibility(View.VISIBLE);*/
                     }
                     @Override
                     public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
@@ -311,6 +307,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                     Toast.makeText(LoginActivity.this, "Phone Verified."+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
                     if (credential.getSmsCode() != null) {
                         mActivityLoginBinding.etOTP.setText(credential.getSmsCode());
+                       firebaseOTP = credential.getSmsCode();
                     }
 
                 }else {
