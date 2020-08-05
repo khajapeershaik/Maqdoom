@@ -16,7 +16,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.project.maqdoom.ui.customerTouristGroups.insideCountry.InsideCountryViewModel" />
@@ -48,10 +50,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
-            android:baselineAligned="false"
             android:layout_marginRight="10dp"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="8">
+
             <RelativeLayout
                 android:id="@+id/ll_country"
                 android:layout_width="0dp"
@@ -67,9 +70,12 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginEnd="5dp"
-                    android:background="@drawable/spinner_arrow"
+
                     android:layout_marginRight="5dp"
-                    android:prompt="@string/s_city" />
+                    android:background="@drawable/spinner_arrow"
+                    android:prompt="@string/s_city"
+                    android:textSize="12sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,6 +87,7 @@
 
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/ll_city"
                 android:layout_width="0dp"
@@ -98,8 +105,10 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/spinner_arrow"
+                    android:prompt="@string/s_city"
 
-                    android:prompt="@string/s_city" />
+                    android:textSize="12sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,14 +135,16 @@
                     android:layout_height="40dp"
                     android:layout_marginStart="5dp"
                     android:background="@drawable/spinner_arrow"
-                    android:prompt="@string/s_language" />
+                    android:prompt="@string/s_language"
+                    android:textSize="12sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="5dp"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
                     app:srcCompat="@drawable/downarrow" />
             </RelativeLayout>
 
@@ -150,12 +161,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginStart="5dp"
-                    android:background="@drawable/spinner_arrow"
-
                     android:layout_marginLeft="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
-                    android:prompt="@string/s_city" />
+                    android:background="@drawable/spinner_arrow"
+                    android:prompt="@string/s_city"
+                    android:textSize="12sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -167,20 +179,23 @@
 
             </RelativeLayout>
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/ll_spinner"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="60dp">
+
             <androidx.core.widget.ContentLoadingProgressBar
                 android:id="@+id/address_looking_up"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/blogRecyclerView"
                 android:layout_width="match_parent"

@@ -163,6 +163,7 @@
                                 android:cursorVisible="true"
                                 android:gravity="center|left|bottom"
                                 android:hint="@string/mobileNo"
+                                android:maxLength="12"
                                 android:inputType="number"
                                 android:paddingBottom="10dp"
                                 android:textColor="@color/black_effective"

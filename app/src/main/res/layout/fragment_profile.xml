@@ -32,9 +32,9 @@
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="true"
         android:background="@color/tg_background"
-        android:clickable="true">
+        android:clickable="true"
+        android:focusable="true">
 
         <RelativeLayout
             android:id="@+id/toolbar"
@@ -122,11 +122,11 @@
                         android:src="@drawable/profile_icon" />
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:layout_marginLeft="10dp"
+                        android:id="@+id/languageButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/languageButton"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="10dp" />
 
                     <TextView
                         android:id="@+id/tvProfileName"
@@ -215,6 +215,7 @@
                             android:background="@android:color/transparent"
                             android:enabled="false"
                             android:inputType="phone"
+                            android:maxLength="12"
                             android:padding="2dp"
                             android:text="@{viewModel.getPhone()}"
                             android:textAllCaps="false"
@@ -345,6 +346,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginTop="10dp">
 
                         <ImageView
