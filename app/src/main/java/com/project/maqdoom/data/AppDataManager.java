@@ -176,6 +176,8 @@ public class AppDataManager implements DataManager {
         return mPreferencesHelper.getAccessToken();
     }
 
+
+
     @Override
     public void setAccessToken(String accessToken) {
         mPreferencesHelper.setAccessToken(accessToken);
@@ -197,6 +199,9 @@ public class AppDataManager implements DataManager {
     public void setCurrentUserEmail(String email) {
         mPreferencesHelper.setCurrentUserEmail(email);
     }
+
+
+
 
     @Override
     public int getCurrentUserId() {
@@ -302,6 +307,18 @@ public class AppDataManager implements DataManager {
     @Override
     public String getCreatedImage() {
         return null;
+    }
+
+    @Override
+    public String getImageUrl() {
+        return mPreferencesHelper.getImageUrl();
+
+    }
+
+    @Override
+    public void setImageUrl(String imageUrl) {
+        mPreferencesHelper.setImageUrl(imageUrl);
+
     }
 
 

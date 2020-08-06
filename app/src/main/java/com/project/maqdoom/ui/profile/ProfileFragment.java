@@ -13,10 +13,12 @@
 
 package com.project.maqdoom.ui.profile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,6 +36,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.opensooq.supernova.gligar.GligarPicker;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
@@ -41,6 +45,7 @@ import com.project.maqdoom.databinding.FragmentProfileBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragment;
 import com.project.maqdoom.ui.login.LoginActivity;
+import com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageFragment;
 import com.project.maqdoom.ui.splash.SplashActivity;
 
 import java.util.ArrayList;
@@ -70,8 +75,9 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     private SharedPreferences sharedpreferences;
     public static final String LANGUAGE_REFERENCE = "language_preference" ;
     public static final String LANGUAGE_KEY = "language";
+    public static final  int PICKER_REQUEST_CODE = 30;
 
-
+    private String pathsList[];
     public static ProfileFragment newInstance() {
         Bundle args = new Bundle();
         ProfileFragment fragment = new ProfileFragment();
@@ -137,9 +143,10 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         String phone = fragmentProfileBinding.etPhone.getText().toString();
         String name = fragmentProfileBinding.etName.getText().toString();
         String eMail = fragmentProfileBinding.etMail.getText().toString();
+
         if (profileViewModel.isValid(phone, name,eMail)) {
             hideKeyboard();
-            profileViewModel.updateProfile(phone, name,eMail);
+            profileViewModel.updateProfile(phone, name,eMail,pathsList[0]);
 
         } else {
             Toast.makeText(getActivity(), getString(R.string.fill_all_error), Toast.LENGTH_SHORT).show();
@@ -150,6 +157,14 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void disableEdit() {
         disableEditOption();
     }
+
+    @Override
+    public void pickImage() {
+
+        new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(ProfileFragment.this).limit(1).disableCamera(true).cameraDirect(false).show();
+
+    }
+
     @Override
     public void showErrorAlert(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
@@ -159,6 +174,10 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         profileViewModel.setNavigator(this);
+        if(profileViewModel.getDataManager().getImageUrl()!=null) {
+            Glide.with(getActivity()).load(profileViewModel.getDataManager().getImageUrl()).into(fragmentProfileBinding.ivProfilePic);
+        }
+
     }
 
     @Override
@@ -326,5 +345,22 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             fragmentProfileBinding.etPhone.setText("Not available");
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        switch (requestCode){
+            case PICKER_REQUEST_CODE : {
+                 pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT); // return list of selected images paths.
+                if(pathsList!=null) {
+                    fragmentProfileBinding.ivProfilePic.setImageBitmap(BitmapFactory.decodeFile(pathsList[0]));
+                }
+                break;
+            }
+        }
     }
 }

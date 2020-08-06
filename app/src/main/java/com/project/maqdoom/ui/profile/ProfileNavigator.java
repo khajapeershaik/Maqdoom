@@ -32,4 +32,6 @@ public interface ProfileNavigator {
 
     void disableEdit();
 
+    void pickImage();
+
 }

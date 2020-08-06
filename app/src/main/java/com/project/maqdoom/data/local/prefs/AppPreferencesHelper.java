@@ -47,6 +47,7 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_USER_SELECTED_LANGUAGE = "PREF_KEY_USER_SELECTED_LANGUAGE";
 
+    private static final String PREF_KEY_IMAGE_URL = "PREF_KEY_IMAGE_URL";
 
     private final SharedPreferences mPrefs;
 
@@ -185,5 +186,16 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public String getCreatedImage() {
         return null;
+    }
+
+    @Override
+    public String getImageUrl() {
+        return mPrefs.getString(PREF_KEY_IMAGE_URL, null);
+
+    }
+
+    @Override
+    public void setImageUrl(String imageUrl) {
+        mPrefs.edit().putString(PREF_KEY_IMAGE_URL, imageUrl).apply();
     }
 }

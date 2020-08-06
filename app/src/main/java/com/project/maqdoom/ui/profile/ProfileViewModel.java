@@ -107,11 +107,11 @@ public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
         }
         return true;
     }
-    public void updateProfile(String phone, String name, String email) {
+    public void updateProfile(String phone, String name, String email,String imageurl) {
         setIsLoading(true);
         int userId = getDataManager().getCurrentUserId();
         getCompositeDisposable().add(getDataManager()
-                .doEditProfileApiCall(new EditProfileRequest.ServerEditProfileRequest(String.valueOf(userId), email, name, phone,"1"))
+                .doEditProfileApiCall(new EditProfileRequest.ServerEditProfileRequest(String.valueOf(userId), email, name, phone,"1",imageurl))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
@@ -122,6 +122,7 @@ public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
                         getDataManager().setPhone(phone);
                         getDataManager().setCurrentUserName(name);
                         getDataManager().setEmail(email);
+                        getDataManager().setImageUrl(imageurl);
                         getNavigator().disableEdit();
                         getNavigator().showErrorAlert(response.getMessage());
                     }
@@ -163,5 +164,9 @@ public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
     public void onCancelEdit() {
         getNavigator().disableEdit();
 
+    }
+
+    public void onSelectLicenseImage() {
+        getNavigator().pickImage();
     }
 }

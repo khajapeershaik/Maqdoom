@@ -32,65 +32,83 @@
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="true"
         android:background="@color/tg_background"
-        android:clickable="true">
+        android:clickable="true"
+        android:focusable="true">
 
-        <RelativeLayout
-            android:id="@+id/toolbar"
+        <LinearLayout
+            android:id="@+id/lnr_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:background="@color/navigation_bg"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/navBackBtn"
-                style="@style/Button.ImageButton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/back_btn"
-                android:onClick="@{() -> viewModel.onNavBackClick()}"
-                android:visibility="invisible" />
+            android:orientation="vertical">
 
-            <TextView
-                style="@style/TextStyle.Menu.SemiBold"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/img_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:onClick="@{() -> viewModel.onSelectLicenseImage()}"
+                android:src="@mipmap/gallery" />
+
+            <RelativeLayout
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:gravity="center"
-                android:text="@string/profile"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:background="@color/navigation_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/navLogout"
-                style="@style/Button.ImageButton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/logout_btn"
-                android:onClick="@{() -> viewModel.onNavLogoutClick()}" />
-        </RelativeLayout>
+                <ImageButton
+                    android:id="@+id/navBackBtn"
+                    style="@style/Button.ImageButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/back_btn"
+                    android:onClick="@{() -> viewModel.onNavBackClick()}"
+                    android:visibility="invisible" />
+
+                <TextView
+                    style="@style/TextStyle.Menu.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:gravity="center"
+                    android:text="@string/profile"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:id="@+id/navLogout"
+                    style="@style/Button.ImageButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/logout_btn"
+                    android:onClick="@{() -> viewModel.onNavLogoutClick()}" />
+            </RelativeLayout>
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/lnr_main">
 
             <LinearLayout
                 android:id="@+id/ll_base"
@@ -122,11 +140,11 @@
                         android:src="@drawable/profile_icon" />
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:layout_marginLeft="10dp"
+                        android:id="@+id/languageButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/languageButton"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="10dp" />
 
                     <TextView
                         android:id="@+id/tvProfileName"
@@ -215,6 +233,7 @@
                             android:background="@android:color/transparent"
                             android:enabled="false"
                             android:inputType="phone"
+                            android:maxLength="12"
                             android:padding="2dp"
                             android:text="@{viewModel.getPhone()}"
                             android:textAllCaps="false"
@@ -345,7 +364,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/imAddress"
