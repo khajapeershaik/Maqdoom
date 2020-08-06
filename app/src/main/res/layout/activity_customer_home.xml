@@ -47,8 +47,8 @@
                     android:id="@+id/top_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:background="@color/navigation_bg">
+
 
                     <ImageButton
                         android:id="@+id/dashboardBackBtn"
@@ -61,8 +61,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
-                        android:background="@drawable/back_btn"
-                       />
+                        android:background="@drawable/back_btn" />
 
                     <TextView
                         style="@style/TextStyle.Menu.Normal"
@@ -77,40 +76,39 @@
                         android:textSize="17sp"
                         android:visibility="gone" />
 
+
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/tg_background">
+                    android:layout_gravity="center"
+                    android:background="@color/tg_background"
+                    android:gravity="center">
 
-                    <View
-                        android:id="@+id/view"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true">
-
-                    </View>
 
                     <LinearLayout
+                        android:id="@+id/lnrmain"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+
                         android:baselineAligned="false"
+
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="4">
 
                         <RelativeLayout
                             android:id="@+id/rl_travel_parent"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:layout_weight="1">
+                            android:layout_weight="2">
 
                             <RelativeLayout
                                 android:id="@+id/rl_travel"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:onClick="@{() -> viewModel.showCustomerHome()}"
@@ -122,17 +120,18 @@
 
                                     <ImageView
                                         android:id="@+id/iv_travel_pic"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="150dp"
+                                        android:layout_height="150dp"
+                                        android:layout_centerHorizontal="true"
                                         android:layout_gravity="top|center"
                                         android:scaleType="fitCenter"
-                                        android:src="@drawable/travel" />
+                                        android:src="@drawable/supplies_dash_bg" />
 
                                     <LinearLayout
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:layout_gravity="bottom|center"
-                                        android:layout_marginTop="130dp"
+                                        android:layout_marginTop="5dp"
                                         android:background="@drawable/round_shape"
                                         android:orientation="vertical">
 
@@ -173,14 +172,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:layout_weight="1">
+                            android:layout_weight="2">
 
                             <RelativeLayout
                                 android:id="@+id/rl_shops"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:onClick="@{() -> viewModel.showShopsHome()}"
+                                android:onClick="@{() -> viewModel.showCustomerHome()}"
                                 android:orientation="vertical">
 
                                 <FrameLayout
@@ -189,17 +188,17 @@
 
                                     <ImageView
                                         android:id="@+id/iv_shop_pic"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="left|center"
-                                        android:scaleType="fitXY"
-                                        android:src="@drawable/shops" />
+                                        android:layout_width="150dp"
+                                        android:layout_height="150dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_gravity="top|center"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/shops_icon" />
 
                                     <LinearLayout
                                         android:layout_width="40dp"
                                         android:layout_height="40dp"
                                         android:layout_gravity="bottom|center"
-                                        android:layout_marginBottom="20dp"
                                         android:background="@drawable/round_shape"
                                         android:orientation="vertical">
 
@@ -222,9 +221,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/rl_shops"
                                 android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
                                 android:layout_marginStart="20dp"
-                                android:layout_marginLeft="20dp"
                                 android:layout_marginTop="10dp"
                                 android:drawableStart="@drawable/shops_img"
                                 android:drawablePadding="10dp"
@@ -236,7 +233,19 @@
                                 android:textSize="14sp" />
                         </RelativeLayout>
 
+
                     </LinearLayout>
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/lnrmain"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true">
+
+                    </View>
+
                     <!-- Layout 2 -->
                     <RelativeLayout
                         android:id="@+id/rl_supplies_parent"
@@ -258,19 +267,18 @@
 
                                 <ImageView
                                     android:id="@+id/iv_supply_pic"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_gravity="top|center"
                                     android:scaleType="fitCenter"
-                                    android:src="@drawable/suppliers" />
+                                    android:src="@drawable/travel_dash_bg" />
 
                                 <LinearLayout
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="bottom|center"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginTop="130dp"
                                     android:background="@drawable/round_shape"
                                     android:orientation="vertical">
 

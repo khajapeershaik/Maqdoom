@@ -68,4 +68,8 @@ public interface PreferencesHelper {
     void setSellerStatus(String status);
 
     String getCreatedImage();
+
+    String getImageUrl();
+    void setImageUrl(String imageUrl);
+
 }
