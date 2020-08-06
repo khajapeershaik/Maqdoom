@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -75,6 +76,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     private SharedPreferences sharedpreferences;
     public static final String LANGUAGE_REFERENCE = "language_preference" ;
     public static final String LANGUAGE_KEY = "language";
+    public static final String PROFILE_IMAGE_KEY = "userImageURL";
     public static final  int PICKER_REQUEST_CODE = 30;
 
     private String pathsList[];
@@ -146,7 +148,11 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
         if (profileViewModel.isValid(phone, name,eMail)) {
             hideKeyboard();
-            profileViewModel.updateProfile(phone, name,eMail,pathsList[0]);
+            if(pathsList.length>0) {
+                profileViewModel.updateProfile(phone, name, eMail, pathsList[0]);
+            }else {
+                profileViewModel.updateProfile(phone, name, eMail, "");
+            }
 
         } else {
             Toast.makeText(getActivity(), getString(R.string.fill_all_error), Toast.LENGTH_SHORT).show();
@@ -174,10 +180,6 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         profileViewModel.setNavigator(this);
-        if(profileViewModel.getDataManager().getImageUrl()!=null) {
-            Glide.with(getActivity()).load(profileViewModel.getDataManager().getImageUrl()).into(fragmentProfileBinding.ivProfilePic);
-        }
-
     }
 
     @Override
@@ -188,7 +190,9 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         sharedpreferences = getActivity().getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
 
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        String profileImageURL = sharedpreferences.getString(PROFILE_IMAGE_KEY,"");
 
+       setImage(fragmentProfileBinding.ivProfilePic,profileImageURL);
             if (langPreference.equalsIgnoreCase("en")) {
                 defaultLanguage = "English";
             } else {
@@ -213,18 +217,17 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         saveLanguagePreference(en);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
        startActivity(new Intent(getActivity(), SplashActivity.class));
-//        if (Build.VERSION.SDK_INT >= 26) {
-//            ft.setReorderingAllowed(false);
-//        }
-//        startActivity(getActivity().getIntent());
-//        ft.detach(this).attach(this).commit();
-//        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
     }
 
     private void saveLanguagePreference(String lan){
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(LANGUAGE_KEY, lan);
+        editor.commit();
+    }
+
+    private void saveProfileImage(String url){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(PROFILE_IMAGE_KEY, url);
         editor.commit();
     }
 
@@ -347,6 +350,14 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
     }
 
+    private void setImage(ImageView imgv ,String url){
+        Glide.with(getActivity())
+                .load(url)
+                .centerCrop()
+                .placeholder(R.drawable.profile_icon)
+                .into(imgv);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -357,7 +368,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             case PICKER_REQUEST_CODE : {
                  pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT); // return list of selected images paths.
                 if(pathsList!=null) {
-                    fragmentProfileBinding.ivProfilePic.setImageBitmap(BitmapFactory.decodeFile(pathsList[0]));
+                    setImage(fragmentProfileBinding.ivProfilePic,pathsList[0]);
+                    saveProfileImage(pathsList[0]);
                 }
                 break;
             }
