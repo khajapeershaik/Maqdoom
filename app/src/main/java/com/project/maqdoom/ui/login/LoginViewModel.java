@@ -18,13 +18,23 @@ import android.util.Log;
 
 import com.androidnetworking.error.ANError;
 import com.project.maqdoom.data.DataManager;
+import com.project.maqdoom.data.model.api.MaqDoomLoginResponse;
 import com.project.maqdoom.data.model.api.MaqdoomLoginRequest;
+import com.project.maqdoom.data.model.api.ProfileResponse;
+import com.project.maqdoom.data.remote.api_rest.ApiClient;
+import com.project.maqdoom.data.remote.api_rest.ApiInterface;
 import com.project.maqdoom.ui.base.BaseViewModel;
 import com.project.maqdoom.utils.CommonUtils;
 import com.project.maqdoom.utils.rx.SchedulerProvider;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
+
+    String imageUrl = "";
 
     public LoginViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -67,19 +77,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                                                 response.getData().getPhone()
 
                                         );
-                                //getDataManager().setLanguage("en");
-                                if ("0".equalsIgnoreCase(response.getData().getIs_seller())) {
-                                    getNavigator().openCustomerHome();
-                                } else {
-//                                    if("0".equalsIgnoreCase(response.getData().getSeller_subscrption_status())){
-//                                        getNavigator().openSellerSubscription();
-//                                        //getNavigator().openSellerHome();
-//                                    }else{
-                                    getNavigator().openSellerHome();
-                                    // }
-                                }
-
-
+                                getProfile(response);
                             } else {
                                 getNavigator().showErrorAlert(response.getMessage());
                             }
@@ -137,6 +135,44 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     getNavigator().handleError(throwable);
                 }));
 
+    }
+
+    /* Get profile image - need to call this , no other way as per API */
+    public String getProfile(MaqDoomLoginResponse loginResponse) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<ProfileResponse> profileResponse = apiService.getProfile(getDataManager().getCurrentUserId());
+        profileResponse.enqueue(new Callback<ProfileResponse>() {
+            @Override
+            public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
+                if (response.isSuccessful()) {
+                    imageUrl = response.body().getDpimg();
+                    Log.v("profileResponse", response.body().getName());
+                    if ("0".equalsIgnoreCase(loginResponse.getData().getIs_seller())) {
+                        getNavigator().openCustomerHome();
+                    } else {
+//                                    if("0".equalsIgnoreCase(response.getData().getSeller_subscrption_status())){
+//                                        getNavigator().openSellerSubscription();
+//                                        //getNavigator().openSellerHome();
+//                                    }else{
+                        getNavigator().openSellerHome();
+                        // }
+                    }
+                } else {
+                    Log.d("TAG", "get profile error");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileResponse> call, Throwable t) {
+                Log.d("TAG", "get profile error");
+            }
+        });
+        return imageUrl;
+    }
+
+    public String getProfileImage() {
+        return imageUrl;
     }
 
     public void onSignUpClick() {

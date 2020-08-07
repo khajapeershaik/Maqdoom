@@ -155,8 +155,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         String LANGUAGE_REFERENCE = "language_preference";
         SharedPreferences sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
         String USER_TYPE_KEY = "userType";
+        String USER_IMAGE_KEY = "userImageURL";
+        String imageUrl = mLoginViewModel.getProfileImage();
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(USER_TYPE_KEY, userType);
+        editor.putString(USER_IMAGE_KEY, imageUrl);
         editor.commit();
     }
 

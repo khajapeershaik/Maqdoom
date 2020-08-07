@@ -21,8 +21,6 @@ import com.project.maqdoom.utils.AppConstants;
 
 import javax.inject.Inject;
 
-
-
 public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN";
