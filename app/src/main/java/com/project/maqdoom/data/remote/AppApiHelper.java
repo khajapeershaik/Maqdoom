@@ -289,6 +289,8 @@ public class AppApiHelper implements ApiHelper {
             jsonObject.put("email", request.getEmail());
             jsonObject.put("phone", request.getPhone());
             jsonObject.put("notification", request.getNotifications());
+            jsonObject.put("image", request.getImage());
+
 
         } catch (JSONException e) {
             e.printStackTrace();

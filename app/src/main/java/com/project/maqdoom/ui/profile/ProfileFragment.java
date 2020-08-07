@@ -174,9 +174,9 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         profileViewModel.setNavigator(this);
-        if(profileViewModel.getDataManager().getImageUrl()!=null) {
+       /* if(profileViewModel.getDataManager().getImageUrl()!=null) {
             Glide.with(getActivity()).load(profileViewModel.getDataManager().getImageUrl()).into(fragmentProfileBinding.ivProfilePic);
-        }
+        }*/
 
     }
 
