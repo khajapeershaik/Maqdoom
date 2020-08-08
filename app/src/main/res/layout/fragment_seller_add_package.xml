@@ -225,14 +225,13 @@
 
                     <EditText
                         android:id="@+id/etServices"
-                        android:layout_width="match_parent"
+                        android:layout_width="364dp"
                         android:layout_height="40dp"
                         android:layout_below="@+id/tvServices"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/custom_bg_edit_text_one"
+                        android:editable="false"
                         android:ellipsize="end"
-                        android:hint="@string/name_hint"
-                        android:imeOptions="actionNext"
                         android:padding="8dp"
                         android:singleLine="true" />
 

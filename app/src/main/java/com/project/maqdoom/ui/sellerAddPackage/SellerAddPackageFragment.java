@@ -837,7 +837,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         hashMap = new HashMap<>();
         imageUpload = new HashMap<>();
 
-        fragmentSellerAddPackageBinding.rlServices.setOnClickListener(v -> {
+        fragmentSellerAddPackageBinding.etServices.setOnClickListener(v -> {
 
             ServicesItemAdapter servicesItemAdapter;
             List<ServicesChecklistItems> servicesChecklist = new ArrayList<>();
