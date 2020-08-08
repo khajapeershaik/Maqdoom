@@ -149,10 +149,10 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         if (profileViewModel.isValid(phone, name,eMail)) {
             hideKeyboard();
             if((pathsList!=null)&&(pathsList.length>0)) {
-                profileViewModel.updateProfile(phone, name, eMail, pathsList[0]);
+                profileViewModel.updateProfile(phone, name, eMail, pathsList[0],defaultLanguage);
             }
             else {
-                profileViewModel.updateProfile(phone, name, eMail, "");
+                profileViewModel.updateProfile(phone, name, eMail, "",defaultLanguage);
             }
 
         } else {

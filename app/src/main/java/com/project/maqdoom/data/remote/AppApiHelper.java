@@ -46,6 +46,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Single;
+import okhttp3.MultipartBody;
 
 /**
  *

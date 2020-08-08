@@ -233,7 +233,7 @@
                             android:background="@android:color/transparent"
                             android:enabled="false"
                             android:inputType="phone"
-                            android:maxLength="12"
+                            android:maxLength="13"
                             android:padding="2dp"
                             android:text="@{viewModel.getPhone()}"
                             android:textAllCaps="false"

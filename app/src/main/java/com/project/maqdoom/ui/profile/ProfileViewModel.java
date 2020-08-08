@@ -19,12 +19,24 @@ import android.util.Log;
 import com.androidnetworking.error.ANError;
 import com.project.maqdoom.data.DataManager;
 import com.project.maqdoom.data.model.api.EditProfileRequest;
+import com.project.maqdoom.data.model.api.EditProfileResponse;
 import com.project.maqdoom.data.model.api.MaqdoomLoginRequest;
+import com.project.maqdoom.data.model.api.ProfileResponse;
+import com.project.maqdoom.data.remote.api_rest.ApiClient;
+import com.project.maqdoom.data.remote.api_rest.ApiInterface;
 import com.project.maqdoom.ui.base.BaseViewModel;
 import com.project.maqdoom.utils.CommonUtils;
 import com.project.maqdoom.utils.rx.SchedulerProvider;
 
+import java.io.File;
+
 import androidx.databinding.ObservableField;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
@@ -107,38 +119,45 @@ public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
         }
         return true;
     }
-    public void updateProfile(String phone, String name, String email,String imageurl) {
+    public void updateProfile(String phone, String name, String email,String imageurl,String lang) {
         setIsLoading(true);
         int userId = getDataManager().getCurrentUserId();
-        getCompositeDisposable().add(getDataManager()
-                .doEditProfileApiCall(new EditProfileRequest.ServerEditProfileRequest(String.valueOf(userId), email, name, phone,"1",imageurl))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(response -> {
-                    setIsLoading(false);
-                    if ("fail".equals(response.getResponse())) {
-                        getNavigator().showErrorAlert(response.getMessage());
+
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+        File file =  new File(imageurl);
+        RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part image = MultipartBody.Part.createFormData("image", file.getName(),body);
+        MultipartBody.Part userid = MultipartBody.Part.createFormData("user_id", String.valueOf(userId));
+        MultipartBody.Part emails = MultipartBody.Part.createFormData("email", email);
+        MultipartBody.Part names = MultipartBody.Part.createFormData("name", name);
+        MultipartBody.Part noti = MultipartBody.Part.createFormData("notifications", "1");
+        MultipartBody.Part lan = MultipartBody.Part.createFormData("language",lang );
+        MultipartBody.Part phon = MultipartBody.Part.createFormData("phone",phone );
+
+        Call<EditProfileResponse> profileResponse = apiService.editProfile(emails,lan,phon,names,noti,userid,image);
+        profileResponse.enqueue(new Callback<EditProfileResponse>() {
+            @Override
+            public void onResponse(Call<EditProfileResponse> call, Response<EditProfileResponse> response) {
+                setIsLoading(false);
+                    if ("fail".equals(response.message())) {
+                        getNavigator().showErrorAlert(response.message());
                     } else {
                         getDataManager().setPhone(phone);
                         getDataManager().setCurrentUserName(name);
                         getDataManager().setEmail(email);
-                        getDataManager().setImageUrl(imageurl);
                         getNavigator().disableEdit();
-                        getNavigator().showErrorAlert(response.getMessage());
+                        getNavigator().showErrorAlert(response.message());
                     }
-                }, throwable -> {
-                    if (throwable instanceof ANError) {
-                        ANError anError = (ANError) throwable;
-                        if (anError.getErrorCode() != 0) {
-                        } else {
-                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
-                        }
-                    } else {
-                        Log.d("TAG", "onError errorMessage : " + throwable.getMessage());
-                    }
-                    throwable.printStackTrace();
-                    setIsLoading(false);
-                }));
+            }
+
+            @Override
+            public void onFailure(Call<EditProfileResponse> call, Throwable t) {
+                setIsLoading(false);
+                getNavigator().showErrorAlert(t.getMessage());
+            }
+        });
+
     }
     public void onNavBackClick() {
         getNavigator().goBack();
