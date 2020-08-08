@@ -77,7 +77,18 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                                                 response.getData().getPhone()
 
                                         );
-                                getProfile(response);
+                                imageUrl = response.getData().getDpimg();
+
+                                if ("0".equalsIgnoreCase(response.getData().getIs_seller())) {
+                                    getNavigator().openCustomerHome();
+                                } else {
+//                                    if("0".equalsIgnoreCase(response.getData().getSeller_subscrption_status())){
+//                                        getNavigator().openSellerSubscription();
+//                                        //getNavigator().openSellerHome();
+//                                    }else{
+                                    getNavigator().openSellerHome();
+                                    // }
+                                }
                             } else {
                                 getNavigator().showErrorAlert(response.getMessage());
                             }
@@ -135,40 +146,6 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     getNavigator().handleError(throwable);
                 }));
 
-    }
-
-    /* Get profile image - need to call this , no other way as per API */
-    public String getProfile(MaqDoomLoginResponse loginResponse) {
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProfileResponse> profileResponse = apiService.getProfile(getDataManager().getCurrentUserId());
-        profileResponse.enqueue(new Callback<ProfileResponse>() {
-            @Override
-            public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                if (response.isSuccessful()) {
-                    imageUrl = response.body().getDpimg();
-                    Log.v("profileResponse", response.body().getName());
-                    if ("0".equalsIgnoreCase(loginResponse.getData().getIs_seller())) {
-                        getNavigator().openCustomerHome();
-                    } else {
-//                                    if("0".equalsIgnoreCase(response.getData().getSeller_subscrption_status())){
-//                                        getNavigator().openSellerSubscription();
-//                                        //getNavigator().openSellerHome();
-//                                    }else{
-                        getNavigator().openSellerHome();
-                        // }
-                    }
-                } else {
-                    Log.d("TAG", "get profile error");
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProfileResponse> call, Throwable t) {
-                Log.d("TAG", "get profile error");
-            }
-        });
-        return imageUrl;
     }
 
     public String getProfileImage() {

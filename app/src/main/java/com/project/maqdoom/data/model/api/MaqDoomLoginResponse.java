@@ -97,6 +97,9 @@ public final class MaqDoomLoginResponse {
         @SerializedName("phone")
         private String phone;
 
+        @Expose
+        @SerializedName("dpimg")
+        private String dpimg;
 
         @Expose
         @SerializedName("seller_subscrption_status")
@@ -115,6 +118,10 @@ public final class MaqDoomLoginResponse {
             User user = (User) o;
             return name.equals(user.name);
 
+        }
+
+        public String getDpimg() {
+            return dpimg;
         }
 
         public String getName() {
