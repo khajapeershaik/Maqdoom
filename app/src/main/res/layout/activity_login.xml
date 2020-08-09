@@ -73,66 +73,64 @@
                             style="@style/TextStyle.Menu.Normal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left|top"
+                            android:layout_gravity="start|top"
                             android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
                             android:layout_marginTop="20dp"
                             android:text="@string/sign_in_header"
                             android:textAllCaps="false"
                             android:textSize="25sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/etCountryCode"
-                            style="@style/TextStyle"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.3"
-                            android:layout_marginTop="20dp"
-                            android:cursorVisible="true"
-                            android:gravity="center|left|bottom"
-                            android:background="@drawable/input_border_bottom"
-                            android:maxLength="12"
-                            android:inputType="number"
-                            android:paddingBottom="10dp"
-                            android:textColor="@color/black_effective"
-                            android:textSize="14sp" />
-
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1.7"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColorHint="@color/gray"
-                            app:hintEnabled="false"
-                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+                            android:layout_marginTop="40dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etMobileNumber"
+                            <EditText
+                                android:id="@+id/etCountryCode"
                                 style="@style/TextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginRight="20dp"
+                                android:layout_weight="0.3"
                                 android:background="@drawable/input_border_bottom"
                                 android:cursorVisible="true"
-                                android:gravity="center|left|bottom"
-                                android:hint="@string/mobileNo"
+                                android:gravity="center|start|bottom"
                                 android:inputType="number"
                                 android:maxLength="12"
                                 android:paddingBottom="10dp"
                                 android:textColor="@color/black_effective"
                                 android:textSize="14sp" />
 
-                        </com.google.android.material.textfield.TextInputLayout>
 
-                    </LinearLayout>
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.7"
+                                android:textColorHint="@color/gray"
+                                app:hintEnabled="false"
+                                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etMobileNumber"
+                                    style="@style/TextStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:background="@drawable/input_border_bottom"
+                                    android:cursorVisible="true"
+                                    android:gravity="center|start|bottom"
+                                    android:hint="@string/mobileNo"
+                                    android:inputType="number"
+                                    android:maxLength="12"
+                                    android:paddingBottom="10dp"
+                                    android:textColor="@color/black_effective"
+                                    android:textSize="14sp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
 
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -150,12 +148,12 @@
                                 style="@style/TextStyle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginRight="20dp"
+                                android:layout_marginEnd="20dp"
                                 android:background="@drawable/input_border_bottom"
                                 android:cursorVisible="true"
-                                android:gravity="center|left|bottom"
+                                android:gravity="center|start|bottom"
                                 android:hint="@string/otp"
                                 android:inputType="number"
                                 android:paddingBottom="10dp"
@@ -212,14 +210,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
                                 android:layout_centerHorizontal="true"
-                                android:layout_gravity="right|top"
+                                android:layout_gravity="end|top"
                                 android:layout_marginStart="20dp"
-                                android:layout_marginLeft="20dp"
                                 android:layout_marginTop="20dp"
                                 android:layout_marginEnd="15dp"
-                                android:layout_marginRight="15dp"
                                 android:onClick="@{() -> viewModel.onSignUpClick()}"
                                 android:padding="2dp"
                                 android:text="@string/sign_up"
@@ -241,14 +236,14 @@
                 <LinearLayout
                     android:id="@+id/ll_login"
                     android:layout_width="80dp"
-                    android:visibility="gone"
                     android:layout_height="80dp"
-                    android:layout_gravity="bottom|right"
+                    android:layout_gravity="bottom|end"
                     android:layout_marginEnd="30dp"
                     android:layout_marginRight="30dp"
                     android:background="@drawable/round_shape"
                     android:onClick="@{() -> viewModel.onServerLoginClick()}"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"

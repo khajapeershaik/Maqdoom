@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:gravity="center"
                 android:text="@string/family_trip_title"
                 android:textColor="@color/white"
@@ -254,7 +254,7 @@
                     android:layout_height="40dp"
                     android:textSize="12sp"
 
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/spinner_arrow"
                     android:prompt="@string/s_city" />
                 <ImageView
@@ -263,7 +263,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:srcCompat="@drawable/downarrow" />
 
@@ -290,7 +290,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="5dp"
                     android:layout_gravity="center"

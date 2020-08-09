@@ -168,7 +168,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     @Override
     public void pickImage() {
 
-        new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(ProfileFragment.this).limit(1).disableCamera(true).cameraDirect(false).show();
+        new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(ProfileFragment.this).limit(1).disableCamera(false).show();
 
     }
 
@@ -319,6 +319,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         fragmentProfileBinding.etPhone.requestFocus();
         fragmentProfileBinding.etName.setEnabled(true);
         fragmentProfileBinding.etMail.setEnabled(true);
+        fragmentProfileBinding.imgGallery.setVisibility(View.VISIBLE);
         fragmentProfileBinding.rlSave.setVisibility(View.VISIBLE);
     }
 

@@ -144,10 +144,10 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
     public void pickImage(Boolean isLicense) {
         if (!isLicense) {
             //Upload images
-            new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(SellerAddPackageFragment.this).limit(4).disableCamera(true).show();
+            new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(SellerAddPackageFragment.this).limit(4).disableCamera(false).show();
         } else {
             //Upload license
-            new GligarPicker().requestCode(31).withFragment(SellerAddPackageFragment.this).limit(4).disableCamera(true).show();
+            new GligarPicker().requestCode(31).withFragment(SellerAddPackageFragment.this).limit(4).disableCamera(false).show();
 
         }
     }
@@ -1048,7 +1048,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
         fragmentSellerAddPackageBinding.tvSubCategory.setVisibility(View.VISIBLE);
         fragmentSellerAddPackageBinding.spinnerSubType.setVisibility(View.VISIBLE);
-        fragmentSellerAddPackageBinding.tvName.setText("Package Name");
+        fragmentSellerAddPackageBinding.tvName.setText(getString(R.string.package_name));
 
         //country
         fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
@@ -1068,7 +1068,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
     private void initialiseCategorySpinnerSupplier() {
 
-        fragmentSellerAddPackageBinding.tvName.setText("Package Name");
+        fragmentSellerAddPackageBinding.tvName.setText(getString(R.string.package_name));
         fragmentSellerAddPackageBinding.tvCity.setVisibility(View.GONE);
         fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.GONE);
         ArrayAdapter<String> spinnerSuppliesAdapter = new ArrayAdapter<>(
@@ -1081,7 +1081,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
                 // TODO Auto-generated method stub
-                fragmentSellerAddPackageBinding.tvName.setText("Package Name");
+                fragmentSellerAddPackageBinding.tvName.setText(getString(R.string.package_name));
                 //country
                 fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
                 fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);
@@ -1144,7 +1144,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
 
                 } else {
-                    fragmentSellerAddPackageBinding.tvName.setText("Package Name");
+                    fragmentSellerAddPackageBinding.tvName.setText(getString(R.string.package_name));
                     //country
                     fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
                     fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);

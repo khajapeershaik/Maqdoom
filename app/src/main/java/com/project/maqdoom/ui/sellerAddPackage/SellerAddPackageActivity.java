@@ -651,7 +651,7 @@ public class SellerAddPackageActivity extends BaseActivity<ActivitySellerAddPack
 
 
                     } else {
-                        activitySellerAddPackageBinding.tvName.setText("Package Name");
+                        activitySellerAddPackageBinding.tvName.setText(getString(R.string.package_name));
                         //country
                         activitySellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
                         activitySellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);

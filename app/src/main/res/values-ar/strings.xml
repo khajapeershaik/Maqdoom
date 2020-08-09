@@ -187,7 +187,7 @@
     <string name="service_location">الموقع</string>
     <string name="location_hint">إضافة موقع</string>
     <string name="location_price">إضافة سعر</string>
-    <string name="service_includes">Package Includes</string>
+    <string name="service_includes">الشحنة تحتوي</string>
     <string name="service_includes_hint">Add includes</string>
     <string name="service_people">عدد الأشخاص</string>
     <string name="service_people_hint">ادخل الرقم</string>
@@ -564,10 +564,11 @@
     <string name="str_travel_agent">اسم وكيل السفر</string>
     <string name="str_low_high">من الأقل الى الأعلى</string>
     <string name="str_high_low">من الأعلى الى الأقل</string>
-    <string name="mobileNo">Mobile Number</string>
+    <string name="mobileNo">رقم الهاتف المحمول</string>
     <string name="otp">Enter OTP</string>
     <string name="add_images">إضافة صورة</string>
     <string name="upload_pic">قم بتحميل صورة الترخيص</string>
+    <string name="str_message">رسالتك</string>
     <string-array name="item_services">
 
         <item>القفز الحر بالمظلة</item>

@@ -31,7 +31,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/back_btn"
@@ -43,9 +43,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:gravity="center"
-                    android:text="Select a language"
+                    android:text="@string/select_language_option"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
