@@ -30,5 +30,10 @@ public interface ApiInterface {
                                           @Part MultipartBody.Part name,@Part MultipartBody.Part notifications,@Part MultipartBody.Part user_id,
                                           @Part MultipartBody.Part image);
 
+    @POST("editUserProfile")
+    @Multipart
+    Call<EditProfileResponse> editProfileNoImage(@Part MultipartBody.Part email,@Part MultipartBody.Part language,@Part MultipartBody.Part phone,
+                                          @Part MultipartBody.Part name,@Part MultipartBody.Part notifications,@Part MultipartBody.Part user_id);
+
 }
 

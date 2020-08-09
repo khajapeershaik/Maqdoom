@@ -205,6 +205,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             showLanguages();
         });
         setUp();
+        populateData();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         //onBackPressed();
@@ -246,13 +247,11 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         llLanguageList.setOnItemClickListener((adapterView, view, i, l) -> {
 
             if(i==1){
-                profileViewModel.getDataManager().setLanguage("ar");
                 Log.v("selected","ar");
                 fragmentProfileBinding.languageButton.setText("Arabic");
                 updateLocale("ar");
             }
             else{
-                profileViewModel.getDataManager().setLanguage("en");
                 Log.v("selected","en");
                 fragmentProfileBinding.languageButton.setText("English");
                 updateLocale("en");
