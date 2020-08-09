@@ -212,13 +212,20 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     }
 
     private void updateLocale(String en) {
-        Locale locale = new Locale(en);
-        Configuration config = getResources().getConfiguration();
-        config.locale = locale;
-        getResources().updateConfiguration(config,getResources().getDisplayMetrics());
+
+        Locale locale;
+        locale = new Locale(en);
+        Configuration config = new Configuration(getActivity().getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getActivity().getBaseContext().getResources().updateConfiguration(config,
+                getActivity().getBaseContext().getResources().getDisplayMetrics());
+
         saveLanguagePreference(en);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-       startActivity(new Intent(getActivity(), SplashActivity.class));
+        Intent intent =new Intent(getActivity(), SplashActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void saveLanguagePreference(String lan){

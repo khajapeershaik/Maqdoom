@@ -104,16 +104,15 @@
                 <TextView
                     android:id="@+id/tvCategory"
                     style="@style/TextStyle.Menu.Normal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_vertical"
+                    android:layout_gravity="start|end"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
                     android:text="@string/service_category"
-                    android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="@color/light_grey"
                     android:textSize="13sp" />
@@ -202,7 +201,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/etName"
-                    android:layout_marginLeft="20dp"
                     android:visibility="visible">
 
                     <TextView
@@ -211,7 +209,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|center_vertical"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
@@ -227,8 +225,10 @@
                         android:id="@+id/etServices"
                         android:layout_width="364dp"
                         android:layout_height="40dp"
+                        android:layout_marginStart="20dp"
                         android:layout_below="@+id/tvServices"
                         android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
                         android:background="@drawable/custom_bg_edit_text_one"
                         android:editable="false"
                         android:ellipsize="end"
