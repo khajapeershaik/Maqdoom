@@ -122,20 +122,29 @@ public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
     public void updateProfile(String phone, String name, String email,String imageurl,String lang) {
         setIsLoading(true);
         int userId = getDataManager().getCurrentUserId();
-
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<EditProfileResponse> profileResponse;
 
-        File file =  new File(imageurl);
-        RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part image = MultipartBody.Part.createFormData("image", file.getName(),body);
-        MultipartBody.Part userid = MultipartBody.Part.createFormData("user_id", String.valueOf(userId));
-        MultipartBody.Part emails = MultipartBody.Part.createFormData("email", email);
-        MultipartBody.Part names = MultipartBody.Part.createFormData("name", name);
-        MultipartBody.Part noti = MultipartBody.Part.createFormData("notifications", "1");
-        MultipartBody.Part lan = MultipartBody.Part.createFormData("language",lang );
-        MultipartBody.Part phon = MultipartBody.Part.createFormData("phone",phone );
-
-        Call<EditProfileResponse> profileResponse = apiService.editProfile(emails,lan,phon,names,noti,userid,image);
+        if(!imageurl.equalsIgnoreCase("")) {
+            File file = new File(imageurl);
+            RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part image = MultipartBody.Part.createFormData("image", file.getName(), body);
+            MultipartBody.Part userid = MultipartBody.Part.createFormData("user_id", String.valueOf(userId));
+            MultipartBody.Part emails = MultipartBody.Part.createFormData("email", email);
+            MultipartBody.Part names = MultipartBody.Part.createFormData("name", name);
+            MultipartBody.Part noti = MultipartBody.Part.createFormData("notifications", "1");
+            MultipartBody.Part lan = MultipartBody.Part.createFormData("language",lang );
+            MultipartBody.Part phon = MultipartBody.Part.createFormData("phone",phone );
+            profileResponse = apiService.editProfile(emails,lan,phon,names,noti,userid,image);
+        }else {
+            MultipartBody.Part userid = MultipartBody.Part.createFormData("user_id", String.valueOf(userId));
+            MultipartBody.Part emails = MultipartBody.Part.createFormData("email", email);
+            MultipartBody.Part names = MultipartBody.Part.createFormData("name", name);
+            MultipartBody.Part noti = MultipartBody.Part.createFormData("notifications", "1");
+            MultipartBody.Part lan = MultipartBody.Part.createFormData("language", lang);
+            MultipartBody.Part phon = MultipartBody.Part.createFormData("phone", phone);
+            profileResponse = apiService.editProfileNoImage(emails,lan,phon,names,noti,userid);
+        }
         profileResponse.enqueue(new Callback<EditProfileResponse>() {
             @Override
             public void onResponse(Call<EditProfileResponse> call, Response<EditProfileResponse> response) {

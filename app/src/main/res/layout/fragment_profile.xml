@@ -348,7 +348,6 @@
                             android:background="@android:color/transparent"
                             android:enabled="false"
                             android:padding="2dp"
-                            android:text="@{viewModel.getUserEmail()}"
                             android:textAllCaps="false"
                             android:textColor="@color/dark_grey"
                             android:textSize="14sp" />

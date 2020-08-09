@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY, "en");
         String mobile = mActivityLoginBinding.etMobileNumber.getText().toString();
         String otp = mActivityLoginBinding.etOTP.getText().toString();
-        String number = "+" + countryCodePicker.getSelectedCountryCode()+mobile;
+        String number = mActivityLoginBinding.etCountryCode.getText().toString().trim() +mobile;
 //        if(firebaseOTP.equalsIgnoreCase(otp)) {
             mLoginViewModel.savePhoneOTP(langPreference, number, otp);
 //        }else {
@@ -195,10 +195,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         countryCodePicker = mActivityLoginBinding.ccp;
         fStore = FirebaseFirestore.getInstance();
 
+        mActivityLoginBinding.etCountryCode.setText("+"+countryCodePicker.getSelectedCountryCode());
+
 
         mActivityLoginBinding.btnSubmit.setOnClickListener(v -> {
             if(!TextUtils.isEmpty(mActivityLoginBinding.etMobileNumber.getText())) {
-                String phoneNum = "+" + countryCodePicker.getSelectedCountryCode() + mActivityLoginBinding.etMobileNumber.getText().toString();
+                String phoneNum = mActivityLoginBinding.etCountryCode.getText().toString().trim() + mActivityLoginBinding.etMobileNumber.getText().toString();
                 Log.d("phone", "Phone No.: " + phoneNum);
                 requestPhoneAuth(phoneNum);
             }

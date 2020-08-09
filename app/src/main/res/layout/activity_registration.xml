@@ -143,33 +143,59 @@
                             android:visibility="gone"
                             android:padding="10dp" />
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
-                            android:textColorHint="@color/gray"
-                            app:hintEnabled="false"
-                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+                            android:weightSum="2"
+                            android:orientation="horizontal">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etMobileNumber"
+                            <EditText
+                                android:id="@+id/etCountryCode"
                                 style="@style/TextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.3"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginRight="20dp"
-                                android:background="@drawable/input_border_bottom"
                                 android:cursorVisible="true"
                                 android:gravity="center|left|bottom"
-                                android:hint="@string/mobileNo"
+                                android:background="@drawable/input_border_bottom"
                                 android:maxLength="12"
                                 android:inputType="number"
                                 android:paddingBottom="10dp"
                                 android:textColor="@color/black_effective"
                                 android:textSize="14sp" />
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.7"
+                                android:layout_marginTop="15dp"
+                                android:textColorHint="@color/gray"
+                                app:hintEnabled="false"
+                                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etMobileNumber"
+                                    style="@style/TextStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginRight="20dp"
+                                    android:background="@drawable/input_border_bottom"
+                                    android:cursorVisible="true"
+                                    android:gravity="center|left|bottom"
+                                    android:hint="@string/mobileNo"
+                                    android:maxLength="12"
+                                    android:inputType="number"
+                                    android:paddingBottom="10dp"
+                                    android:textColor="@color/black_effective"
+                                    android:textSize="14sp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
