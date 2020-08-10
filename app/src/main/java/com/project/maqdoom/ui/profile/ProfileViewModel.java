@@ -194,7 +194,7 @@ public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
 
     }
 
-    public void onSelectLicenseImage() {
+    public void onSelectImage() {
         getNavigator().pickImage();
     }
 }

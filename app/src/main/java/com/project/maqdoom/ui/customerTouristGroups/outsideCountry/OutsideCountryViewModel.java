@@ -35,15 +35,15 @@ public class OutsideCountryViewModel extends BaseViewModel<OutsideCountryNavigat
         super(dataManager, schedulerProvider);
         travelListLiveData = new MutableLiveData<>();
         sortedList = new ArrayList<>();
-        fetchData();
+
     }
 
-    public void fetchData() {
+    public void fetchData(String type) {
         setIsLoading(true);
         final String userType = getDataManager().getUserType();
         int userId = getDataManager().getCurrentUserId();
         getCompositeDisposable().add(getDataManager()
-                .doTravelCategoryGroupApiCall(new TravelCategoryRequest.ServerTravelCategoryRequest("TGP"),userType, String.valueOf(userId))
+                .doTravelCategoryGroupApiCall(new TravelCategoryRequest.ServerTravelCategoryRequest(type),userType, String.valueOf(userId))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {

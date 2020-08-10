@@ -22,6 +22,8 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class HoneymoonFragmentProvider {
 
-    @ContributesAndroidInjector(modules = HoneymoonFragmentModule.class)
+    @ContributesAndroidInjector(modules = TouristHoneymoonFragmentModule.class)
     abstract TouristHoneymoonFragment provideTouristHoneymoonFragmentFactory();
+
+
 }

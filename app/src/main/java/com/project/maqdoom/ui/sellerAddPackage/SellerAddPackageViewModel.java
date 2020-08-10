@@ -142,11 +142,11 @@ public class SellerAddPackageViewModel extends BaseViewModel<SellerAddPackageNav
         }
         return true;
     }
-    public void addPackage(String guide_name, String level1_category, String level2_category, String level3_category, String packageName, String package_include, String phone, String country, String location, String whatsapp_phone, String price, String people_cnt, String more_details, String city, String language, String addId,java.util.HashMap<String, String> imageList) {
+    public void addPackage(String guide_name, String level1_category, String level2_category, String level3_category, String packageName, String package_include, String phone, String country, String location, String whatsapp_phone, String price, String people_cnt, String more_details, String city, String language, String addId,java.util.HashMap<String, String> imageList,String services) {
         setIsLoading(true);
         int userId = getDataManager().getCurrentUserId();
         getCompositeDisposable().add(getDataManager()
-                .doAddPackageApiCall(new AddServiceRequest.ServerPackageAddRequest(String.valueOf(userId), guide_name, level1_category, level2_category, level3_category, packageName, package_include, phone, country, location, whatsapp_phone, price, people_cnt, more_details, city, language,imageList,addId))
+                .doAddPackageApiCall(new AddServiceRequest.ServerPackageAddRequest(String.valueOf(userId), guide_name, level1_category, level2_category, level3_category, packageName, package_include, phone, country, location, whatsapp_phone, price, people_cnt, more_details, city, language,imageList,addId,services))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {

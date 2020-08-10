@@ -27,35 +27,8 @@ import androidx.lifecycle.MutableLiveData;
 
 public class FamilyTripViewModel extends BaseViewModel<FamilyTripNavigator> {
 
-    private final MutableLiveData<List<TravelCategoryResponse.Adds>> travelListLiveData;
-
     public FamilyTripViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
-        travelListLiveData = new MutableLiveData<>();
-        fetchData();
-    }
-
-    public void fetchData() {
-        setIsLoading(true);
-        final String userType = getDataManager().getUserType();
-        int userId = getDataManager().getCurrentUserId();
-        getCompositeDisposable().add(getDataManager()
-                .doTravelCategoryApiCall(new TravelCategoryRequest.ServerTravelCategoryRequest("FT"),userType, String.valueOf(userId))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(response -> {
-                    if (response != null && response.getData() != null) {
-                        travelListLiveData.setValue(response.getData());
-                    }
-                    setIsLoading(false);
-                }, throwable -> {
-                    setIsLoading(false);
-
-                }));
-    }
-
-    public LiveData<List<TravelCategoryResponse.Adds>> getTravelListLiveData() {
-        return travelListLiveData;
     }
     public void onNavBackClick() {
         getNavigator().goBack();

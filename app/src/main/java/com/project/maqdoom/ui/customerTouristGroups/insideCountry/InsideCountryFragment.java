@@ -69,9 +69,11 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
     ViewModelProviderFactory factory;
     Spinner country, price, city, service;
     private InsideCountryViewModel insideCountryViewModel;
-
-    public static InsideCountryFragment newInstance() {
+    public static String DATA_TYPE = "bundle";
+    private String dataType="";
+    public static InsideCountryFragment newInstance(String Type) {
         Bundle args = new Bundle();
+        args.putString(DATA_TYPE, Type);
         InsideCountryFragment fragment = new InsideCountryFragment();
         fragment.setArguments(args);
         return fragment;
@@ -102,11 +104,12 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         insideCountryViewModel.setNavigator(this);
+        dataType = getArguments().getString(DATA_TYPE);
     }
 
     @Override
     public void onRetryClick() {
-        insideCountryViewModel.fetchData();
+        insideCountryViewModel.fetchData(dataType);
     }
 
     public void onDeleteButtonClick(String appId) {
@@ -139,7 +142,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
                         Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
                     } else {
                         mBlogAdapter.clearItems();
-                        insideCountryViewModel.fetchData();
+                        insideCountryViewModel.fetchData(dataType);
                         observeData();
                         fragmentTouristInsideBinding.blogRecyclerView.setAdapter(mBlogAdapter);
                     }
@@ -157,6 +160,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
         super.onViewCreated(view, savedInstanceState);
         Log.v("inside","onViewCreated");
         fragmentTouristInsideBinding = getViewDataBinding();
+        insideCountryViewModel.fetchData(dataType);
         setUp();
     }
 

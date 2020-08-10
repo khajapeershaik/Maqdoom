@@ -23,7 +23,6 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class FamilyTripFragmentProvider {
 
-    //(modules = TouristGuideFragmentModule.class)
     @ContributesAndroidInjector(modules = FamilyTripFragmentModule.class)
     abstract FamilyTripFragment provideFamilyTripFragmentFactory();
 }

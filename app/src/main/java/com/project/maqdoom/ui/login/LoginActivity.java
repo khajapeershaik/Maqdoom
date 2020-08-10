@@ -43,7 +43,6 @@ import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.databinding.ActivityLoginBinding;
 import com.project.maqdoom.di.component.AppComponent;
-import com.project.maqdoom.di.component.DaggerAppComponent;
 import com.project.maqdoom.ui.base.BaseActivity;
 import com.project.maqdoom.ui.customerHome.CustomerHomeActivity;
 import com.project.maqdoom.ui.forgotPassword.ForgotPasswordActivity;

@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:gravity="center"
                 android:text="@string/family_trip_title"
                 android:textColor="@color/white"
@@ -254,7 +254,7 @@
                     android:layout_height="40dp"
                     android:textSize="12sp"
 
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/spinner_arrow"
                     android:prompt="@string/s_city" />
                 <ImageView
@@ -263,7 +263,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:srcCompat="@drawable/downarrow" />
 
@@ -290,7 +290,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="5dp"
                     android:layout_gravity="center"
@@ -324,33 +324,28 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <RelativeLayout
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            style="@style/AppTab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:tabGravity="fill"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/optionButtons"
+            app:tabIndicatorGravity="bottom"
+            app:tabTextColor="@color/gray"
+            app:tabTextAppearance="@style/TextStyle.Menu.Normal"
+            app:tabSelectedTextColor="@color/black"
+            app:tabIndicatorColor="@color/navigation_bg" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/newpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/ll_spinner"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="60dp">
-
-            <androidx.core.widget.ContentLoadingProgressBar
-                android:id="@+id/address_looking_up"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/blogRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginEnd="30dp"
-                app:adapter_family="@{viewModel.getTravelListLiveData}"
-                tools:listitem="@layout/item_tourist_family_view" />
-        </RelativeLayout>
+            android:background="@color/white"
+            android:layout_below="@+id/tabLayout"
+            android:clipToPadding="false" />
     </RelativeLayout>
 
 </layout>

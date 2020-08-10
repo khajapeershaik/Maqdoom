@@ -28,8 +28,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -75,8 +75,8 @@
                     android:background="@color/translucent_white"
                     android:orientation="vertical"
                     android:paddingBottom="3dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:paddingTop="3dp">
 
                     <TextView

@@ -13,9 +13,6 @@
 
 package com.project.maqdoom.ui.customerHoneymoon;
 
-import com.project.maqdoom.ui.customerTouristGuide.TouristGuidesFragment;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.Module;
 import dagger.Provides;
 
@@ -23,9 +20,8 @@ import dagger.Provides;
 @Module
 public class TouristHoneymoonFragmentModule {
 
-
     @Provides
-    LinearLayoutManager provideLinearLayoutManager(TouristHoneymoonFragment fragment) {
-        return new LinearLayoutManager(fragment.getActivity());
+    HoneyMoonPagerAdapter provideHoneymoonPagerAdapter(TouristHoneymoonFragment fragment) {
+        return new HoneyMoonPagerAdapter(fragment.getChildFragmentManager());
     }
 }

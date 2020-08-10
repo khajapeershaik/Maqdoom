@@ -13,8 +13,6 @@
 
 package com.project.maqdoom.ui.customerTouristGroups.outsideCountry;
 
-import com.project.maqdoom.ui.customerTouristGroups.insideCountry.InsideCountryFragment;
-import com.project.maqdoom.ui.customerTouristGroups.insideCountry.InsideCountryFragmentModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

@@ -70,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:gravity="center"
                         android:text="@string/dashboard"
                         android:textColor="@color/white"
@@ -196,7 +196,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:onClick="@{() -> viewModel.showCustomerHome()}"
+                                android:onClick="@{() -> viewModel.showShopsHome()}"
                                 android:orientation="vertical">
 
                                 <FrameLayout
@@ -297,7 +297,6 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="bottom|center"
-                                    android:layout_marginBottom="10dp"
                                     android:background="@drawable/round_shape"
                                     android:orientation="vertical">
 
@@ -305,6 +304,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
+                                        android:layout_marginTop="2dp"
                                         android:background="@mipmap/ic_arrow_forward">
 
                                     </ImageView>
@@ -321,7 +321,6 @@
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
                             android:drawableStart="@drawable/supplies_img"
                             android:drawablePadding="10dp"

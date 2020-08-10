@@ -45,9 +45,9 @@ public class TouristGroupPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return InsideCountryFragment.newInstance();
+                return InsideCountryFragment.newInstance("TGP");
             case 1:
-                return OutsideCountryFragment.newInstance();
+                return OutsideCountryFragment.newInstance("TGP");
             default:
                 return null;
         }

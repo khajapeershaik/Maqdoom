@@ -84,4 +84,6 @@ public class MaqdoomApp extends Application implements HasActivityInjector {
         }
         res.updateConfiguration(conf, dm);
     }
+
+
 }

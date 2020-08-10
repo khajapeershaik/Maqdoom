@@ -13,9 +13,6 @@
 
 package com.project.maqdoom.ui.customerFamilyTrip;
 
-import java.util.ArrayList;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.Module;
 import dagger.Provides;
 
@@ -24,12 +21,7 @@ import dagger.Provides;
 public class FamilyTripFragmentModule {
 
     @Provides
-    TouristFamilyAdapter provideTouristFamilyAdapter() {
-        return new TouristFamilyAdapter(new ArrayList<>());
-    }
-
-    @Provides
-    LinearLayoutManager provideLinearLayoutManager(FamilyTripFragment fragment) {
-        return new LinearLayoutManager(fragment.getActivity());
+    FamilyTripPagerAdapter provideFamilyPagerAdapter(FamilyTripFragment fragment) {
+        return new FamilyTripPagerAdapter(fragment.getChildFragmentManager());
     }
 }

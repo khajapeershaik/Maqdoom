@@ -24,8 +24,6 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.project.maqdoom.data.model.api.NotificationResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryResponse;
-import com.project.maqdoom.ui.customerFamilyTrip.TouristFamilyAdapter;
-import com.project.maqdoom.ui.customerHoneymoon.HoneyMoonAdapter;
 import com.project.maqdoom.ui.customerRentalSupplies.RentalSuppliesAdapter;
 import com.project.maqdoom.ui.customerSuppliesCruises.CruiseSuppliesAdapter;
 import com.project.maqdoom.ui.customerTouristGroups.insideCountry.InsideCountryAdapter;
@@ -45,9 +43,6 @@ public final class BindingUtils {
     private BindingUtils() {
         // This class is not publicly instantiable
     }
-
-
-
 
     @BindingAdapter({"adapter_new"})
     public static void addOutsideCountryItems(RecyclerView recyclerView, List<TravelCategoryGroupResponse.Adds> data) {
@@ -86,22 +81,6 @@ public final class BindingUtils {
     @BindingAdapter({"adapter_rental"})
     public static void addRentalSuppliesItems(RecyclerView recyclerView, List<TravelCategoryResponse.Adds> data) {
         RentalSuppliesAdapter adapter = (RentalSuppliesAdapter) recyclerView.getAdapter();
-        if (adapter != null) {
-            adapter.clearItems();
-            adapter.addItems(data);
-        }
-    }
-    @BindingAdapter({"adapter_family"})
-    public static void addTouristFamilyItems(RecyclerView recyclerView, List<TravelCategoryResponse.Adds> data) {
-        TouristFamilyAdapter adapter = (TouristFamilyAdapter) recyclerView.getAdapter();
-        if (adapter != null) {
-            adapter.clearItems();
-            adapter.addItems(data);
-        }
-    }
-    @BindingAdapter({"adapter_hm"})
-    public static void addTouristHoneymoonItems(RecyclerView recyclerView, List<TravelCategoryResponse.Adds> data) {
-        HoneyMoonAdapter adapter = (HoneyMoonAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.clearItems();
             adapter.addItems(data);

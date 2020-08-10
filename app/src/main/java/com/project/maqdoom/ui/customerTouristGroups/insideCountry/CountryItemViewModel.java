@@ -104,6 +104,8 @@ public class CountryItemViewModel {
                 item.put("location",mAdds.getLocation());
                 item.put("no_of_people",mAdds.getPeople_cnt());
                 item.put("licence_pic_url",mAdds.getLicence_pic_url());
+                item.put("country",mAdds.getCountry());
+                item.put("city",mAdds.getCity());
 
                 if(mAdds.getLevel1_category().equalsIgnoreCase("TR")){
                     mListener.onEditButtonClick(1,item.toString());
@@ -137,6 +139,7 @@ public class CountryItemViewModel {
                 item.put("whatsApp", mAdds.getWhatsapp_phone());
                 item.put("phone", mAdds.getPhone());
                 item.put("images", listString);
+                item.put("services",mAdds.getServices());
                 mListener.onItemClick(item.toString());
             }catch (Exception e){
                 e.printStackTrace();

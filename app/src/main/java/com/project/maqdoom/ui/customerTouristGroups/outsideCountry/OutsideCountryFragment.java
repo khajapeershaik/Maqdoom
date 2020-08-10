@@ -66,8 +66,14 @@ public class OutsideCountryFragment extends BaseFragment<FragmentTouristOutsideB
     ViewModelProviderFactory factory;
     private OutsideCountryViewModel outsideCountryViewModel;
     Spinner country, price, city, service;
-    public static OutsideCountryFragment newInstance() {
+
+    public static String DATA_TYPE = "bundle";
+
+    private String dataType="";
+
+    public static OutsideCountryFragment newInstance(String type) {
         Bundle args = new Bundle();
+        args.putString(DATA_TYPE, type);
         OutsideCountryFragment fragment = new OutsideCountryFragment();
         fragment.setArguments(args);
         return fragment;
@@ -98,18 +104,18 @@ public class OutsideCountryFragment extends BaseFragment<FragmentTouristOutsideB
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         outsideCountryViewModel.setNavigator(this);
-        //mBlogAdapter.setListener(this);
-    }
+        dataType = getArguments().getString(DATA_TYPE);    }
 
     @Override
     public void onRetryClick() {
-        outsideCountryViewModel.fetchData();
+        outsideCountryViewModel.fetchData(dataType);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentTouristOutsideBinding = getViewDataBinding();
+        outsideCountryViewModel.fetchData(dataType);
         setUp();
     }
 
@@ -187,7 +193,7 @@ public class OutsideCountryFragment extends BaseFragment<FragmentTouristOutsideB
                         Toast.makeText(getContext(), "Something went wrong ,Please try again", Toast.LENGTH_LONG).show();
                     } else {
                         mBlogAdapter.clearItems();
-                        outsideCountryViewModel.fetchData();
+                        outsideCountryViewModel.fetchData(dataType);
                         observeData();
                         fragmentTouristOutsideBinding.outsideCountryRecyclerView.setAdapter(mBlogAdapter);
                     }

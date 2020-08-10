@@ -112,6 +112,11 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
 
     @Override
     public void gotoHoneymoon() {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof TouristHoneymoonFragment){
+                this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
         if(getActivity()!=null) {
             getFragmentManager()
                     .beginTransaction()
@@ -125,6 +130,11 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
 
     @Override
     public void gotoFamilyTrip() {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof FamilyTripFragment){
+                this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
         if(getActivity()!=null) {
             getFragmentManager()
                     .beginTransaction()

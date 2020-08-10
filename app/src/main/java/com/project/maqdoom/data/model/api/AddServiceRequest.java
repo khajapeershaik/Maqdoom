@@ -100,7 +100,11 @@ public final class AddServiceRequest {
         @SerializedName("add_id")
         private String add_id;
 
-        public ServerPackageAddRequest(String user_id, String guide_name, String level1_category, String level2_category, String level3_category, String packageName, String package_include, String phone, String country, String location, String whatsapp_phone, String price, String people_cnt, String more_details, String city, String language, java.util.HashMap<String, String> imageList, String addId) {
+        @Expose
+        @SerializedName("service")
+        private String service;
+
+        public ServerPackageAddRequest(String user_id, String guide_name, String level1_category, String level2_category, String level3_category, String packageName, String package_include, String phone, String country, String location, String whatsapp_phone, String price, String people_cnt, String more_details, String city, String language, java.util.HashMap<String, String> imageList, String addId,String service) {
             this.user_id = user_id;
             this.guide_name = guide_name;
             this.level1_category = level1_category;
@@ -119,6 +123,7 @@ public final class AddServiceRequest {
             this.language = language;
             this.image_list = imageList;
             this.add_id = addId;
+            this.service = service;
         }
 
         public String getUser_id() {
@@ -191,6 +196,10 @@ public final class AddServiceRequest {
 
         public String getAdd_id() {
             return add_id;
+        }
+
+        public String getService() {
+            return service;
         }
     }
 

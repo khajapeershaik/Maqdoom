@@ -27,14 +27,12 @@ import com.glide.slider.library.slidertypes.DefaultSliderView;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
-import com.project.maqdoom.data.model.api.TravelCategoryResponse;
 import com.project.maqdoom.databinding.FragmentPackageDetailsBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragment;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,14 +49,15 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
 
     public static final String TAG = TouristPackageDetailsFragment.class.getSimpleName();
     private static String GD;
-    private String guideData = "";
-    private String add_id = "",whatsAppNumber ="", phoneNumber="";
+    String packageName = "";
     @Inject
     ViewModelProviderFactory factory;
+    FragmentPackageDetailsBinding fragmentTouristGuideBinding;
+    private String guideData = "";
+    private String add_id = "", whatsAppNumber = "", phoneNumber = "";
     private TouristPackageDetailsViewModel touristGuideViewModel;
     private SliderLayout mDemoSlider;
     private PagerIndicator pagerIndicator;
-    FragmentPackageDetailsBinding fragmentTouristGuideBinding;
 
     public static TouristPackageDetailsFragment newInstance(String data) {
         Bundle args = new Bundle();
@@ -152,7 +151,16 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
 
     @Override
     public void openChat() {
-        Toast.makeText(getActivity(), "Available in future release", Toast.LENGTH_SHORT).show();
+        try {
+            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+            smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
+            smsIntent.setType("vnd.android-dir/mms-sms");
+            smsIntent.setData(Uri.parse("sms:" + phoneNumber));
+            smsIntent.putExtra("sms_body", packageName);
+            startActivity(smsIntent);
+        } catch (Exception e) {
+
+        }
     }
 
 
@@ -182,16 +190,18 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
         }
         try {
             JSONObject jsonObj = new JSONObject(guideData);
-            add_id = jsonObj.optString("id").toString();
-            whatsAppNumber = jsonObj.optString("whatsApp").toString();
+            add_id = jsonObj.optString("id");
+            whatsAppNumber = jsonObj.optString("whatsApp");
             phoneNumber = jsonObj.optString("phone");
-            fragmentTouristGuideBinding.tvPackageName.setText(jsonObj.optString("package").toString());
-            fragmentTouristGuideBinding.tvDetails.setText(jsonObj.optString("details").toString());
-            fragmentTouristGuideBinding.tvPackagePrice.setText(jsonObj.optString("price").toString());
+            packageName = jsonObj.optString("package");
+            fragmentTouristGuideBinding.tvPackageName.setText(jsonObj.optString("package"));
+            fragmentTouristGuideBinding.tvDetails.setText(jsonObj.optString("details"));
+            fragmentTouristGuideBinding.tvPackagePrice.setText(jsonObj.optString("price"));
+            fragmentTouristGuideBinding.tvServices.setText(jsonObj.optString("services"));
 
             //List<TravelCategoryResponse.Adds.Images> img = jsonObj.optString("images").to;
             //System.out.println("Arun images--"+ img.size());
-            List<String> imList = Arrays.asList(jsonObj.optString("images").split(","));
+            List<String> imList = Arrays.asList(jsonObj.optString("images").split("\t"));
             setImageSlide(imList);
             String inclusions = jsonObj.optString("package_include");
             if ("".equalsIgnoreCase(inclusions)) {
@@ -227,22 +237,23 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
 
     }
 
-    private void  openCallDialer(){
-        try{
-            if(!"".equalsIgnoreCase(phoneNumber)){
+    private void openCallDialer() {
+        try {
+            if (!"".equalsIgnoreCase(phoneNumber)) {
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null));
                 startActivity(intent);
-            }else{
-                Toast.makeText(getActivity(),"Phone number not available",Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Phone number not available", Toast.LENGTH_LONG).show();
             }
 
-        }catch (Exception e){
-            Toast.makeText(getActivity(),"Something went wrong !!",Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Something went wrong !!", Toast.LENGTH_LONG).show();
         }
 
     }
-    private void openWhatsAppFromDevice(){
-        if(!"".equalsIgnoreCase(whatsAppNumber)){
+
+    private void openWhatsAppFromDevice() {
+        if (!"".equalsIgnoreCase(whatsAppNumber)) {
             boolean isWhatsAppInstalled = whatsAppInstalledOrNot("com.whatsapp");
             if (isWhatsAppInstalled) {
                 Uri uri = Uri.parse("smsto:" + whatsAppNumber);
@@ -258,13 +269,13 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
                 startActivity(goToMarket);
 
             }
-        }else{
-            Toast.makeText(getActivity(),"WhatsApp number not available",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getActivity(), "WhatsApp number not available", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private void setImageSlide(List<String> imList){
+    private void setImageSlide(List<String> imList) {
         //ArrayList<String> listUrl = new ArrayList<>();
 
         //listUrl.add("http://www.gstatic.com/webp/gallery/1.webp");
@@ -294,6 +305,7 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
         mDemoSlider.stopCyclingWhenTouch(false);
         mDemoSlider.setCustomIndicator(pagerIndicator);
     }
+
     private boolean whatsAppInstalledOrNot(String uri) {
         PackageManager pm = getActivity().getPackageManager();
         boolean app_installed = false;
@@ -305,6 +317,7 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
         }
         return app_installed;
     }
+
     private void showHome() {
         for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();

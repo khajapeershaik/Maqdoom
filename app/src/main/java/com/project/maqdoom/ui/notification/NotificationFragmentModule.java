@@ -13,8 +13,6 @@
 
 package com.project.maqdoom.ui.notification;
 
-import com.project.maqdoom.ui.customerHoneymoon.HoneyMoonAdapter;
-import com.project.maqdoom.ui.touristGuideDetails.TouristGuidesDetailsFragment;
 
 import java.util.ArrayList;
 

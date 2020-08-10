@@ -14,9 +14,11 @@
 package com.project.maqdoom.di.builder;
 
 import com.project.maqdoom.ui.chat.ChatActivity;
+import com.project.maqdoom.ui.customerFamilyTrip.FamilyTripFragmentModule;
 import com.project.maqdoom.ui.customerFamilyTrip.FamilyTripFragmentProvider;
 import com.project.maqdoom.ui.customerHome.CustomerHomeActivity;
 import com.project.maqdoom.ui.customerHoneymoon.HoneymoonFragmentProvider;
+import com.project.maqdoom.ui.customerHoneymoon.TouristHoneymoonFragmentModule;
 import com.project.maqdoom.ui.customerRentalSupplies.CustomerRentalSuppliesFragmentProvider;
 import com.project.maqdoom.ui.customerSuppliesCruises.CustomerCruiseSuppliesFragmentProvider;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragmentModule;
@@ -65,7 +67,9 @@ public abstract class ActivityBuilder {
             TouristGroupFragmentProvider.class,
             TouristGroupFragmentModule.class,
             HoneymoonFragmentProvider.class,
+            TouristHoneymoonFragmentModule.class,
             FamilyTripFragmentProvider.class,
+            FamilyTripFragmentModule.class,
             InsideCountryFragmentProvider.class,
             OutsideCountryFragmentProvider.class,
             TouristGuideDetailsFragmentProvider.class,
@@ -76,7 +80,6 @@ public abstract class ActivityBuilder {
             FriendsFragmentProvider.class,
             ProfileFragmentProvider.class,
             ShopsFrgamentProvoder.class
-
     })
     abstract CustomerHomeActivity bindCustomerHomeActivity();
 
@@ -85,7 +88,9 @@ public abstract class ActivityBuilder {
             TouristGroupFragmentProvider.class,
             TouristGroupFragmentModule.class,
             HoneymoonFragmentProvider.class,
+            TouristHoneymoonFragmentModule.class,
             FamilyTripFragmentProvider.class,
+            FamilyTripFragmentModule.class,
             InsideCountryFragmentProvider.class,
             OutsideCountryFragmentProvider.class,
             TouristGuideDetailsFragmentProvider.class,
@@ -98,6 +103,7 @@ public abstract class ActivityBuilder {
             FriendsFragmentProvider.class,
             OptionDialogProvider.class,
             ShopsFrgamentProvoder.class
+
     })
     abstract SellerHomeActivity bindSellerHomeActivity();
 

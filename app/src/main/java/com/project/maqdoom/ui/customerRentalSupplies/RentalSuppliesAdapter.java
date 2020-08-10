@@ -25,7 +25,6 @@ import com.project.maqdoom.databinding.ItemBlogEmptyViewBinding;
 import com.project.maqdoom.databinding.ItemCustomerRentalViewBinding;
 import com.project.maqdoom.ui.base.BaseViewHolder;
 import com.project.maqdoom.ui.custom.EmptyItemViewModel;
-import com.project.maqdoom.ui.customerHoneymoon.HoneyMoonAdapter;
 import com.project.maqdoom.ui.sellerAddPackage.SellerAddPackageFragment;
 import com.project.maqdoom.ui.touristPackageDetails.TouristPackageDetailsFragment;
 

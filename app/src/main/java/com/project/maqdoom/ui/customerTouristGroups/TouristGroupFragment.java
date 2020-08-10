@@ -27,6 +27,8 @@ import com.project.maqdoom.ui.customerFamilyTrip.FamilyTripFragment;
 import com.project.maqdoom.ui.customerHoneymoon.TouristHoneymoonFragment;
 import com.project.maqdoom.ui.customerTouristGuide.TouristGuidesFragment;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
@@ -38,8 +40,6 @@ import androidx.lifecycle.ViewModelProviders;
 public class TouristGroupFragment extends BaseFragment<FragmentTouristGroupBinding, TouristGroupViewModel> implements TouristGroupNavigator/*, BlogAdapter.BlogAdapterListener*/ {
 
     public static final String TAG = TouristGroupFragment.class.getSimpleName();
-
-
 
     @Inject
     ViewModelProviderFactory factory;
@@ -76,8 +76,6 @@ public class TouristGroupFragment extends BaseFragment<FragmentTouristGroupBindi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         touristGroupViewModel.setNavigator(this);
-        //mBlogAdapter.setListener(this);
-        //setUp();
     }
 
     @Override
@@ -95,7 +93,6 @@ public class TouristGroupFragment extends BaseFragment<FragmentTouristGroupBindi
         fragmentTouristGroupBinding.feedViewPager.setAdapter(mPagerAdapter);
         fragmentTouristGroupBinding.tabLayout.addTab(fragmentTouristGroupBinding.tabLayout.newTab().setText(getString(R.string.domestic_text)));
         fragmentTouristGroupBinding.tabLayout.addTab(fragmentTouristGroupBinding.tabLayout.newTab().setText(getString(R.string.international_text)));
-
 
         //fragmentTouristGroupBinding.feedViewPager.setOffscreenPageLimit(fragmentTouristGroupBinding.tabLayout.getTabCount());
         fragmentTouristGroupBinding.feedViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(fragmentTouristGroupBinding.tabLayout));
@@ -140,17 +137,28 @@ public class TouristGroupFragment extends BaseFragment<FragmentTouristGroupBindi
 
     @Override
     public void gotoHoneymoon() {
+
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof TouristHoneymoonFragment){
+                this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
         if(getActivity()!=null) {
             getFragmentManager()
                     .beginTransaction()
                     .disallowAddToBackStack()
-                    .add(R.id.parentLayout, TouristHoneymoonFragment.newInstance(), TouristGroupFragment.TAG)
+                    .add(R.id.parentLayout, TouristHoneymoonFragment.newInstance(), TouristHoneymoonFragment.TAG)
                     .commit();
         }
     }
 
     @Override
     public void gotoFamilyTrip() {
+        for (Fragment fragment : Objects.requireNonNull(this.getActivity()).getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof FamilyTripFragment){
+                this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
         if(getActivity()!=null) {
             getFragmentManager()
                     .beginTransaction()
@@ -167,17 +175,14 @@ public class TouristGroupFragment extends BaseFragment<FragmentTouristGroupBindi
     }
 
     private void onBackPressed() {
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-                        showHome();
-                        return true;
-                    }
+        getView().setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    showHome();
+                    return true;
                 }
-                return false;
             }
+            return false;
         });
     }
 }
