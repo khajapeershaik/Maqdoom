@@ -65,6 +65,11 @@
         <activity
             android:name=".ui.chat.ChatActivity"
             android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".ui.touristPackageDetails.FullImageActivity"
+            android:launchMode="c"
+            android:windowSoftInputMode="stateHidden"/>
+
         <service
             android:name=".utils.MaqdoomMessaging"
             android:exported="false">
