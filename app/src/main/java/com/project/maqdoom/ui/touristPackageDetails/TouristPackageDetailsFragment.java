@@ -17,13 +17,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.glide.slider.library.SliderLayout;
 import com.glide.slider.library.indicators.PagerIndicator;
+import com.glide.slider.library.slidertypes.BaseSliderView;
 import com.glide.slider.library.slidertypes.DefaultSliderView;
+import com.glide.slider.library.tricks.ViewPagerEx;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
@@ -45,16 +48,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 
-public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageDetailsBinding, TouristPackageDetailsViewModel> implements TouristPackageDetailsNavigator {
+public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageDetailsBinding, TouristPackageDetailsViewModel> implements TouristPackageDetailsNavigator, BaseSliderView.OnSliderClickListener,
+        ViewPagerEx.OnPageChangeListener {
 
     public static final String TAG = TouristPackageDetailsFragment.class.getSimpleName();
-    private static String GD;
+    private static String GD ="";
     String packageName = "";
+    private String guideData = "";
+    private String add_id = "", whatsAppNumber = "", phoneNumber = "";
     @Inject
     ViewModelProviderFactory factory;
     FragmentPackageDetailsBinding fragmentTouristGuideBinding;
-    private String guideData = "";
-    private String add_id = "", whatsAppNumber = "", phoneNumber = "";
     private TouristPackageDetailsViewModel touristGuideViewModel;
     private SliderLayout mDemoSlider;
     private PagerIndicator pagerIndicator;
@@ -203,6 +207,8 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
             //System.out.println("Arun images--"+ img.size());
             List<String> imList = Arrays.asList(jsonObj.optString("images").split("\t"));
             setImageSlide(imList);
+
+
             String inclusions = jsonObj.optString("package_include");
             if ("".equalsIgnoreCase(inclusions)) {
                 fragmentTouristGuideBinding.llIncl.setVisibility(View.GONE);
@@ -288,10 +294,20 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
 
         for (int i = 0; i < imList.size(); i++) {
             DefaultSliderView sliderView = new DefaultSliderView(getActivity());
+            final int finalI =  i;
             sliderView
                     .image(imList.get(i).trim())
                     .setRequestOption(requestOptions)
                     .setProgressBarVisible(true);
+
+            sliderView.image(imList.get(i))
+                    .setOnSliderClickListener(slider -> {
+
+                        Intent intent = new Intent(getActivity(),FullImageActivity.class);
+                        intent.putExtra("imageurls", imList.get(finalI));
+                        startActivity(intent);
+
+                    });
             mDemoSlider.addSlider(sliderView);
         }
 
@@ -322,5 +338,29 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
         for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        Toast.makeText(getActivity(), slider.getBundle().getString("extra") + "", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Toast.makeText(getActivity(),position,Toast.LENGTH_LONG).show();
+        Log.d("scrolpositionis", ""+ position);
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.d("onPageSelected", ""+ position);
+        Toast.makeText(getActivity(),position,Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
