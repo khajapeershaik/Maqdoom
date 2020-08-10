@@ -67,7 +67,7 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".ui.touristPackageDetails.FullImageActivity"
-            android:launchMode="c"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden"/>
 
         <service

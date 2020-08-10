@@ -267,13 +267,15 @@ public class SellerAddPackageViewModel extends BaseViewModel<SellerAddPackageNav
                 VolleyMultipartRequest.DataPart dp = new VolleyMultipartRequest.DataPart(fileName, inputData, "image/"+extension);
                 dataPart.add(dp);
                 // }
-                if(!isLicense) {
+               /* if(!isLicense) {
                     imageList.put("image", dataPart);
                 }
                 else{
-                    imageList.put("licence", dataPart);
+                    imageList.put("licence_pic_url", dataPart);
 
-                }
+                }*/
+
+                imageList.put("image", dataPart);
                 return imageList;
             }
 
