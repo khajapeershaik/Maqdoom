@@ -105,6 +105,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         mSplashViewModel.setNavigator(this);
         sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        Log.v("saved preference splash",langPreference);
         updateLocale(langPreference);
 
         mSplashViewModel.startSeeding();

@@ -13,8 +13,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.project.maqdoom.ui.customerHome.CustomerHomeActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -31,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -490,11 +489,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lnr_main"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginStart="60dp"
                         android:layout_marginLeft="60dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="60dp"
+                        android:layout_marginBottom="60dp"
                         android:layout_marginRight="60dp">
 
                         <LinearLayout
@@ -594,7 +593,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/address_looking_up"

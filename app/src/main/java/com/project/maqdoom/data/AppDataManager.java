@@ -113,6 +113,9 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Single<TravelCategoryGroupResponse> doTravelCategoryGroupApiCall(TravelCategoryRequest.ServerTravelCategoryRequest request, String userType, String userId) {
+        sharedpreferences = mContext.getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        request.setLanguage(langPreference);
         return mApiHelper.doTravelCategoryGroupApiCall(request, userType, userId);
     }
 

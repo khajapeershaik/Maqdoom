@@ -288,7 +288,7 @@ public class OutsideCountryFragment extends BaseFragment<FragmentTouristOutsideB
                                            int arg2, long arg3) {
                     // TODO Auto-generated method stub
                     if (arg2 != 0) {
-                        String selected = price.getItemAtPosition(arg2).toString();
+                        String selected = city.getItemAtPosition(arg2).toString();
                         updateList(2, selected);
                     }
                     else {

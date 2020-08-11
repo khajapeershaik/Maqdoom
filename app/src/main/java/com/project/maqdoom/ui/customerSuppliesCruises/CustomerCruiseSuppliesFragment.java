@@ -27,6 +27,7 @@ import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.data.model.api.DeleteAddRequest;
 import com.project.maqdoom.data.model.api.DeleteAddResponse;
+import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryResponse;
 import com.project.maqdoom.data.remote.api_rest.ApiClient;
 import com.project.maqdoom.data.remote.api_rest.ApiInterface;
@@ -35,6 +36,7 @@ import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerRentalSupplies.CustomerRentalSuppliesFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -67,7 +69,8 @@ public class CustomerCruiseSuppliesFragment extends BaseFragment<FragmentCruiseS
     ViewModelProviderFactory factory;
     private CustomerCruiseSuppliesViewModel customerRentalSuppliesViewModel;
     FragmentCruiseSuppliesBinding fragmentCruiseSuppliesBinding;
-    Spinner country,price;
+    Spinner country,price,city,service;
+
     public static CustomerCruiseSuppliesFragment newInstance() {
         Bundle args = new Bundle();
         CustomerCruiseSuppliesFragment fragment = new CustomerCruiseSuppliesFragment();
@@ -201,20 +204,41 @@ public class CustomerCruiseSuppliesFragment extends BaseFragment<FragmentCruiseS
         });
     }
     private void setSpinner() {
-        country = fragmentCruiseSuppliesBinding.spinnerCity;
-        price = fragmentCruiseSuppliesBinding.spinnerLanguage;
+        country = fragmentCruiseSuppliesBinding.spinnerCountry;
+        price = fragmentCruiseSuppliesBinding.spinnerPrice;
+
+        city = fragmentCruiseSuppliesBinding.spinnerCity;
+        service = fragmentCruiseSuppliesBinding.spinnerService;
+
         ArrayList<String> countyList = new ArrayList<>();
         ArrayList<String> priceList = new ArrayList<>();
+        ArrayList<String> cityList = new ArrayList<>();
+        ArrayList<String> serviceList = new ArrayList<>();
+
         LiveData<List<TravelCategoryResponse.Adds>> countryData = customerRentalSuppliesViewModel.getTravelListLiveData();
         if (countryData != null) {
             for (int i = 0; i < countryData.getValue().size(); i++) {
                 if (!countyList.contains(countryData.getValue().get(i).getCountry()) && countryData.getValue().get(i).getCountry() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getCountry().trim())) {
                     countyList.add(countryData.getValue().get(i).getCountry());
                 }
+                if (!cityList.contains(countryData.getValue().get(i).getCity()) && countryData.getValue().get(i).getCity() != null
+                        && (countryData.getValue().get(i).getCity().trim().length() > 0)) {
+                    cityList.add(countryData.getValue().get(i).getCity());
+                }
+                if (!serviceList.contains(countryData.getValue().get(i).getServices()) && countryData.getValue().get(i).getServices() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getServices().trim())) {
+                    List<String> list = Arrays.asList(countryData.getValue().get(i).getServices().split(","));
+                    for(String s:list){
+                        if(!serviceList.contains(s)){
+                            serviceList.add(s);
+                        }
+                    }
+                }
 
             }
             countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
+            cityList.add(0, getString(R.string.s_city));
+            serviceList.add(0, getString(R.string.service));
             priceList.add(getString(R.string.str_low_high));
             priceList.add(getString(R.string.str_high_low));
             //Country spinner
@@ -245,8 +269,38 @@ public class CustomerCruiseSuppliesFragment extends BaseFragment<FragmentCruiseS
             ArrayAdapter<String> spinnerCityAdapter = new ArrayAdapter<>(
                     getActivity(),
                     android.R.layout.simple_spinner_dropdown_item,
+                    cityList);
+            city.setAdapter(spinnerCityAdapter);
+            city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+                    // TODO Auto-generated method stub
+                    if (arg2 != 0) {
+                        String selected = city.getItemAtPosition(arg2).toString();
+                        updateList(2, selected);
+                    }
+                    else {
+                        mBlogAdapter.clearItems();
+                        observeData();
+
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+
+                }
+            });
+
+            //Price spinner
+            ArrayAdapter<String> spinnerPriceAdapter = new ArrayAdapter<>(
+                    getActivity(),
+                    android.R.layout.simple_spinner_dropdown_item,
                     priceList);
-            price.setAdapter(spinnerCityAdapter);
+            price.setAdapter(spinnerPriceAdapter);
             price.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -254,7 +308,37 @@ public class CustomerCruiseSuppliesFragment extends BaseFragment<FragmentCruiseS
                     // TODO Auto-generated method stub
                     if (arg2 != 0) {
                         String selected = price.getItemAtPosition(arg2).toString();
-                        updateList(2, selected);
+                        updateList(3, selected);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+
+                }
+            });
+
+
+            //Service
+            ArrayAdapter<String> spinnerServiceAdapter = new ArrayAdapter<>(
+                    getActivity(),
+                    android.R.layout.simple_spinner_dropdown_item,
+                    serviceList);
+            service.setAdapter(spinnerServiceAdapter);
+            service.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+                    // TODO Auto-generated method stub
+                    if (arg2 != 0) {
+                        String selected = service.getItemAtPosition(arg2).toString();
+                        updateList(4, selected);
+                    }
+                    else {
+                        mBlogAdapter.clearItems();
+                        observeData();
+
                     }
                 }
 
@@ -296,7 +380,7 @@ public class CustomerCruiseSuppliesFragment extends BaseFragment<FragmentCruiseS
                         mBlogAdapter.addItems(filteredData);
                     }
                 }
-        } else if (type == 2) {
+        } else if (type == 3) {
             if (filteredData.size() > 1) {
                 Collections.sort(filteredData, TravelCategoryResponse.Adds.PRICE);
                 if (value.equalsIgnoreCase(getString(R.string.str_low_high))) {
@@ -326,6 +410,55 @@ public class CustomerCruiseSuppliesFragment extends BaseFragment<FragmentCruiseS
                 }
             }
         }
+            else if (type == 2) {
+                if (filteredData.size() > 1) {
+                    for (int i = 0; i < filteredData.size(); i++) {
+                        if (value.equalsIgnoreCase(filteredData.get(i).getPrice())) {
+                            filteredData.add(filteredData.get(i));
+                        }
+                    }
+                    mBlogAdapter.clearItems();
+                    mBlogAdapter.notifyDataSetChanged();
+                    mBlogAdapter.addItems(filteredData);
+                } else {
+                    LiveData<List<TravelCategoryResponse.Adds>> data = customerRentalSuppliesViewModel.getTravelListLiveData();
+                    if (data != null) {
+                        for (int i = 0; i < data.getValue().size(); i++) {
+                            if (value.equalsIgnoreCase(data.getValue().get(i).getPrice())) {
+                                filteredData.add(data.getValue().get(i));
+                            }
+                        }
+                        mBlogAdapter.clearItems();
+                        mBlogAdapter.notifyDataSetChanged();
+                        mBlogAdapter.addItems(filteredData);
+                    }
+                }
+            }
+            else if (type == 4) {
+                if (filteredData.size() > 1) {
+                    for (int i = 0; i < filteredData.size(); i++) {
+                        if (value.equalsIgnoreCase(filteredData.get(i).getServices())) {
+                            filteredData.add(filteredData.get(i));
+                        }
+                    }
+                    mBlogAdapter.clearItems();
+                    mBlogAdapter.notifyDataSetChanged();
+                    mBlogAdapter.addItems(filteredData);
+                } else {
+                    LiveData<List<TravelCategoryResponse.Adds>> data = customerRentalSuppliesViewModel.getTravelListLiveData();
+                    if (data != null) {
+                        for (int i = 0; i < data.getValue().size(); i++) {
+                            List<String> languageList = Arrays.asList(data.getValue().get(i).getServices().split(","));
+                            if (languageList.contains(value)) {
+                                filteredData.add(data.getValue().get(i));
+                            }
+                        }
+                        mBlogAdapter.clearItems();
+                        mBlogAdapter.notifyDataSetChanged();
+                        mBlogAdapter.addItems(filteredData);
+                    }
+                }
+            }
 
     }
     private void showHome() {

@@ -228,9 +228,9 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
             for (String element : ss) {
                 languageList.add(element);
             }
-            countyList.add(0, getString(R.string.s_country));
-            cityList.add(0, getString(R.string.s_city));
-            languageList.add(0, getString(R.string.s_language));
+            countyList.add(0, getResources().getString(R.string.s_country));
+            cityList.add(0, getResources().getString(R.string.s_city));
+            languageList.add(0, getResources().getString(R.string.s_language));
             //Country spinner
             ArrayAdapter<String> spinnerCountryAdapter = new ArrayAdapter<>(
                     getActivity(),

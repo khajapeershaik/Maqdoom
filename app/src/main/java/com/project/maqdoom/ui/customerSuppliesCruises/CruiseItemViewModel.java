@@ -143,6 +143,8 @@ public class CruiseItemViewModel {
                 item.put("whatsApp", mAdds.getWhatsapp_phone());
                 item.put("phone", mAdds.getPhone());
                 item.put("images", listString);
+                item.put("services",mAdds.getServices());
+
                 mListener.onItemClick(item.toString());
             } catch (Exception e) {
                 e.printStackTrace();
