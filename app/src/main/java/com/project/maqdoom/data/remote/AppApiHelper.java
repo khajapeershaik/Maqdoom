@@ -142,6 +142,7 @@ public class AppApiHelper implements ApiHelper {
                 jsonObject.put("user_id", userId);
             }
             jsonObject.put("level2_category", request.getLevel2_category());
+            jsonObject.put("language", request.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -175,6 +176,7 @@ public class AppApiHelper implements ApiHelper {
             jsonObject.put("city", request.getCity());
             jsonObject.put("language", request.getLanguage());
             jsonObject.put("services",request.getService());
+            jsonObject.put("lan",request.getLan());
             JSONArray jsonArray = new JSONArray();
             JSONObject obj = null;
             if (request.getImage_list() != null) {
@@ -240,6 +242,7 @@ public class AppApiHelper implements ApiHelper {
             jsonObject.put("licence_pic_url",request.getLicence_pic_url());
             jsonObject.put("national_id",request.getNational_id());
             jsonObject.put("services",request.getService());
+            jsonObject.put("lan",request.getLan());
             JSONArray jsonArray = new JSONArray();
             JSONObject obj = null;
             if (request.getImage_list() != null) {

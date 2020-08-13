@@ -104,6 +104,10 @@ public final class AddServiceRequest {
         @SerializedName("service")
         private String service;
 
+        @Expose
+        @SerializedName("lan")
+        private String lan;
+
         public ServerPackageAddRequest(String user_id, String guide_name, String level1_category, String level2_category, String level3_category, String packageName, String package_include, String phone, String country, String location, String whatsapp_phone, String price, String people_cnt, String more_details, String city, String language, java.util.HashMap<String, String> imageList, String addId,String service) {
             this.user_id = user_id;
             this.guide_name = guide_name;
@@ -124,6 +128,14 @@ public final class AddServiceRequest {
             this.image_list = imageList;
             this.add_id = addId;
             this.service = service;
+        }
+
+        public String getLan() {
+            return lan;
+        }
+
+        public void setLan(String lan) {
+            this.lan = lan;
         }
 
         public String getUser_id() {
@@ -311,6 +323,10 @@ public final class AddServiceRequest {
         @SerializedName("image_list")
         private java.util.HashMap<String, String> image_list;
 
+        @Expose
+        @SerializedName("lan")
+        private String lan;
+
         public UpdatePackageRequest() {
         }
 
@@ -320,6 +336,14 @@ public final class AddServiceRequest {
 
         public void setImage_list(HashMap<String, String> image_list) {
             this.image_list = image_list;
+        }
+
+        public String getLan() {
+            return lan;
+        }
+
+        public void setLan(String lan) {
+            this.lan = lan;
         }
 
         public String getAdd_id() {

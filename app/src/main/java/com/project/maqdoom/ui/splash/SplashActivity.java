@@ -103,10 +103,10 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSplashViewModel.setNavigator(this);
-        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
-        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
-        Log.v("saved preference splash",langPreference);
-        updateLocale(langPreference);
+//        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+//        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+//        Log.v("saved preference splash",langPreference);
+//        updateLocale(langPreference);
 
         mSplashViewModel.startSeeding();
     }
@@ -119,6 +119,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         config.setLocale(locale);
         getApplicationContext().getResources().updateConfiguration(config,
                 getApplicationContext().getResources().getDisplayMetrics());
+
         saveLanguagePreference(en);
         Log.v("data",""+sharedpreferences.getString(LANGUAGE_KEY,"en"));
     }

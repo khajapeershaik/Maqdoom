@@ -121,11 +121,17 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Single<AddServiceResponse> doAddPackageApiCall(AddServiceRequest.ServerPackageAddRequest request) {
+        sharedpreferences = mContext.getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        request.setLan(langPreference);
         return mApiHelper.doAddPackageApiCall(request);
     }
 
     @Override
     public Single<AddServiceResponse> doAddPackageEditApiCall(AddServiceRequest.UpdatePackageRequest request) {
+        sharedpreferences = mContext.getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
+        request.setLan(langPreference);
         return mApiHelper.doAddPackageEditApiCall(request);
     }
 

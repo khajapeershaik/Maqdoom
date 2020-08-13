@@ -396,11 +396,18 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                     if (sellerAddPackageViewModel.validateSpinner(3, city)) {
                                         if (!imageUpload.isEmpty()) {
                                             if (!options.isEmpty()) {
+
                                                 String category_l_3_ShortName = "";
                                                 if ("Domestic".equalsIgnoreCase(subCategory)) {
                                                     category_l_3_ShortName = "Domestic";
-                                                } else if ("International".equalsIgnoreCase(subCategory)) {
-                                                    category_l_3_ShortName = "International";
+                                                }  else if ("مجموعة سياحية داخل الدولة".equalsIgnoreCase(subCategory)) {
+                                                    category_l_3_ShortName = "المنزلي";
+                                                }
+                                                else if ("International".equalsIgnoreCase(subCategory)) {
+                                                    category_l_3_ShortName = subCategory;
+                                                }
+                                                else if("مجموعة سياحية خارج الدولة".equalsIgnoreCase(subCategory)){
+                                                    category_l_3_ShortName = "دولي";
                                                 }
 
                                                 String nameEntered = "";
@@ -680,7 +687,20 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                 if (!options.isEmpty()) {
                                     String nameEntered = "";
                                     String category_l_2_ShortName = "";
-                                    String category_l_3_ShortName = subCategory;
+
+                                    String category_l_3_ShortName = "";
+                                    if ("Domestic".equalsIgnoreCase(subCategory)) {
+                                        category_l_3_ShortName = "Domestic";
+                                    }  else if ("مجموعة سياحية داخل الدولة".equalsIgnoreCase(subCategory)) {
+                                        category_l_3_ShortName = "المنزلي";
+                                    }
+                                    else if ("International".equalsIgnoreCase(subCategory)) {
+                                        category_l_3_ShortName = subCategory;
+                                    }
+                                    else if("مجموعة سياحية خارج الدولة".equalsIgnoreCase(subCategory)){
+                                        category_l_3_ShortName = "دولي";
+                                    }
+
                                     String service = "";
                                     if (fragmentSellerAddPackageBinding.etServices.getText().toString().length() > 1) {
                                         service = fragmentSellerAddPackageBinding.etServices.getText().toString();
@@ -974,17 +994,17 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                     selectedCategory = 1;
                 } else if (level2_Category.equalsIgnoreCase("TGP")) {
                     selectedCategory = 2;
-                    if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("Domastic")))) {
+                    if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("المنزلي")))) {
                         fragmentSellerAddPackageBinding.spinnerSubType.setSelection(1);
-                    } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("IC"))) {
+                    } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("دولي"))) {
                         fragmentSellerAddPackageBinding.spinnerSubType.setSelection(2);
                     } else {
                         fragmentSellerAddPackageBinding.spinnerSubType.setSelection(0);
                     }
                 } else if (level2_Category.equalsIgnoreCase("HM")) {
-                    if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("Domastic")))) {
+                    if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("المنزلي")))) {
                         fragmentSellerAddPackageBinding.spinnerSubType.setSelection(1);
-                    } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("IC"))) {
+                    } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("دولي"))) {
                         fragmentSellerAddPackageBinding.spinnerSubType.setSelection(2);
                     } else {
                         fragmentSellerAddPackageBinding.spinnerSubType.setSelection(0);
@@ -992,9 +1012,9 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                     selectedCategory = 3;
                 } else if (level2_Category.equalsIgnoreCase("FT")) {
                     selectedCategory = 4;
-                    if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("Domastic")))) {
+                    if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("المنزلي")))) {
                         fragmentSellerAddPackageBinding.spinnerSubType.setSelection(1);
-                    } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("IC"))) {
+                    } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("دولي"))) {
                         fragmentSellerAddPackageBinding.spinnerSubType.setSelection(2);
                     } else {
                         fragmentSellerAddPackageBinding.spinnerSubType.setSelection(0);
@@ -1014,9 +1034,9 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             } else if (level1_Category.equalsIgnoreCase("Shops")) {
                 option = 3;
                 setSpinner(3);
-                if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("Domastic")))) {
+                if ((level3_Category.equalsIgnoreCase("Domestic") || (level3_Category.equalsIgnoreCase("المنزلي")))) {
                     fragmentSellerAddPackageBinding.spinnerSubType.setSelection(1);
-                } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("IC"))) {
+                } else if ((level3_Category.equalsIgnoreCase("International")) || (level3_Category.equalsIgnoreCase("دولي"))) {
                     fragmentSellerAddPackageBinding.spinnerSubType.setSelection(2);
                 } else {
                     fragmentSellerAddPackageBinding.spinnerSubType.setSelection(0);

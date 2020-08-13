@@ -30,6 +30,7 @@ public class OutsideCountryViewModel extends BaseViewModel<OutsideCountryNavigat
 
     private final MutableLiveData<List<TravelCategoryGroupResponse.Adds>> travelListLiveData;
     private final List<TravelCategoryGroupResponse.Adds> sortedList;
+
     public OutsideCountryViewModel(DataManager dataManager,
                                    SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -43,13 +44,14 @@ public class OutsideCountryViewModel extends BaseViewModel<OutsideCountryNavigat
         final String userType = getDataManager().getUserType();
         int userId = getDataManager().getCurrentUserId();
         getCompositeDisposable().add(getDataManager()
-                .doTravelCategoryGroupApiCall(new TravelCategoryRequest.ServerTravelCategoryRequest(type),userType, String.valueOf(userId))
+                .doTravelCategoryGroupApiCall(new TravelCategoryRequest.ServerTravelCategoryRequest(type), userType, String.valueOf(userId))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
                     if (response != null && response.getData() != null) {
-                        for(int i=0;i<response.getData().size(); i++){
-                            if(response.getData().get(i).getLevel3_category().equalsIgnoreCase("International")){
+                        for (int i = 0; i < response.getData().size(); i++) {
+                            if ((response.getData().get(i).getLevel3_category().equalsIgnoreCase("International"))
+                                    || (response.getData().get(i).getLevel3_category().equalsIgnoreCase("دولي"))) {
                                 sortedList.add(response.getData().get(i));
                             }
                         }

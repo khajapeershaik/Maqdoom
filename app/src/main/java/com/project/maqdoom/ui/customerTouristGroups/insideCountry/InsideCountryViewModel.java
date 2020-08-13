@@ -15,12 +15,9 @@ package com.project.maqdoom.ui.customerTouristGroups.insideCountry;
 
 import android.util.Log;
 
-import com.androidnetworking.error.ANError;
 import com.project.maqdoom.data.DataManager;
-import com.project.maqdoom.data.model.api.DeleteAddRequest;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryRequest;
-import com.project.maqdoom.data.model.api.TravelCategoryResponse;
 import com.project.maqdoom.ui.base.BaseViewModel;
 import com.project.maqdoom.utils.rx.SchedulerProvider;
 
@@ -35,6 +32,7 @@ public class InsideCountryViewModel extends BaseViewModel<InsideCountryNavigator
 
     private final MutableLiveData<List<TravelCategoryGroupResponse.Adds>> travelListLiveData;
     private final List<TravelCategoryGroupResponse.Adds> sortedList;
+
     public InsideCountryViewModel(DataManager dataManager,
                                   SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -47,13 +45,14 @@ public class InsideCountryViewModel extends BaseViewModel<InsideCountryNavigator
         final String userType = getDataManager().getUserType();
         int userId = getDataManager().getCurrentUserId();
         getCompositeDisposable().add(getDataManager()
-                .doTravelCategoryGroupApiCall(new TravelCategoryRequest.ServerTravelCategoryRequest(dataType),userType, String.valueOf(userId))
+                .doTravelCategoryGroupApiCall(new TravelCategoryRequest.ServerTravelCategoryRequest(dataType), userType, String.valueOf(userId))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
                     if (response != null && response.getData() != null) {
-                        for(int i=0;i<response.getData().size(); i++){
-                            if(response.getData().get(i).getLevel3_category().equalsIgnoreCase("Domestic")){
+                        for (int i = 0; i < response.getData().size(); i++) {
+                            if ((response.getData().get(i).getLevel3_category().equalsIgnoreCase("Domestic"))
+                                    || (response.getData().get(i).getLevel3_category().equalsIgnoreCase("المنزلي"))) {
                                 sortedList.add(response.getData().get(i));
                             }
                         }
@@ -62,7 +61,7 @@ public class InsideCountryViewModel extends BaseViewModel<InsideCountryNavigator
                     setIsLoading(false);
                 }, throwable -> {
                     setIsLoading(false);
-                    Log.e("Arun ","onViewCreated throwable");
+                    Log.e("Arun ", "onViewCreated throwable");
 
                     getNavigator().handleError(throwable);
                 }));
@@ -71,7 +70,8 @@ public class InsideCountryViewModel extends BaseViewModel<InsideCountryNavigator
     public LiveData<List<TravelCategoryGroupResponse.Adds>> getTravelListLiveData() {
         return travelListLiveData;
     }
-    public String getUserType(){
+
+    public String getUserType() {
         return getDataManager().getUserType();
     }
 

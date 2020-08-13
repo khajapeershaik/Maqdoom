@@ -47,6 +47,7 @@ public class TouristGuidesDetailsFragment extends BaseFragment<FragmentGuideDeta
     public static final String TAG = TouristGuidesDetailsFragment.class.getSimpleName();
     public static String GD;
     String guideData = "";
+    String packageName = "";
     private String add_id = "",whatsAppNumber ="", phoneNumber="";
     @Inject
     ViewModelProviderFactory factory;
@@ -144,7 +145,16 @@ public class TouristGuidesDetailsFragment extends BaseFragment<FragmentGuideDeta
 
     @Override
     public void openChat() {
-        Toast.makeText(getActivity(), "Available in future release", Toast.LENGTH_SHORT).show();
+        try {
+            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+            smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
+            smsIntent.setType("vnd.android-dir/mms-sms");
+            smsIntent.setData(Uri.parse("sms:" + phoneNumber));
+            smsIntent.putExtra("sms_body", packageName);
+            startActivity(smsIntent);
+        } catch (Exception e) {
+
+        }
     }
 
 
@@ -172,6 +182,7 @@ public class TouristGuidesDetailsFragment extends BaseFragment<FragmentGuideDeta
         try{
             JSONObject jsonObj = new JSONObject(guideData);
             add_id = jsonObj.optString("id").toString();
+            packageName = jsonObj.optString("package");
             fragmentTouristGuideBinding.tvGuide.setText(jsonObj.optString("name").toString());
             fragmentTouristGuideBinding.tvProfileDesc.setText(jsonObj.optString("profile").toString());
             fragmentTouristGuideBinding.tvLanguageDesc.setText(jsonObj.optString("language").toString());
