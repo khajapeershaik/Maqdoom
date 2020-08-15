@@ -33,6 +33,7 @@ import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.databinding.FragmentPackageDetailsBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragment;
+import com.project.maqdoom.ui.friends.FriendsFragment;
 
 import org.json.JSONObject;
 
@@ -155,16 +156,12 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
 
     @Override
     public void openChat() {
-        try {
-            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-            smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
-            smsIntent.setType("vnd.android-dir/mms-sms");
-            smsIntent.setData(Uri.parse("sms:" + phoneNumber));
-            smsIntent.putExtra("sms_body", packageName);
-            startActivity(smsIntent);
-        } catch (Exception e) {
-
-        }
+        getFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .add(R.id.parentLayout, FriendsFragment.newInstance(), FriendsFragment.TAG)
+                .commit();
     }
 
 

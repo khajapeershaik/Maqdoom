@@ -108,7 +108,12 @@ public final class AddServiceRequest {
         @SerializedName("lan")
         private String lan;
 
-        public ServerPackageAddRequest(String user_id, String guide_name, String level1_category, String level2_category, String level3_category, String packageName, String package_include, String phone, String country, String location, String whatsapp_phone, String price, String people_cnt, String more_details, String city, String language, java.util.HashMap<String, String> imageList, String addId,String service) {
+        @Expose
+        @SerializedName("national_id")
+        private String national_id;
+
+
+        public ServerPackageAddRequest(String user_id, String guide_name, String level1_category, String level2_category, String level3_category, String packageName, String package_include, String phone, String country, String location, String whatsapp_phone, String price, String people_cnt, String more_details, String city, String language, java.util.HashMap<String, String> imageList, String addId,String service,String national_id) {
             this.user_id = user_id;
             this.guide_name = guide_name;
             this.level1_category = level1_category;
@@ -128,6 +133,11 @@ public final class AddServiceRequest {
             this.image_list = imageList;
             this.add_id = addId;
             this.service = service;
+            this.national_id = national_id;
+        }
+
+        public String getNational_id() {
+            return national_id;
         }
 
         public String getLan() {

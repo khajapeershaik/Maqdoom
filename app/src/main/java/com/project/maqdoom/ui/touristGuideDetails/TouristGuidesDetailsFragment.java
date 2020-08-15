@@ -27,6 +27,7 @@ import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.databinding.FragmentGuideDetailsBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragment;
+import com.project.maqdoom.ui.friends.FriendsFragment;
 
 import org.json.JSONObject;
 
@@ -145,16 +146,12 @@ public class TouristGuidesDetailsFragment extends BaseFragment<FragmentGuideDeta
 
     @Override
     public void openChat() {
-        try {
-            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-            smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
-            smsIntent.setType("vnd.android-dir/mms-sms");
-            smsIntent.setData(Uri.parse("sms:" + phoneNumber));
-            smsIntent.putExtra("sms_body", packageName);
-            startActivity(smsIntent);
-        } catch (Exception e) {
-
-        }
+            getFragmentManager()
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .add(R.id.parentLayout, FriendsFragment.newInstance(), FriendsFragment.TAG)
+                    .commit();
     }
 
 
@@ -186,8 +183,8 @@ public class TouristGuidesDetailsFragment extends BaseFragment<FragmentGuideDeta
             fragmentTouristGuideBinding.tvGuide.setText(jsonObj.optString("name").toString());
             fragmentTouristGuideBinding.tvProfileDesc.setText(jsonObj.optString("profile").toString());
             fragmentTouristGuideBinding.tvLanguageDesc.setText(jsonObj.optString("language").toString());
-            fragmentTouristGuideBinding.tvCountryDesc.setText(jsonObj.optString("country").toString());
-            List<String> imList = Arrays.asList(jsonObj.optString("images").split(","));
+            fragmentTouristGuideBinding.tvCountryDesc.setText(jsonObj.optString("city")+","+jsonObj.optString("country").toString());
+            List<String> imList = Arrays.asList(jsonObj.optString("images").split("\t"));
 
             Glide.with(getActivity()).load(imList.get(0).trim()).into(fragmentTouristGuideBinding.coverImageView);
 

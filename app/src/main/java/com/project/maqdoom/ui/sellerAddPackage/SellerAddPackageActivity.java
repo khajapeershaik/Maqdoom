@@ -155,7 +155,7 @@ public class SellerAddPackageActivity extends BaseActivity<ActivitySellerAddPack
                                         } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
                                             category_l_2_ShortName = "CUS";
                                         }
-                                        sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, "", phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, language,addId,imageUpload,"");
+                                        sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, "", phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, language,addId,imageUpload,"","");
                                     } else {
                                         Toast.makeText(this, "Please upload image", Toast.LENGTH_SHORT).show();
                                     }
@@ -208,7 +208,7 @@ public class SellerAddPackageActivity extends BaseActivity<ActivitySellerAddPack
                                             } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
                                                 category_l_2_ShortName = "CUS";
                                             }
-                                            sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, category_l_3_ShortName, name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId,imageUpload,"");
+                                            sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, category_l_3_ShortName, name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId,imageUpload,"","");
                                         } else {
                                             Toast.makeText(this, "Please add Package", Toast.LENGTH_SHORT).show();
                                         }
@@ -256,7 +256,7 @@ public class SellerAddPackageActivity extends BaseActivity<ActivitySellerAddPack
                                 } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
                                     category_l_2_ShortName = "CUS";
                                 }
-                                sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, selectedCategory, phone, "", location, whatsApp, price, numberOfPeople, moreDetails, "", "", addId,imageUpload,"");
+                                sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, selectedCategory, phone, "", location, whatsApp, price, numberOfPeople, moreDetails, "", "", addId,imageUpload,"","");
                             } else {
                                 Toast.makeText(this, "Please add Package", Toast.LENGTH_SHORT).show();
                             }

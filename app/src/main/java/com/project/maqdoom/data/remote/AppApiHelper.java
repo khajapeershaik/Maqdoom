@@ -177,6 +177,7 @@ public class AppApiHelper implements ApiHelper {
             jsonObject.put("language", request.getLanguage());
             jsonObject.put("services",request.getService());
             jsonObject.put("lan",request.getLan());
+            jsonObject.put("national_id",request.getNational_id());
             JSONArray jsonArray = new JSONArray();
             JSONObject obj = null;
             if (request.getImage_list() != null) {

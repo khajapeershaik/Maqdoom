@@ -607,10 +607,38 @@
         <item>Tourist Guide</item>
 
     </string-array>
-
     <string name="mobileNo">Mobile Number</string>
     <string name="otp">Enter OTP</string>
     <string name="add_images">Add Images</string>
     <string name="upload_pic">Upload licence image </string>
     <string name="str_message">Your message...</string>
+
+
+    <string-array name="supplier_services">
+
+        <item>Caravan</item>
+        <item>Camps</item>
+        <item>Desert Ride</item>
+        <item>Cooking Supplies</item>
+        <item>Butcher</item>
+        <item>Chalet</item>
+        <item>Restaurant</item>
+    </string-array>
+
+    <string-array name="shops_services">
+        <item>Caravan</item>
+        <item>Camping</item>
+        <item>Cooking Supplies</item>
+    </string-array>
+
+    <string-array name="cruises_services">
+        <item>Sea Food Seller</item>
+        <item>Jet Ski</item>
+        <item>Cruise</item>
+        <item>Cooking Supplies</item>
+        <item>Hunting Supplies</item>
+    </string-array>
+
+    <string name="national_id" translatable="false">National Id</string>
+
 </resources>
