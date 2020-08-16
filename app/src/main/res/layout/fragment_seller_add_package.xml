@@ -297,7 +297,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/custom_bg_edit_text_one"
                     android:ellipsize="end"
-                    android:hint="Please enter language"
+                    android:hint="@string/city_hint"
                     android:imeOptions="actionNext"
                     android:padding="8dp"
                     android:singleLine="true" />

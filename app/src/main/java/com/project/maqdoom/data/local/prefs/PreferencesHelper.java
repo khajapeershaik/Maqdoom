@@ -72,4 +72,7 @@ public interface PreferencesHelper {
     String getImageUrl();
     void setImageUrl(String imageUrl);
 
+    String getarUserName();
+    void setArUserName(String username);
+
 }

@@ -110,7 +110,7 @@
     <string name="profile_language">يمكن للغة أن تتحدث</string>
     <string name="profile_country">بلد</string>
     <string name="profile_call">مكالمة</string>
-    <string name="profile_whats">ال WhatsApp</string>
+    <string name="profile_whats">واتس اب</string>
     <string name="profile_message">رسالة</string>
 
     <!-- Tourist groups -->
@@ -141,6 +141,7 @@
     <string name="package_sight_seeing">معالم المدينة</string>
     <string name="package_meals">وجبات</string>
     <string name="package_site_visit">زيارة البصر</string>
+    <string name="city_hint">الرجاء إدخال المدينة</string>
 
     <!-- Notification -->
     <string name="notification_header">إشعارات</string>

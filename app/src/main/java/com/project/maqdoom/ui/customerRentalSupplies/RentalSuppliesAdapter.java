@@ -165,19 +165,19 @@ public class RentalSuppliesAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                     String[] values = inclusions.split(",");
                     for (int i = 0; i < values.length; i++) {
                         String name = values[i].trim();
-                        if ("Flights".equalsIgnoreCase(name)) {
+                        if (itemView.getContext().getResources().getString(R.string.package_flights).equalsIgnoreCase(name)) {
                             mBinding.llFlights.setVisibility(View.VISIBLE);
                         }
-                        if ("Hotels".equalsIgnoreCase(name)) {
+                        if (itemView.getContext().getResources().getString(R.string.package_hotels).equalsIgnoreCase(name)) {
                             mBinding.llHotels.setVisibility(View.VISIBLE);
                         }
-                        if ("Sight Seeing".equalsIgnoreCase(name)) {
+                        if (itemView.getContext().getResources().getString(R.string.package_sight_seeing).equalsIgnoreCase(name)) {
                             mBinding.llSightSeeing.setVisibility(View.VISIBLE);
                         }
-                        if ("Meals".equalsIgnoreCase(name)) {
+                        if (itemView.getContext().getResources().getString(R.string.package_meals).equalsIgnoreCase(name)) {
                             mBinding.llMeals.setVisibility(View.VISIBLE);
                         }
-                        if ("Sight Visit".equalsIgnoreCase(name)) {
+                        if (itemView.getContext().getResources().getString(R.string.package_site_visit).equalsIgnoreCase(name)) {
                             mBinding.llSightVisit.setVisibility(View.VISIBLE);
                         }
                     }

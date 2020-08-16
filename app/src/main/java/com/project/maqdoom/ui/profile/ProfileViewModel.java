@@ -18,8 +18,10 @@ import android.util.Log;
 
 import com.androidnetworking.error.ANError;
 import com.project.maqdoom.data.DataManager;
+import com.project.maqdoom.data.model.api.DeleteAddRequest;
 import com.project.maqdoom.data.model.api.EditProfileRequest;
 import com.project.maqdoom.data.model.api.EditProfileResponse;
+import com.project.maqdoom.data.model.api.GetProfileRequest;
 import com.project.maqdoom.data.model.api.MaqdoomLoginRequest;
 import com.project.maqdoom.data.model.api.ProfileResponse;
 import com.project.maqdoom.data.remote.api_rest.ApiClient;
@@ -42,15 +44,10 @@ import retrofit2.Response;
 public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
 
     private final ObservableField<String> userEmail = new ObservableField<>();
-    ;
     private final ObservableField<String> userName = new ObservableField<>();
-    ;
     private final ObservableField<String> date = new ObservableField<>();
-    ;
     private final ObservableField<String> phone = new ObservableField<>();
-    ;
     private final ObservableField<String> address = new ObservableField<>();
-    ;
 
     public ProfileViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -168,6 +165,83 @@ public class ProfileViewModel extends BaseViewModel<ProfileNavigator> {
         });
 
     }
+
+    public void getProfile() {
+        setIsLoading(true);
+        int userId = getDataManager().getCurrentUserId();
+        getCompositeDisposable().add(getDataManager()
+                .doGetProfile(new GetProfileRequest.GetProfile(userId))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(response -> {
+                    setIsLoading(false);
+
+                    final String currentUserName = response.getName();
+                    if (!TextUtils.isEmpty(currentUserName)) {
+                     //   userName.set(currentUserName);
+                        getDataManager().setCurrentUserName(currentUserName);
+                    }
+
+                    final String currentUserEmail = response.getEmail();
+                    if (!TextUtils.isEmpty(currentUserEmail)) {
+                       // userEmail.set(currentUserEmail);
+                        getDataManager().setEmail(currentUserEmail);
+                    }
+
+                    final String crDate = response.getCreated_at();
+                    if (!TextUtils.isEmpty(crDate)) {
+                      //  date.set(crDate);
+                        getDataManager().setCreatedDate(crDate);
+
+                    }
+
+                    final String arUserName = response.getNameAr();
+                    if (!TextUtils.isEmpty(arUserName)) {
+                        //  date.set(crDate);
+                        getDataManager().setArUserName(arUserName);
+
+                    }
+
+                    final String phoneNumber = response.getPhone();
+                    if (!TextUtils.isEmpty(phoneNumber)) {
+                        getDataManager().setPhone(phoneNumber);
+
+                    }else{
+                        getDataManager().setPhone("Not available");
+                    }
+
+                    final String imageUrl = response.getDpimg();
+                    if (!TextUtils.isEmpty(imageUrl)) {
+                        getDataManager().setImageUrl(imageUrl);
+
+                    }else{
+                        getDataManager().setImageUrl("");
+                    }
+
+                    address.set("Not available");
+
+
+                  /*  if ("fail".equals(response.getResponse())) {
+                        getNavigator().showErrorAlert(response.getMessage());
+                    } else {
+                        getNavigator().showErrorAlert(response.getMessage());
+                    }*/
+                }, throwable -> {
+                    if (throwable instanceof ANError) {
+                        ANError anError = (ANError) throwable;
+                        if (anError.getErrorCode() != 0) {
+                        } else {
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        }
+                    } else {
+                        Log.d("TAG", "onError errorMessage : " + throwable.getMessage());
+                    }
+                    throwable.printStackTrace();
+                    setIsLoading(false);
+                }));
+    }
+
+
     public void onNavBackClick() {
         getNavigator().goBack();
     }

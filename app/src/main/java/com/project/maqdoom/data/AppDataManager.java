@@ -27,6 +27,8 @@ import com.project.maqdoom.data.model.api.DeleteAddResponse;
 import com.project.maqdoom.data.model.api.EditProfileRequest;
 import com.project.maqdoom.data.model.api.EditProfileResponse;
 import com.project.maqdoom.data.model.api.ForgotPasswordResponse;
+import com.project.maqdoom.data.model.api.GetProfileRequest;
+import com.project.maqdoom.data.model.api.GetProfileResponse;
 import com.project.maqdoom.data.model.api.ImageUploadRequest;
 import com.project.maqdoom.data.model.api.ImageUploadResponse;
 import com.project.maqdoom.data.model.api.LogoutResponse;
@@ -178,6 +180,10 @@ public class AppDataManager implements DataManager {
         return mApiHelper.dosavePhoneOTP(request);
     }
 
+    @Override
+    public Single<GetProfileResponse> doGetProfile(GetProfileRequest.GetProfile request) {
+        return mApiHelper.doGetProfile(request);
+    }
 
 
     @Override
@@ -283,6 +289,8 @@ public class AppDataManager implements DataManager {
         mPreferencesHelper.setPhone(phone);
     }
 
+
+
     @Override
     public String getCreatedDate() {
         return mPreferencesHelper.getCreatedDate();
@@ -327,6 +335,18 @@ public class AppDataManager implements DataManager {
     @Override
     public void setImageUrl(String imageUrl) {
         mPreferencesHelper.setImageUrl(imageUrl);
+
+    }
+
+    @Override
+    public String getarUserName() {
+        return mPreferencesHelper.getarUserName();
+
+    }
+
+    @Override
+    public void setArUserName(String username) {
+        mPreferencesHelper.setArUserName(username);
 
     }
 

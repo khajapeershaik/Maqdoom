@@ -187,7 +187,7 @@ public class TouristGuidesDetailsFragment extends BaseFragment<FragmentGuideDeta
             fragmentTouristGuideBinding.tvProfileDesc.setText(jsonObj.optString("profile").toString());
             fragmentTouristGuideBinding.tvLanguageDesc.setText(jsonObj.optString("language").toString());
             fragmentTouristGuideBinding.tvCountryDesc.setText(jsonObj.optString("country").toString());
-            List<String> imList = Arrays.asList(jsonObj.optString("images").split(","));
+            List<String> imList = Arrays.asList(jsonObj.optString("images").split("\t"));
 
             Glide.with(getActivity()).load(imList.get(0).trim()).into(fragmentTouristGuideBinding.coverImageView);
 

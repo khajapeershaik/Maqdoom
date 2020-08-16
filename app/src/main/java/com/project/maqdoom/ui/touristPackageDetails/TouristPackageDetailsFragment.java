@@ -217,19 +217,19 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
                 String[] values = inclusions.split(",");
                 for (int i = 0; i < values.length; i++) {
                     String name = values[i].trim();
-                    if ("Flights".equalsIgnoreCase(name)) {
+                    if (getResources().getString(R.string.package_flights).equalsIgnoreCase(name)) {
                         fragmentTouristGuideBinding.llFlights.setVisibility(View.VISIBLE);
                     }
-                    if ("Hotels".equalsIgnoreCase(name)) {
+                    if (getResources().getString(R.string.package_hotels).equalsIgnoreCase(name)) {
                         fragmentTouristGuideBinding.llHotels.setVisibility(View.VISIBLE);
                     }
-                    if ("Sight Seeing".equalsIgnoreCase(name)) {
+                    if (getResources().getString(R.string.package_sight_seeing).equalsIgnoreCase(name)) {
                         fragmentTouristGuideBinding.llSightSeeing.setVisibility(View.VISIBLE);
                     }
-                    if ("Meals".equalsIgnoreCase(name)) {
+                    if (getResources().getString(R.string.package_meals).equalsIgnoreCase(name)) {
                         fragmentTouristGuideBinding.llMeals.setVisibility(View.VISIBLE);
                     }
-                    if ("Sight Visit".equalsIgnoreCase(name)) {
+                    if (getResources().getString(R.string.package_site_visit).equalsIgnoreCase(name)) {
                         fragmentTouristGuideBinding.llSightVisit.setVisibility(View.VISIBLE);
                     }
                 }

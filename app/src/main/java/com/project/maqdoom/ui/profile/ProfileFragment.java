@@ -74,12 +74,13 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     FragmentProfileBinding fragmentProfileBinding;
     private String defaultLanguage;
     private SharedPreferences sharedpreferences;
-    public static final String LANGUAGE_REFERENCE = "language_preference" ;
+    public static final String LANGUAGE_REFERENCE = "language_preference";
     public static final String LANGUAGE_KEY = "language";
     public static final String PROFILE_IMAGE_KEY = "userImageURL";
-    public static final  int PICKER_REQUEST_CODE = 30;
+    public static final int PICKER_REQUEST_CODE = 30;
 
     private String pathsList[];
+
     public static ProfileFragment newInstance() {
         Bundle args = new Bundle();
         ProfileFragment fragment = new ProfileFragment();
@@ -146,13 +147,12 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         String name = fragmentProfileBinding.etName.getText().toString();
         String eMail = fragmentProfileBinding.etMail.getText().toString();
 
-        if (profileViewModel.isValid(phone, name,eMail)) {
+        if (profileViewModel.isValid(phone, name, eMail)) {
             hideKeyboard();
-            if((pathsList!=null)&&(pathsList.length>0)) {
-                profileViewModel.updateProfile(phone, name, eMail, pathsList[0],defaultLanguage);
-            }
-            else {
-                profileViewModel.updateProfile(phone, name, eMail, "",defaultLanguage);
+            if ((pathsList != null) && (pathsList.length > 0)) {
+                profileViewModel.updateProfile(phone, name, eMail, pathsList[0], defaultLanguage);
+            } else {
+                profileViewModel.updateProfile(phone, name, eMail, "", defaultLanguage);
             }
 
         } else {
@@ -169,6 +169,45 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void pickImage() {
 
         new GligarPicker().requestCode(PICKER_REQUEST_CODE).withFragment(ProfileFragment.this).limit(1).disableCamera(false).show();
+
+    }
+
+    @Override
+    public void getProfile() {
+        profileViewModel.getProfile();
+
+
+        final String currentUserEmail = profileViewModel.getDataManager().getEmail();
+        if (!TextUtils.isEmpty(currentUserEmail)) {
+            fragmentProfileBinding.etMail.setText(currentUserEmail);
+
+
+        }
+        final String phoneNumber = profileViewModel.getDataManager().getPhone();
+        if (!TextUtils.isEmpty(phoneNumber)) {
+            fragmentProfileBinding.etPhone.setText(phoneNumber);
+        } else {
+            fragmentProfileBinding.etPhone.setText("Not available");
+        }
+        final String imageUrl = profileViewModel.getDataManager().getImageUrl();
+        if (!TextUtils.isEmpty(imageUrl)) {
+            setImage(fragmentProfileBinding.ivProfilePic, imageUrl);
+        }
+        if (fragmentProfileBinding.languageButton.getText().toString().equalsIgnoreCase("English")) {
+
+            final String currentUserName = profileViewModel.getDataManager().getCurrentUserName();
+            if (!TextUtils.isEmpty(currentUserName)) {
+                fragmentProfileBinding.etName.setText(currentUserName);
+            }
+
+
+        } else {
+
+            final String arUserName = profileViewModel.getDataManager().getarUserName();
+            if (!TextUtils.isEmpty(arUserName)) {
+                fragmentProfileBinding.etName.setText(phoneNumber);
+            }
+        }
 
     }
 
@@ -190,22 +229,23 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
         sharedpreferences = getActivity().getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
 
-        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
-        String profileImageURL = sharedpreferences.getString(PROFILE_IMAGE_KEY,"");
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY, "en");
+        String profileImageURL = sharedpreferences.getString(PROFILE_IMAGE_KEY, "");
 
-       setImage(fragmentProfileBinding.ivProfilePic,profileImageURL);
-            if (langPreference.equalsIgnoreCase("en")) {
-                defaultLanguage = "English";
-            } else {
-                defaultLanguage = "Arabic";
-            }
+        setImage(fragmentProfileBinding.ivProfilePic, profileImageURL);
+        if (langPreference.equalsIgnoreCase("en")) {
+            defaultLanguage = "English";
+        } else {
+            defaultLanguage = "Arabic";
+        }
 
         fragmentProfileBinding.languageButton.setText(defaultLanguage);
         fragmentProfileBinding.languageButton.setOnClickListener(view1 -> {
             showLanguages();
         });
         setUp();
-        populateData();
+        //  populateData();
+        getProfile();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         //onBackPressed();
@@ -223,18 +263,18 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
         saveLanguagePreference(en);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Intent intent =new Intent(getActivity(), SplashActivity.class);
+        Intent intent = new Intent(getActivity(), SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
-    private void saveLanguagePreference(String lan){
+    private void saveLanguagePreference(String lan) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(LANGUAGE_KEY, lan);
         editor.commit();
     }
 
-    private void saveProfileImage(String url){
+    private void saveProfileImage(String url) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(PROFILE_IMAGE_KEY, url);
         editor.commit();
@@ -247,19 +287,18 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         AlertDialog OptionDialog = alertDialog.create();
         OptionDialog.show();
         ListView llLanguageList = customLayout.findViewById(R.id.lv_language);
-        String[] languageArray = {"English","Arabic"};
+        String[] languageArray = {"English", "Arabic"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1
-                ,languageArray);
+                , languageArray);
         llLanguageList.setAdapter(adapter);
         llLanguageList.setOnItemClickListener((adapterView, view, i, l) -> {
 
-            if(i==1){
-                Log.v("selected","ar");
+            if (i == 1) {
+                Log.v("selected", "ar");
                 fragmentProfileBinding.languageButton.setText("Arabic");
                 updateLocale("ar");
-            }
-            else{
-                Log.v("selected","en");
+            } else {
+                Log.v("selected", "en");
                 fragmentProfileBinding.languageButton.setText("English");
                 updateLocale("en");
             }
@@ -297,6 +336,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         });
 
     }
+
     private void onBackPressed() {
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -320,7 +360,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
     private void enableEditOption() {
         fragmentProfileBinding.etPhone.setEnabled(true);
-        if("Not available".equalsIgnoreCase(fragmentProfileBinding.etPhone.getText().toString().trim())){
+        if ("Not available".equalsIgnoreCase(fragmentProfileBinding.etPhone.getText().toString().trim())) {
             fragmentProfileBinding.etPhone.setText("");
         }
         fragmentProfileBinding.etPhone.requestFocus();
@@ -331,7 +371,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     }
 
     private void disableEditOption() {
-        populateData();
+        //  populateData();
+        getProfile();
         fragmentProfileBinding.etPhone.setEnabled(false);
         fragmentProfileBinding.etName.setEnabled(false);
         fragmentProfileBinding.etMail.setEnabled(false);
@@ -340,6 +381,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
 
     }
+
     public void populateData() {
         final String currentUserName = profileViewModel.getDataManager().getCurrentUserName();
         if (!TextUtils.isEmpty(currentUserName)) {
@@ -353,13 +395,13 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         final String phoneNumber = profileViewModel.getDataManager().getPhone();
         if (!TextUtils.isEmpty(phoneNumber)) {
             fragmentProfileBinding.etPhone.setText(phoneNumber);
-        }else{
+        } else {
             fragmentProfileBinding.etPhone.setText("Not available");
         }
 
     }
 
-    private void setImage(ImageView imgv ,String url){
+    private void setImage(ImageView imgv, String url) {
         Glide.with(getActivity())
                 .load(url)
                 .centerCrop()
@@ -373,11 +415,11 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
-        switch (requestCode){
-            case PICKER_REQUEST_CODE : {
-                 pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT); // return list of selected images paths.
-                if(pathsList!=null) {
-                    setImage(fragmentProfileBinding.ivProfilePic,pathsList[0]);
+        switch (requestCode) {
+            case PICKER_REQUEST_CODE: {
+                pathsList = data.getExtras().getStringArray(GligarPicker.IMAGES_RESULT); // return list of selected images paths.
+                if (pathsList != null) {
+                    setImage(fragmentProfileBinding.ivProfilePic, pathsList[0]);
                     saveProfileImage(pathsList[0]);
                 }
                 break;

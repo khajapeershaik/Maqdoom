@@ -21,6 +21,8 @@ import com.project.maqdoom.data.model.api.DeleteAddResponse;
 import com.project.maqdoom.data.model.api.EditProfileRequest;
 import com.project.maqdoom.data.model.api.EditProfileResponse;
 import com.project.maqdoom.data.model.api.ForgotPasswordResponse;
+import com.project.maqdoom.data.model.api.GetProfileRequest;
+import com.project.maqdoom.data.model.api.GetProfileResponse;
 import com.project.maqdoom.data.model.api.ImageUploadRequest;
 import com.project.maqdoom.data.model.api.ImageUploadResponse;
 import com.project.maqdoom.data.model.api.LogoutResponse;
@@ -414,6 +416,26 @@ public class AppApiHelper implements ApiHelper {
                 .addJSONObjectBody(jsonObject)
                 .build()
                 .getObjectSingle(SellerPayResponse.class);
+    }
+
+    @Override
+    public Single<GetProfileResponse> doGetProfile(GetProfileRequest.GetProfile request) {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("user_id", request.getUser_id());
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SERVER_GET_PROFILE)
+                .setContentType("application/json; charset=utf-8")
+                .addHeaders(mApiHeader.getPublicApiHeader())
+                //.addBodyParameter(request)
+                .addJSONObjectBody(jsonObject)
+                .build()
+                .getObjectSingle(GetProfileResponse.class);
     }
 
 

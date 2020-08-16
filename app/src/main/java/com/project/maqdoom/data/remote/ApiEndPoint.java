@@ -49,6 +49,9 @@ public final class ApiEndPoint {
 
     public static final String ENDPOINT_SERVER_DELETE_ADD = BuildConfig.BASE_SERVER_URL + "/deleteAdd";
 
+    public static final String ENDPOINT_SERVER_GET_PROFILE = BuildConfig.BASE_SERVER_URL + "/user";
+
+
     public static final String ENDPOINT_SERVER_REQUEST_CODE = BuildConfig.BASE_SERVER_URL + "/sendEmailVerificationCode";
 
     public static final String ENDPOINT_SERVER_FORGOT_PASSWORD = BuildConfig.BASE_SERVER_URL + "/changePassword";

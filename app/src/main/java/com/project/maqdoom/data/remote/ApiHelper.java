@@ -22,6 +22,8 @@ import com.project.maqdoom.data.model.api.DeleteAddResponse;
 import com.project.maqdoom.data.model.api.EditProfileRequest;
 import com.project.maqdoom.data.model.api.EditProfileResponse;
 import com.project.maqdoom.data.model.api.ForgotPasswordResponse;
+import com.project.maqdoom.data.model.api.GetProfileRequest;
+import com.project.maqdoom.data.model.api.GetProfileResponse;
 import com.project.maqdoom.data.model.api.ImageUploadRequest;
 import com.project.maqdoom.data.model.api.LogoutResponse;
 import com.project.maqdoom.data.model.api.MaqDoomLoginResponse;
@@ -73,6 +75,8 @@ public interface ApiHelper {
     Single<ImageUploadResponse> doUploadImageApiCall(ImageUploadRequest.ServerUploadImageRequest request);
 
     Single<SellerPayResponse> dosavePhoneOTP(MaqdoomLoginRequest.ServerLoginRequest request);
+
+    Single<GetProfileResponse> doGetProfile(GetProfileRequest.GetProfile request);
 
     ApiHeader getApiHeader();
 

@@ -143,6 +143,7 @@
     <string name="package_meals">Meals</string>
     <string name="package_site_visit">Sight Visit</string>
 
+
     <!-- Notification -->
     <string name="notification_header">Notifications</string>
 
@@ -172,6 +173,8 @@
     <string name="service_sub_category">Sub Category</string>
     <string name="Service_name">Name</string>
     <string name="name_hint">Please enter name</string>
+    <string name="city_hint">Please Enter City</string>
+
     <string name="Service_phone">Phone</string>
     <string name="phone_hint">Phone number</string>
     <string name="Service_wp">WhatsApp</string>

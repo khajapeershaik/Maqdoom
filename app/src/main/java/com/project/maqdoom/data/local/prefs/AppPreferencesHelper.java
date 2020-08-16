@@ -49,6 +49,8 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String PREF_KEY_IMAGE_URL = "PREF_KEY_IMAGE_URL";
 
+    private static final String PREF_KEY_AR_USERNAME = "PREF_KEY_AR_USERNAME";
+
     private final SharedPreferences mPrefs;
 
     @Inject
@@ -194,8 +196,24 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     }
 
+
+
+
+
     @Override
     public void setImageUrl(String imageUrl) {
         mPrefs.edit().putString(PREF_KEY_IMAGE_URL, imageUrl).apply();
+    }
+
+    @Override
+    public String getarUserName() {
+        return mPrefs.getString(PREF_KEY_AR_USERNAME, null);
+
+    }
+
+    @Override
+    public void setArUserName(String username) {
+
+        mPrefs.edit().putString(PREF_KEY_AR_USERNAME, username).apply();
     }
 }
