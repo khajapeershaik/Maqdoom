@@ -82,6 +82,7 @@ public class GuideItemViewModel {
                     item.put("whatsApp", mAdds.getWhatsapp_phone());
                     item.put("phone", mAdds.getPhone());
                     item.put("images", listString);
+                    item.put("city",mAdds.getCity());
                     mListener.onItemClick(item.toString());
                 }catch (Exception e){
                     e.printStackTrace();

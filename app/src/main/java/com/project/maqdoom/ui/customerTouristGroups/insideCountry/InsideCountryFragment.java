@@ -216,11 +216,9 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
     }
 
     private void setSpinner() {
-        country = fragmentTouristInsideBinding.spinnerCountry;
         price = fragmentTouristInsideBinding.spinnerPrice;
         city = fragmentTouristInsideBinding.spinnerCity;
         service = fragmentTouristInsideBinding.spinnerService;
-        ArrayList<String> countyList = new ArrayList<>();
         ArrayList<String> priceList = new ArrayList<>();
 
         ArrayList<String> cityList = new ArrayList<>();
@@ -230,9 +228,6 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
         LiveData<List<TravelCategoryGroupResponse.Adds>> countryData = insideCountryViewModel.getTravelListLiveData();
         if (countryData != null) {
             for (int i = 0; i < countryData.getValue().size(); i++) {
-                if (!countyList.contains(countryData.getValue().get(i).getCountry()) && countryData.getValue().get(i).getCountry() != null && !"".equalsIgnoreCase(countryData.getValue().get(i).getCountry().trim())) {
-                    countyList.add(countryData.getValue().get(i).getCountry());
-                }
                 if (!cityList.contains(countryData.getValue().get(i).getCity()) && countryData.getValue().get(i).getCity() != null
                         && (countryData.getValue().get(i).getCity().trim().length() > 0)) {
                     cityList.add(countryData.getValue().get(i).getCity());
@@ -249,39 +244,9 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
             priceList.add(getString(R.string.str_low_high));
             priceList.add(getString(R.string.str_high_low));
 
-            countyList.add(0, getString(R.string.s_country));
             priceList.add(0, getString(R.string.service_price));
             cityList.add(0, getString(R.string.s_city));
             serviceList.add(0, getString(R.string.service));
-            //Country spinner
-            ArrayAdapter<String> spinnerCountryAdapter = new ArrayAdapter<>(
-                    getActivity(),
-                    android.R.layout.simple_spinner_dropdown_item,
-                    countyList);
-            country.setAdapter(spinnerCountryAdapter);
-            country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                           int arg2, long arg3) {
-                    // TODO Auto-generated method stub
-                    if (arg2 != 0) {
-                        String selected = country.getItemAtPosition(arg2).toString();
-                        updateList(1, selected);
-                    } else {
-                        mBlogAdapter.clearItems();
-                        observeData();
-
-                    }
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> arg0) {
-                    // TODO Auto-generated method stub
-
-                }
-            });
-
             //City spinner
             ArrayAdapter<String> spinnerCityAdapter = new ArrayAdapter<>(
                     getActivity(),
@@ -375,32 +340,7 @@ public class InsideCountryFragment extends BaseFragment<FragmentTouristInsideBin
         Type 4 -> Service
         */
         List<TravelCategoryGroupResponse.Adds> filteredData = new ArrayList<>();
-        if (type == 1) {
-            if (filteredData.size() > 1) {
-                for (int i = 0; i < filteredData.size(); i++) {
-                    if (value.equalsIgnoreCase(filteredData.get(i).getCountry())) {
-                        //data.getValue().remove(i);
-                        filteredData.add(filteredData.get(i));
-                    }
-                }
-                mBlogAdapter.clearItems();
-                mBlogAdapter.notifyDataSetChanged();
-                mBlogAdapter.addItems(filteredData);
-            } else {
-                LiveData<List<TravelCategoryGroupResponse.Adds>> data = insideCountryViewModel.getTravelListLiveData();
-                if (data != null) {
-                    for (int i = 0; i < data.getValue().size(); i++) {
-                        if (value.equalsIgnoreCase(data.getValue().get(i).getCountry())) {
-                            filteredData.add(data.getValue().get(i));
-                        }
-                    }
-                    mBlogAdapter.clearItems();
-                    mBlogAdapter.notifyDataSetChanged();
-                    mBlogAdapter.addItems(filteredData);
-                }
-            }
-
-        } else if (type == 2) {
+       if (type == 2) {
             if (filteredData.size() > 1) {
                 for (int i = 0; i < filteredData.size(); i++) {
                     if (value.equalsIgnoreCase(filteredData.get(i).getCity())) {

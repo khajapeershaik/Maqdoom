@@ -324,7 +324,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                             services = fragmentSellerAddPackageBinding.etServices.getText().toString();
                                         }
                                         if (isEditRequest == 0) {
-                                            sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, "", phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, language, addId, imageUpload, services);
+                                            sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, "", phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, language, addId, imageUpload, services,"");
                                         } else {
                                             AddServiceRequest.UpdatePackageRequest updatePackageRequest = new AddServiceRequest.UpdatePackageRequest();
                                             updatePackageRequest.setAdd_id(edtAddId);
@@ -432,7 +432,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                                     services = fragmentSellerAddPackageBinding.etServices.getText().toString();
                                                 }
                                                 if (isEditRequest == 0) {
-                                                    sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, category_l_3_ShortName, name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId, imageUpload, services);
+                                                    sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, category_l_3_ShortName, name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId, imageUpload, services,"");
                                                 } else {
                                                     AddServiceRequest.UpdatePackageRequest updatePackageRequest = new AddServiceRequest.UpdatePackageRequest();
                                                     updatePackageRequest.setAdd_id(edtAddId);
@@ -598,15 +598,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                 if (!options.isEmpty()) {
                                     String nameEntered = "";
                                     String category_l_2_ShortName = "";
-                                    if (getString(R.string.t_guide).equalsIgnoreCase(category)) {
-                                        category_l_2_ShortName = "TG";
-                                    } else if (getString(R.string.group_title).equalsIgnoreCase(category)) {
-                                        category_l_2_ShortName = "TGP";
-                                    } else if (getString(R.string.honeymoon_title).equalsIgnoreCase(category)) {
-                                        category_l_2_ShortName = "HM";
-                                    } else if (getString(R.string.family_trip_title).equalsIgnoreCase(category)) {
-                                        category_l_2_ShortName = "FT";
-                                    } else if (getString(R.string.supplies_menu_1).equalsIgnoreCase(category)) {
+                                     if (getString(R.string.supplies_menu_1).equalsIgnoreCase(category)) {
                                         category_l_2_ShortName = "WT";
                                     } else if (getString(R.string.supplies_menu_2).equalsIgnoreCase(category)) {
                                         category_l_2_ShortName = "CUS";
@@ -615,8 +607,12 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                     if (fragmentSellerAddPackageBinding.etServices.getText().toString().length() > 1) {
                                         service = fragmentSellerAddPackageBinding.etServices.getText().toString();
                                     }
+                                    String nationalId ="";
+                                    if (fragmentSellerAddPackageBinding.etNationalId.getText().toString().length() > 1) {
+                                        nationalId = fragmentSellerAddPackageBinding.etNationalId.getText().toString();
+                                    }
                                     if (isEditRequest == 0) {
-                                        sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId, imageUpload, service);
+                                        sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId, imageUpload, service,nationalId);
                                     } else {
 
                                         AddServiceRequest.UpdatePackageRequest updatePackageRequest = new AddServiceRequest.UpdatePackageRequest();
@@ -638,7 +634,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                         updatePackageRequest.setCity(city);
                                         updatePackageRequest.setLanguage("");
                                         updatePackageRequest.setLicence_pic_url("");
-                                        updatePackageRequest.setNational_id("");
+                                        updatePackageRequest.setNational_id(nationalId);
                                         updatePackageRequest.setService(service);
                                         updatePackageRequest.setImage_list(imageUpload);
                                         sellerAddPackageViewModel.upDatePackage(updatePackageRequest);
@@ -706,7 +702,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                         service = fragmentSellerAddPackageBinding.etServices.getText().toString();
                                     }
                                     if (isEditRequest == 0) {
-                                        sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, category_l_3_ShortName, name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId, imageUpload, service);
+                                        sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, category_l_3_ShortName, name, selectedCategory, phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, "", addId, imageUpload, service,"");
                                     } else {
 
                                         AddServiceRequest.UpdatePackageRequest updatePackageRequest = new AddServiceRequest.UpdatePackageRequest();
@@ -898,14 +894,34 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         fragmentSellerAddPackageBinding.etServices.setOnClickListener(v -> {
 
             ServicesItemAdapter servicesItemAdapter;
+            String[] itemServices = new String[0];
             List<ServicesChecklistItems> servicesChecklist = new ArrayList<>();
             ArrayList<String> selectedServiceList = new ArrayList<>();
             final Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.dialog_services);
 
             RecyclerView recyclerServices = dialog.findViewById(R.id.recycler_services);
+            
+                    /*Travel*/
+                    if(option ==1){
+                        itemServices = getResources().getStringArray(R.array.item_services);
+                    }
+                    /*Supplier*/
+                    else if(option==2){
+                        if(fragmentSellerAddPackageBinding.spinnerType.getSelectedItemPosition()==1) {
+                            itemServices = getResources().getStringArray(R.array.supplier_services);
+                        }
+                        /*Cruise*/
+                        else {
+                            itemServices = getResources().getStringArray(R.array.cruises_services);
+                        }
+                    }
+                    /*Shops*/
+                    else if(option==3){
+                        itemServices = getResources().getStringArray(R.array.shops_services);
+                    }
 
-            String[] itemServices = getResources().getStringArray(R.array.item_services);
+
 
             for (int i = 0; i < itemServices.length; i++) {
 
@@ -952,6 +968,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
     private void setUp() {
         try {
+
             JSONObject jsonObj = new JSONObject(guideData);
             edtAddId = jsonObj.optString("id");
             fragmentSellerAddPackageBinding.etWhatsApp.setText(jsonObj.optString("whatsApp"));
@@ -1123,6 +1140,12 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         fragmentSellerAddPackageBinding.tvCategory.setVisibility(View.GONE);
         fragmentSellerAddPackageBinding.spinnerType.setVisibility(View.GONE);
 
+        fragmentSellerAddPackageBinding.tvnNationalId.setVisibility(View.GONE);
+        fragmentSellerAddPackageBinding.etNationalId.setVisibility(View.GONE);
+
+        fragmentSellerAddPackageBinding.tvUpload.setVisibility(View.VISIBLE);
+        fragmentSellerAddPackageBinding.rlUploadPic.setVisibility(View.VISIBLE);
+
         fragmentSellerAddPackageBinding.tvSubCategory.setVisibility(View.VISIBLE);
         fragmentSellerAddPackageBinding.spinnerSubType.setVisibility(View.VISIBLE);
         fragmentSellerAddPackageBinding.tvName.setText(getString(R.string.package_name));
@@ -1147,6 +1170,13 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         fragmentSellerAddPackageBinding.tvName.setText(getString(R.string.package_name));
         fragmentSellerAddPackageBinding.tvCity.setVisibility(View.GONE);
         fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.GONE);
+
+        fragmentSellerAddPackageBinding.tvUpload.setVisibility(View.INVISIBLE);
+        fragmentSellerAddPackageBinding.rlUploadPic.setVisibility(View.INVISIBLE);
+
+        fragmentSellerAddPackageBinding.tvnNationalId.setVisibility(View.VISIBLE);
+        fragmentSellerAddPackageBinding.etNationalId.setVisibility(View.VISIBLE);
+
         ArrayAdapter<String> spinnerSuppliesAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
@@ -1183,6 +1213,12 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
     }
 
     private void initialiseCategorySpinnerTraveler() {
+
+        fragmentSellerAddPackageBinding.tvnNationalId.setVisibility(View.GONE);
+        fragmentSellerAddPackageBinding.etNationalId.setVisibility(View.GONE);
+
+        fragmentSellerAddPackageBinding.tvUpload.setVisibility(View.VISIBLE);
+        fragmentSellerAddPackageBinding.rlUploadPic.setVisibility(View.VISIBLE);
 
         ArrayAdapter<String> spinnerTravelAdapter = new ArrayAdapter<>(
                 getActivity(),

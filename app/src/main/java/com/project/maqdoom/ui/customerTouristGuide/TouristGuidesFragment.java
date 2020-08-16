@@ -246,6 +246,10 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
                         String selected = country.getItemAtPosition(arg2).toString();
                         updateList(1, selected);
                     }
+                    else {
+                        mBlogAdapter.clearItems();
+                        observeData();
+                    }
 
                 }
 
@@ -270,6 +274,9 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
                     if (arg2 != 0) {
                         String selected = city.getItemAtPosition(arg2).toString();
                         updateList(2, selected);
+                    }else {
+                        mBlogAdapter.clearItems();
+                        observeData();
                     }
 
                 }
@@ -295,6 +302,9 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
                     if (arg2 != 0) {
                         String selected = language.getItemAtPosition(arg2).toString();
                         updateList(3, selected);
+                    }else {
+                        mBlogAdapter.clearItems();
+                        observeData();
                     }
                 }
 
@@ -307,6 +317,13 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
         }
 
 
+    }
+
+    private void observeData() {
+        touristGuideViewModel.getTravelListLiveData().observe(this, adds -> {
+            mBlogAdapter.addItems(adds);
+            mBlogAdapter.notifyDataSetChanged();
+        });
     }
 
     private void updateList(int type, String value) {
@@ -323,6 +340,7 @@ public class TouristGuidesFragment extends BaseFragment<FragmentTouristGuideBind
                     }
                 }
                 mBlogAdapter.clearItems();
+                touristGuideViewModel.getTravelListLiveData();
                 mBlogAdapter.notifyDataSetChanged();
                 mBlogAdapter.addItems(filteredData);
             } else {

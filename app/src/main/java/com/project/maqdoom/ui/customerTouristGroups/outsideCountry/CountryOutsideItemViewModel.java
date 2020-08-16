@@ -58,7 +58,7 @@ public class CountryOutsideItemViewModel {
         this.mAdds = adds;
         this.mListener = listener;
         packageName = new ObservableField<>(mAdds.getTourist_package());
-        country = new ObservableField<>(mAdds.getCountry());
+        country = new ObservableField<>(mAdds.getCity()+", "+mAdds.getCountry());
         description = new ObservableField<>(mAdds.getMore_details());
         noOfPeople = new ObservableField<>(mAdds.getPeople_cnt());
         price = new ObservableField<>(mAdds.getPrice());

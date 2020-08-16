@@ -503,7 +503,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
-                        android:text="Package includes"
+                        android:text="@string/service_includes"
                         android:textAlignment="center"
                         android:textAllCaps="false"
                         android:textColor="@color/light_grey"
@@ -795,6 +795,42 @@
                 </RelativeLayout>
 
 
+                <TextView
+                    android:id="@+id/tvnNationalId"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlSV"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/national_id"
+                    android:visibility="gone"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_grey"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/etNationalId"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/tvnNationalId"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/custom_bg_edit_text_one"
+                    android:ellipsize="end"
+                    android:visibility="gone"
+                    android:hint="@string/national_id"
+                    android:imeOptions="actionNext"
+                    android:padding="8dp"
+                    android:singleLine="true" />
                 <TextView
                     android:id="@+id/tvUpload"
                     style="@style/TextStyle.Menu.Normal"
