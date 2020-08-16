@@ -1148,6 +1148,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
 
         fragmentSellerAddPackageBinding.tvSubCategory.setVisibility(View.VISIBLE);
         fragmentSellerAddPackageBinding.spinnerSubType.setVisibility(View.VISIBLE);
+
         fragmentSellerAddPackageBinding.tvName.setText(getString(R.string.package_name));
 
         //country

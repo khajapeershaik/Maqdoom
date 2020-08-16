@@ -42,6 +42,9 @@ import com.opensooq.supernova.gligar.GligarPicker;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
+import com.project.maqdoom.data.model.api.ProfileResponse;
+import com.project.maqdoom.data.remote.api_rest.ApiClient;
+import com.project.maqdoom.data.remote.api_rest.ApiInterface;
 import com.project.maqdoom.databinding.FragmentProfileBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragment;
@@ -63,6 +66,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel> implements ProfileNavigator {
@@ -77,6 +83,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public static final String LANGUAGE_REFERENCE = "language_preference";
     public static final String LANGUAGE_KEY = "language";
     public static final String PROFILE_IMAGE_KEY = "userImageURL";
+    public static final String ARABIC_NAME_KEY = "arabicName";
     public static final int PICKER_REQUEST_CODE = 30;
 
     private String pathsList[];
@@ -173,45 +180,6 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     }
 
     @Override
-    public void getProfile() {
-        profileViewModel.getProfile();
-
-
-        final String currentUserEmail = profileViewModel.getDataManager().getEmail();
-        if (!TextUtils.isEmpty(currentUserEmail)) {
-            fragmentProfileBinding.etMail.setText(currentUserEmail);
-
-
-        }
-        final String phoneNumber = profileViewModel.getDataManager().getPhone();
-        if (!TextUtils.isEmpty(phoneNumber)) {
-            fragmentProfileBinding.etPhone.setText(phoneNumber);
-        } else {
-            fragmentProfileBinding.etPhone.setText("Not available");
-        }
-        final String imageUrl = profileViewModel.getDataManager().getImageUrl();
-        if (!TextUtils.isEmpty(imageUrl)) {
-            setImage(fragmentProfileBinding.ivProfilePic, imageUrl);
-        }
-        if (fragmentProfileBinding.languageButton.getText().toString().equalsIgnoreCase("English")) {
-
-            final String currentUserName = profileViewModel.getDataManager().getCurrentUserName();
-            if (!TextUtils.isEmpty(currentUserName)) {
-                fragmentProfileBinding.etName.setText(currentUserName);
-            }
-
-
-        } else {
-
-            final String arUserName = profileViewModel.getDataManager().getarUserName();
-            if (!TextUtils.isEmpty(arUserName)) {
-                fragmentProfileBinding.etName.setText(phoneNumber);
-            }
-        }
-
-    }
-
-    @Override
     public void showErrorAlert(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
@@ -232,11 +200,18 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY, "en");
         String profileImageURL = sharedpreferences.getString(PROFILE_IMAGE_KEY, "");
 
+        String profileNameArabic = sharedpreferences.getString(ARABIC_NAME_KEY, "");
+
         setImage(fragmentProfileBinding.ivProfilePic, profileImageURL);
         if (langPreference.equalsIgnoreCase("en")) {
             defaultLanguage = "English";
         } else {
             defaultLanguage = "Arabic";
+           if(profileNameArabic.equalsIgnoreCase("")) {
+               getProfile();
+           }else {
+               fragmentProfileBinding.etName.setText(profileNameArabic);
+           }
         }
 
         fragmentProfileBinding.languageButton.setText(defaultLanguage);
@@ -244,8 +219,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             showLanguages();
         });
         setUp();
-        //  populateData();
-        getProfile();
+        populateData();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         //onBackPressed();
@@ -277,6 +251,11 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     private void saveProfileImage(String url) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(PROFILE_IMAGE_KEY, url);
+        editor.commit();
+    }
+    private void saveArabicName(String name) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(ARABIC_NAME_KEY, name);
         editor.commit();
     }
 
@@ -371,8 +350,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     }
 
     private void disableEditOption() {
-        //  populateData();
-        getProfile();
+     populateData();
         fragmentProfileBinding.etPhone.setEnabled(false);
         fragmentProfileBinding.etName.setEnabled(false);
         fragmentProfileBinding.etMail.setEnabled(false);
@@ -425,5 +403,30 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
                 break;
             }
         }
+    }
+
+    public void getProfile() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<ProfileResponse> profileResponse = apiService.getProfile(getViewModel().getDataManager().getCurrentUserId());
+
+        profileResponse.enqueue(new retrofit2.Callback<ProfileResponse>() {
+            @Override
+            public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
+                if (response.isSuccessful()) {
+
+                    String arabicName = response.body().getNameAr();
+                    fragmentProfileBinding.etName.setText(arabicName);
+                    saveArabicName(arabicName);
+                } else {
+                    Log.d("TAG", "get profile error");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileResponse> call, Throwable t) {
+                Log.d("TAG", "get profile error");
+            }
+        });
     }
 }

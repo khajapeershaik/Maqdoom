@@ -34,6 +34,4 @@ public interface ProfileNavigator {
 
     void pickImage();
 
-    void getProfile();
-
 }
