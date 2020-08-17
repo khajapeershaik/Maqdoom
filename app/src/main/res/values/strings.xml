@@ -621,7 +621,7 @@
 
         <item>Caravan</item>
         <item>Camps</item>
-        <item>Desert Ride</item>
+        <item>Desert Camps</item>
         <item>Cooking Supplies</item>
         <item>Butcher</item>
         <item>Chalet</item>
@@ -642,6 +642,6 @@
         <item>Hunting Supplies</item>
     </string-array>
 
-    <string name="national_id" translatable="false">National Id</string>
+    <string name="national_id">National Id</string>
 
 </resources>

@@ -205,12 +205,19 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         setImage(fragmentProfileBinding.ivProfilePic, profileImageURL);
         if (langPreference.equalsIgnoreCase("en")) {
             defaultLanguage = "English";
+            final String currentUserName = profileViewModel.getDataManager().getCurrentUserName();
+            if (!TextUtils.isEmpty(currentUserName)) {
+                fragmentProfileBinding.etName.setText(currentUserName);
+                fragmentProfileBinding.tvProfileName.setText(currentUserName);
+            }
         } else {
             defaultLanguage = "Arabic";
            if(profileNameArabic.equalsIgnoreCase("")) {
                getProfile();
            }else {
                fragmentProfileBinding.etName.setText(profileNameArabic);
+               fragmentProfileBinding.tvProfileName.setText(profileNameArabic);
+
            }
         }
 
@@ -361,10 +368,6 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     }
 
     public void populateData() {
-        final String currentUserName = profileViewModel.getDataManager().getCurrentUserName();
-        if (!TextUtils.isEmpty(currentUserName)) {
-            fragmentProfileBinding.etName.setText(currentUserName);
-        }
 
         final String currentUserEmail = profileViewModel.getDataManager().getEmail();
         if (!TextUtils.isEmpty(currentUserEmail)) {
@@ -416,6 +419,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
                     String arabicName = response.body().getNameAr();
                     fragmentProfileBinding.etName.setText(arabicName);
+                    fragmentProfileBinding.tvProfileName.setText(arabicName);
+
                     saveArabicName(arabicName);
                 } else {
                     Log.d("TAG", "get profile error");

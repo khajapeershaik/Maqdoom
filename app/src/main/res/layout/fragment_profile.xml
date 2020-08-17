@@ -168,7 +168,6 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:padding="10dp"
-                        android:text="@{viewModel.getUserName()}"
                         android:textAllCaps="false"
                         android:textColor="@color/navigation_bg"
                         android:textSize="15sp" />

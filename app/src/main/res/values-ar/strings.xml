@@ -584,4 +584,36 @@
         <item>مرشد سياحي</item>
 
     </string-array>
+    <string-array name="shops_services">
+        <item>كارافان</item>
+        <item>مخيمات</item>
+        <item>Cooking Supplies</item>
+    </string-array>
+
+    <string-array name="cruises_services">
+        <item>Sea Food Seller</item>
+        <item>ركوب الدراجات المائية</item>
+        <item>Cruise</item>
+        <item>Cooking Supplies</item>
+        <item>Hunting Supplies</item>
+    </string-array>
+
+    <string-array name="supplier_services">
+
+        <item>كارافان</item>
+        <item>مخيمات</item>
+        <item>مخيمات صحراوية</item>
+        <item>Cooking Supplies</item>
+        <item>Butcher</item>
+        <item>Chalet</item>
+        <item>Restaurant</item>
+    </string-array>
+    <string name="national_id"> رقم الهوية</string>
+
+
+
+
 </resources>
+
+
+

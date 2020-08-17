@@ -320,9 +320,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                             category_l_2_ShortName = "CUS";
                                         }
                                         String services = "";
-                                        if (fragmentSellerAddPackageBinding.etServices.getText().toString().trim().length() > 0) {
-                                            services = fragmentSellerAddPackageBinding.etServices.getText().toString();
-                                        }
+
                                         if (isEditRequest == 0) {
                                             sellerAddPackageViewModel.addPackage(nameEntered, category_l_1_ShortName, category_l_2_ShortName, "", name, "", phone, country, location, whatsApp, price, numberOfPeople, moreDetails, city, language, addId, imageUpload, services,"");
                                         } else {
@@ -1127,6 +1125,9 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                     fragmentSellerAddPackageBinding.rlLanguageSelected.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.tvSubCategory.setVisibility(View.GONE);
                     fragmentSellerAddPackageBinding.spinnerSubType.setVisibility(View.GONE);
+
+                    fragmentSellerAddPackageBinding.tvServices.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.etServices.setVisibility(View.GONE);
                     //country
                     fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.VISIBLE);
@@ -1148,6 +1149,8 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                     fragmentSellerAddPackageBinding.tvCity.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.spinnerCity.setVisibility(View.VISIBLE);
 
+                    fragmentSellerAddPackageBinding.tvServices.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.etServices.setVisibility(View.VISIBLE);
 
                     fragmentSellerAddPackageBinding.llLocation.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.tvNoOfPeoples.setVisibility(View.VISIBLE);
