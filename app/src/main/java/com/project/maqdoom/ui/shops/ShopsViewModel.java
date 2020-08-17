@@ -25,7 +25,6 @@ public class ShopsViewModel extends BaseViewModel<ShopsNavigator> {
         shopsList = new ArrayList<>();
         fetchData();
     }
-//9501795017
     public void fetchData() {
         setIsLoading(true);
         final String userType = getDataManager().getUserType();

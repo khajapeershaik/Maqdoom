@@ -20,7 +20,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.firebase.crashlytics.internal.common.CrashlyticsCore;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
@@ -46,9 +45,9 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     private SplashViewModel mSplashViewModel;
 
     private SharedPreferences sharedpreferences;
-    public static final String LANGUAGE_REFERENCE = "language_preference" ;
+    public static final String LANGUAGE_REFERENCE = "language_preference";
     public static final String LANGUAGE_KEY = "language";
-
+    private boolean isLanguage = false;
 
     @Override
     public int getBindingVariable() {
@@ -62,7 +61,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Override
     public SplashViewModel getViewModel() {
-        mSplashViewModel = ViewModelProviders.of(this,factory).get(SplashViewModel.class);
+        mSplashViewModel = ViewModelProviders.of(this, factory).get(SplashViewModel.class);
         return mSplashViewModel;
     }
 
@@ -103,10 +102,11 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSplashViewModel.setNavigator(this);
-//        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
-//        String langPreference = sharedpreferences.getString(LANGUAGE_KEY,"en");
-//        Log.v("saved preference splash",langPreference);
-//        updateLocale(langPreference);
+        sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
+        String langPreference = sharedpreferences.getString(LANGUAGE_KEY, "en");
+        Log.v("saved preference splash", langPreference);
+
+        updateLocale(langPreference);
 
         mSplashViewModel.startSeeding();
     }
@@ -114,17 +114,19 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     private void updateLocale(String en) {
         Locale locale;
         locale = new Locale(en);
-        Configuration config = new Configuration(getApplicationContext().getResources().getConfiguration());
         Locale.setDefault(locale);
-        config.setLocale(locale);
-        getApplicationContext().getResources().updateConfiguration(config,
-                getApplicationContext().getResources().getDisplayMetrics());
+        Configuration config = new Configuration();
+        config.locale = locale;
+        //config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+
 
         saveLanguagePreference(en);
-        Log.v("data",""+sharedpreferences.getString(LANGUAGE_KEY,"en"));
+        Log.v("data", "" + sharedpreferences.getString(LANGUAGE_KEY, "en"));
     }
 
-    private void saveLanguagePreference(String lan){
+    private void saveLanguagePreference(String lan) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(LANGUAGE_KEY, lan);
         editor.commit();
