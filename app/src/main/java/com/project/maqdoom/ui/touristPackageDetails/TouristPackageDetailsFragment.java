@@ -199,7 +199,7 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
             fragmentTouristGuideBinding.tvDetails.setText(jsonObj.optString("details"));
             fragmentTouristGuideBinding.tvPackagePrice.setText(jsonObj.optString("price"));
             fragmentTouristGuideBinding.tvServices.setText(jsonObj.optString("services"));
-
+            fragmentTouristGuideBinding.tvTravelAgent.setText(jsonObj.optString("supplier_name"));
             //List<TravelCategoryResponse.Adds.Images> img = jsonObj.optString("images").to;
             //System.out.println("Arun images--"+ img.size());
             List<String> imList = Arrays.asList(jsonObj.optString("images").split("\t"));

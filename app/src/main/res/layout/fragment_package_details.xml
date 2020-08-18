@@ -94,7 +94,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="20dp"
                             android:gravity="center"
-                            android:text="@string/str_travel_agent"
+
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             app:tabTextAppearance="@style/TextStyle.Menu.Normal" />

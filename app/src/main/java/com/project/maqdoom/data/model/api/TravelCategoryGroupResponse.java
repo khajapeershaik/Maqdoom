@@ -144,6 +144,11 @@ public final class TravelCategoryGroupResponse {
         @SerializedName("licence_pic_url")
         private String licence_pic_url;
 
+
+        @Expose
+        @SerializedName("supplier_name")
+        private String supplier_name;
+
         @Override
         public boolean equals(Object o) {
             if (this == o) {
@@ -233,6 +238,11 @@ public final class TravelCategoryGroupResponse {
         public String getCreated_at() {
             return created_at;
         }
+
+        public String getSupplier_name() {
+            return supplier_name;
+        }
+
 
         public String getGuide_name() {
             return guide_name;

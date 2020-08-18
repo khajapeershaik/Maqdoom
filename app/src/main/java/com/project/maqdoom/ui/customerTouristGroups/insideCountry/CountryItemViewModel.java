@@ -30,6 +30,7 @@ import static android.view.View.VISIBLE;
 public class CountryItemViewModel {
 
     public final ObservableField<String> packageName;
+    public final ObservableField<String> supplierName;
 
     public final ObservableField<String> country;
 
@@ -59,6 +60,7 @@ public class CountryItemViewModel {
         this.mAdds = adds;
         this.mListener = listener;
         packageName = new ObservableField<>(mAdds.getTourist_package());
+        supplierName= new ObservableField<>(mAdds.getSupplier_name());
         country = new ObservableField<>(mAdds.getCity()+", "+mAdds.getCountry());
         description = new ObservableField<>(mAdds.getMore_details());
         noOfPeople = new ObservableField<>(mAdds.getPeople_cnt());
