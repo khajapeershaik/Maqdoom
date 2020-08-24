@@ -103,13 +103,14 @@
 
                         <TextView
                             android:id="@+id/tvTravelAgent"
-                            android:layout_width="42dp"
-                            android:layout_height="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="start|top"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="5dp"
-                            android:text="@string/travel_agent"
                             android:textAllCaps="false"
+                            android:text="@{viewModel.supplierName}"
+
                             android:textColor="@color/navigation_bg"
                             android:textSize="15sp"
                             app:tabTextAppearance="@style/TextStyle.Menu.Normal" />
@@ -119,6 +120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginLeft="5dp"
+
                             android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 

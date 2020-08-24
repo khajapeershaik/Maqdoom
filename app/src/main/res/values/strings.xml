@@ -190,7 +190,7 @@
     <string name="location_price">Add Price</string>
     <string name="service_includes">Package Includes</string>
     <string name="service_includes_hint">Add includes</string>
-    <string name="service_people">No of Peoples</string>
+    <string name="service_people">No of People</string>
     <string name="service_people_hint">Enter number</string>
     <string name="fill_all_error">Please enter all required fields</string>
 

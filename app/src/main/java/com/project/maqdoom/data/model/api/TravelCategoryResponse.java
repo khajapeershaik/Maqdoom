@@ -144,6 +144,9 @@ public final class TravelCategoryResponse {
         @Expose
         @SerializedName("licence_pic_url")
         private String licence_pic_url;
+        @Expose
+        @SerializedName("supplier_name")
+        private String supplier_name;
 
         @Override
         public boolean equals(Object o) {
@@ -191,6 +194,11 @@ public final class TravelCategoryResponse {
         public String getPackage_include() {
             return package_include;
         }
+
+        public String getSupplier_name() {
+            return supplier_name;
+        }
+
 
         public String getPhone() {
             return phone;

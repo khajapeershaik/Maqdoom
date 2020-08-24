@@ -32,6 +32,7 @@ public class RentalItemViewModel {
     public final ObservableField<String> name;
 
     public final ObservableField<String> packageName;
+    public final ObservableField<String> supplierName;
 
     public final ObservableField<String> country;
 
@@ -58,10 +59,11 @@ public class RentalItemViewModel {
         this.mListener = listener;
         name = new ObservableField<>(mAdds.getGuide_name());
         packageName = new ObservableField<>(mAdds.getTourist_package());
-        country = new ObservableField<>(mAdds.getCountry());
+        country = new ObservableField<>(mAdds.getCity()+", "+mAdds.getCountry());
         description = new ObservableField<>(mAdds.getMore_details());
         noOfPeople = new ObservableField<>(mAdds.getPeople_cnt());
         price = new ObservableField<>(mAdds.getPrice());
+        supplierName= new ObservableField<>(mAdds.getSupplier_name());
         imageUrl = new ObservableField<>(listString.trim());
         userType = user;
 

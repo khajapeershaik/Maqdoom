@@ -31,6 +31,7 @@ import static android.view.View.VISIBLE;
 public class CountryOutsideItemViewModel {
 
     public final ObservableField<String> packageName;
+    public final ObservableField<String> supplierName;
 
     public final ObservableField<String> country;
 
@@ -62,6 +63,7 @@ public class CountryOutsideItemViewModel {
         description = new ObservableField<>(mAdds.getMore_details());
         noOfPeople = new ObservableField<>(mAdds.getPeople_cnt());
         price = new ObservableField<>(mAdds.getPrice());
+        supplierName= new ObservableField<>(mAdds.getSupplier_name());
         imageUrl = new ObservableField<>(listString.trim());
         userType = user;
     }
