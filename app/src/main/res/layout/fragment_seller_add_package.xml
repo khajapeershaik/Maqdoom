@@ -273,7 +273,6 @@
                     android:clickable="false"
                     android:textAllCaps="false"
                     android:textAlignment="center"
-
                     android:textColor="@color/light_grey"
                     android:visibility="gone"
                     android:textSize="13sp" />

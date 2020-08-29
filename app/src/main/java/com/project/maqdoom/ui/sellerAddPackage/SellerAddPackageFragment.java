@@ -291,7 +291,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             if (fragmentSellerAddPackageBinding.spinnerType.getSelectedItemId() != 0) {
                 if (fragmentSellerAddPackageBinding.spinnerType.getSelectedItemId() == 1) {
                     // Tourist guide
-                     country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
+                  String   country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
                     String city = fragmentSellerAddPackageBinding.spinnerCity.getText().toString();
                     if (sellerAddPackageViewModel.isValidFields(name, phone, whatsApp, moreDetails, city)) {
                         String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
@@ -785,7 +785,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         hashMap = new HashMap<>();
         imageUpload = new HashMap<>();
 
-        fragmentSellerAddPackageBinding.spinnerSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      /*  fragmentSellerAddPackageBinding.spinnerSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position==1){
@@ -803,7 +803,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
         fragmentSellerAddPackageBinding.etServices.setOnClickListener(v -> {
 
