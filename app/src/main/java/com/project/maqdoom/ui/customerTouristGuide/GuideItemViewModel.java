@@ -53,7 +53,7 @@ public class GuideItemViewModel {
         this.mListener = listener;
         name = new ObservableField<>(mAdds.getGuide_name());
         packageName = new ObservableField<>(mAdds.getTourist_package());
-        country = new ObservableField<>(mAdds.getCity());
+        country = new ObservableField<>(mAdds.getCity()+", "+mAdds.getCountry());
         description = new ObservableField<>(mAdds.getMore_details());
         noOfPeople = new ObservableField<>(mAdds.getPeople_cnt());
         price = new ObservableField<>(mAdds.getPrice());

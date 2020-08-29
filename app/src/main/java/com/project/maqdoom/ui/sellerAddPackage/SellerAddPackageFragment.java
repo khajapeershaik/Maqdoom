@@ -91,6 +91,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
     FragmentSellerAddPackageBinding fragmentSellerAddPackageBinding;
     private int isEditRequest = 0;
     private SellerAddPackageViewModel sellerAddPackageViewModel;
+    private String country;
 
     public static SellerAddPackageFragment newInstance(int type, String jsonData) {
         Bundle args = new Bundle();
@@ -273,6 +274,8 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         String moreDetails = fragmentSellerAddPackageBinding.etMore.getText().toString();
 
 
+
+
         //String language = "activitySellerAddPackageBinding.spinnerLanguage.getSelectedItem().toString()";
 
         String category_l_1_ShortName = "";
@@ -288,7 +291,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             if (fragmentSellerAddPackageBinding.spinnerType.getSelectedItemId() != 0) {
                 if (fragmentSellerAddPackageBinding.spinnerType.getSelectedItemId() == 1) {
                     // Tourist guide
-                    String country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
+                     country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
                     String city = fragmentSellerAddPackageBinding.spinnerCity.getText().toString();
                     if (sellerAddPackageViewModel.isValidFields(name, phone, whatsApp, moreDetails, city)) {
                         String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
@@ -782,6 +785,26 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
         hashMap = new HashMap<>();
         imageUpload = new HashMap<>();
 
+        fragmentSellerAddPackageBinding.spinnerSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position==1){
+                    fragmentSellerAddPackageBinding.tvDomesticCity.setVisibility(View.VISIBLE);
+                    fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);
+                    country=fragmentSellerAddPackageBinding.tvDomesticCity.getText().toString();
+                }
+                if(position==2){
+                    fragmentSellerAddPackageBinding.tvDomesticCity.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         fragmentSellerAddPackageBinding.etServices.setOnClickListener(v -> {
 
             ServicesItemAdapter servicesItemAdapter;
@@ -792,7 +815,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             dialog.setContentView(R.layout.dialog_services);
 
             RecyclerView recyclerServices = dialog.findViewById(R.id.recycler_services);
-            
+
                     /*Travel*/
                     if(option ==1){
                         itemServices = getResources().getStringArray(R.array.item_services);

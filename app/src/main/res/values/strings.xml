@@ -132,7 +132,7 @@
     <string name="family_trip_title">Family Trip</string>
 
     <!-- Supplies menu -->
-    <string name="supplies_menu_1">Trips &amp; Wild stories</string>
+    <string name="supplies_menu_1">Trips &amp; Wild sorties</string>
     <string name="supplies_menu_2">Cruises</string>
 
     <!-- Package details -->
@@ -190,9 +190,10 @@
     <string name="location_price">Add Price</string>
     <string name="service_includes">Package Includes</string>
     <string name="service_includes_hint">Add includes</string>
-    <string name="service_people">No of People</string>
+    <string name="service_people">No. of People</string>
     <string name="service_people_hint">Enter number</string>
     <string name="fill_all_error">Please enter all required fields</string>
+    <string name="str_arabic">عربي</string>
 
     <!--Dialog -->
     <string name="select_option">Select an option</string>
@@ -643,5 +644,6 @@
     </string-array>
 
     <string name="national_id">National Id</string>
+    <string name="country_saudi">Saudi Arabia</string>
 
 </resources>

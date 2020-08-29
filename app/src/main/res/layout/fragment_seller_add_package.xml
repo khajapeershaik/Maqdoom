@@ -235,11 +235,10 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tvCountry"
-                    style="@style/TextStyle.Menu.Normal"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/lnr_country"
                     android:layout_below="@+id/rlServices"
                     android:layout_gravity="center|center_vertical"
                     android:layout_marginStart="20dp"
@@ -247,18 +246,45 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvCountry"
+                    style="@style/TextStyle.Menu.Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
                     android:text="@string/s_country"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="@color/light_grey"
                     android:textSize="13sp" />
 
+                <EditText
+                    android:id="@+id/tvDomesticCity"
+                    style="@style/Widget.MyApp.HeaderBar.SpinnerService"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/country_saudi"
+                    android:clickable="false"
+                    android:textAllCaps="false"
+                    android:textAlignment="center"
+
+                    android:textColor="@color/light_grey"
+                    android:visibility="gone"
+                    android:textSize="13sp" />
+
+                </LinearLayout>
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinnerCountry"
                     style="@style/Widget.MyApp.HeaderBar.SpinnerService"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/tvCountry"
+                    android:layout_below="@+id/lnr_country"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginEnd="20dp"
@@ -267,6 +293,8 @@
                     android:paddingEnd="5dp"
                     android:paddingRight="5dp"
                     android:prompt="@string/s_city" />
+
+
 
                 <TextView
                     android:id="@+id/tvCity"

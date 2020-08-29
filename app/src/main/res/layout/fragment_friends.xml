@@ -33,8 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/tg_background"
-        android:focusable="true"
-        android:clickable="true">
+        android:clickable="true"
+        android:focusable="true">
 
         <RelativeLayout
             android:id="@+id/toolbar"
@@ -55,8 +55,9 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
+
                 android:background="@drawable/back_btn"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
             <TextView
                 style="@style/TextStyle.Menu.SemiBold"
@@ -72,11 +73,12 @@
 
 
         </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/friends_list"
-            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
             android:layout_marginBottom="50dp">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -86,9 +88,9 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_gravity="center"
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 

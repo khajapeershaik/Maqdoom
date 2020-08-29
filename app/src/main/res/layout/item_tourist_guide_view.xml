@@ -62,7 +62,7 @@
                     android:layout_margin="5dp"
                     app:rounded_radius="50"
                     app:imageUrl="@{viewModel.imageUrl}"
-                    tools:src="@drawable/profile_icon" />
+                    tools:src="@drawable/profil_image" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -99,6 +99,7 @@
                         android:layout_below="@+id/ratingBar"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/image_dash"
+                        android:visibility="gone"
                         android:scaleType="fitCenter" />
 
                     <TextView

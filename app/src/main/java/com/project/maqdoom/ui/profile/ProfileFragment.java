@@ -273,7 +273,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         AlertDialog OptionDialog = alertDialog.create();
         OptionDialog.show();
         ListView llLanguageList = customLayout.findViewById(R.id.lv_language);
-        String[] languageArray = {"English", "Arabic"};
+        String[] languageArray = {"English", getString(R.string.str_arabic)};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1
                 , languageArray);
         llLanguageList.setAdapter(adapter);
