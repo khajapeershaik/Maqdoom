@@ -291,7 +291,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             if (fragmentSellerAddPackageBinding.spinnerType.getSelectedItemId() != 0) {
                 if (fragmentSellerAddPackageBinding.spinnerType.getSelectedItemId() == 1) {
                     // Tourist guide
-                     country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
+                  String country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
                     String city = fragmentSellerAddPackageBinding.spinnerCity.getText().toString();
                     if (sellerAddPackageViewModel.isValidFields(name, phone, whatsApp, moreDetails, city)) {
                         String category = fragmentSellerAddPackageBinding.spinnerType.getSelectedItem().toString();
