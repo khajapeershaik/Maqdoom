@@ -386,7 +386,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         Glide.with(getActivity())
                 .load(url)
                 .centerCrop()
-                .placeholder(R.drawable.profile_icon)
+                .placeholder(R.drawable.avatar)
                 .into(imgv);
     }
 

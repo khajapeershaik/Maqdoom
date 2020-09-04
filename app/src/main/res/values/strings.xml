@@ -119,7 +119,7 @@
     <string name="package_address">Address</string>
     <string name="package_price">$1567</string>
     <string name="package_includes">Package Includes</string>
-    <string name="no_of_peoples">No. of Peoples</string>
+    <string name="no_of_peoples">No. of People</string>
     <string name="tourist_inside">Tourist Group Inside the Country</string>
     <string name="tourist_outside">Tourist Group Outside the Country</string>
     <string name="domestic_text">Domestic</string>
@@ -645,5 +645,6 @@
 
     <string name="national_id">National Id</string>
     <string name="country_saudi">Saudi Arabia</string>
+    <string name="default_notification_channel_id">channelId</string>
 
 </resources>

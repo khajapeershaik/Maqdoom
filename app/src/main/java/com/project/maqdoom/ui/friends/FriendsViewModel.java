@@ -25,8 +25,6 @@ public class FriendsViewModel extends BaseViewModel<FriendsNavigator> {
 
     }
 
-
-
     public void onNavBackClick() {
         getNavigator().goBack();
     }

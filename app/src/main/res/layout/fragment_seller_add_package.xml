@@ -253,7 +253,6 @@
                     style="@style/TextStyle.Menu.Normal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:text="@string/s_country"
                     android:textAlignment="center"
                     android:textAllCaps="false"
@@ -263,7 +262,7 @@
                 <EditText
                     android:id="@+id/tvDomesticCity"
                     style="@style/Widget.MyApp.HeaderBar.SpinnerService"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
@@ -273,8 +272,7 @@
                     android:clickable="false"
                     android:textAllCaps="false"
                     android:textAlignment="center"
-
-                    android:textColor="@color/light_grey"
+                    android:textColor="@color/black"
                     android:visibility="gone"
                     android:textSize="13sp" />
 

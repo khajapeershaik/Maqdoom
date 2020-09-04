@@ -32,6 +32,7 @@ import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
 import com.project.maqdoom.databinding.FragmentPackageDetailsBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
+import com.project.maqdoom.ui.chat.ChatActivity;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragment;
 import com.project.maqdoom.ui.friends.FriendsFragment;
 
@@ -162,6 +163,9 @@ public class TouristPackageDetailsFragment extends BaseFragment<FragmentPackageD
                 .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                 .add(R.id.parentLayout, FriendsFragment.newInstance(), FriendsFragment.TAG)
                 .commit();
+
+//        Intent intent = ChatActivity.newIntent(getActivity(), userID, userName);
+//        startActivity(intent);
     }
 
 

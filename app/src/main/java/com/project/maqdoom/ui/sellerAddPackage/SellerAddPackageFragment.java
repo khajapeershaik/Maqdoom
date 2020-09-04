@@ -91,7 +91,7 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
     FragmentSellerAddPackageBinding fragmentSellerAddPackageBinding;
     private int isEditRequest = 0;
     private SellerAddPackageViewModel sellerAddPackageViewModel;
-    private String country;
+    private String country="";
 
     public static SellerAddPackageFragment newInstance(int type, String jsonData) {
         Bundle args = new Bundle();
@@ -390,7 +390,6 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                             // if (sellerAddPackageViewModel.validateSpinner(2, country)) {
                             //if (sellerAddPackageViewModel.validateSpinner(3, city)) {
                             String subCategory = fragmentSellerAddPackageBinding.spinnerSubType.getSelectedItem().toString();
-                            String country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
                             String city = fragmentSellerAddPackageBinding.spinnerCity.getText().toString();
                             if (sellerAddPackageViewModel.validateSpinner(4, subCategory)) {
                                 if (sellerAddPackageViewModel.validateSpinner(2, country)) {
@@ -401,14 +400,18 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
                                                 String category_l_3_ShortName = "";
                                                 if ("Domestic".equalsIgnoreCase(subCategory)) {
                                                     category_l_3_ShortName = "Domestic";
+                                                    country = "Saudi Arabia";
                                                 }  else if ("مجموعة سياحية داخل الدولة".equalsIgnoreCase(subCategory)) {
                                                     category_l_3_ShortName = "المنزلي";
+                                                    country = "المملكة العربية السعودية";
                                                 }
                                                 else if ("International".equalsIgnoreCase(subCategory)) {
                                                     category_l_3_ShortName = subCategory;
+                                                    country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
                                                 }
                                                 else if("مجموعة سياحية خارج الدولة".equalsIgnoreCase(subCategory)){
                                                     category_l_3_ShortName = "دولي";
+                                                    country = fragmentSellerAddPackageBinding.spinnerCountry.getSelectedItem().toString();
                                                 }
 
                                                 String nameEntered = "";
@@ -789,12 +792,11 @@ public class SellerAddPackageFragment extends BaseFragment<FragmentSellerAddPack
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position==1){
-                    fragmentSellerAddPackageBinding.tvDomesticCity.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.GONE);
-                    country=fragmentSellerAddPackageBinding.tvDomesticCity.getText().toString();
+                    fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.GONE);
                 }
                 if(position==2){
-                    fragmentSellerAddPackageBinding.tvDomesticCity.setVisibility(View.GONE);
+                    fragmentSellerAddPackageBinding.tvCountry.setVisibility(View.VISIBLE);
                     fragmentSellerAddPackageBinding.spinnerCountry.setVisibility(View.VISIBLE);
                 }
             }
