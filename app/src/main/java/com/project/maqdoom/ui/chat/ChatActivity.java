@@ -26,6 +26,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -47,9 +51,13 @@ import com.project.maqdoom.ui.forgotPassword.ForgotPasswordNavigator;
 import com.project.maqdoom.ui.forgotPassword.ForgotPasswordViewModel;
 import com.project.maqdoom.ui.login.LoginActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -74,14 +82,21 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
     private ConnectivityReceiver connectivityReceiver;
     private MessageAdapter messageAdapter;
     private DatabaseReference rootReference;
-    private String messageSenderId, download_url;
+    private String messageSenderId, download_url,currentUsername;
     private static String messageReceiverID;
     private static String messageReceiverName;
     private final List<Message> messageList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
-    public static Intent newIntent(Context context, String userId, String userName) {
+    private String TAG = "ChatActivity";
+    private static String userDeviceToken;
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAA-oOyuPA:APA91bFm0MITtinKhCS0Vhk2Kbi9nm0_O2cfZnHXzt0h-qnvUxk_k5dctgP1MWYB69Yr_hn_WuuDJ1BaNX1hkvY1Uno_tkVINS_Stqw29tzrZk3Qa3z_wYFrS_JQPcrO400_loRt6bp7";
+    final private String contentType = "application/json";
+
+    public static Intent newIntent(Context context, String userId, String userName,String deviceToken) {
         messageReceiverID = userId;
         messageReceiverName = userName;
+        userDeviceToken = deviceToken;
         return new Intent(context, ChatActivity.class);
     }
 
@@ -145,6 +160,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
 
         mAuth = FirebaseAuth.getInstance();
         messageSenderId = mAuth.getCurrentUser().getUid();
+        currentUsername = mAuth.getCurrentUser().getDisplayName();
 
 
         imageMessageStorageRef = FirebaseStorage.getInstance().getReference().child("messages_image");
@@ -221,6 +237,39 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
                     }
                 });
     }
+    private void sendNotification (String message){
+        JSONObject notification = new JSONObject();
+        JSONObject notifcationBody = new JSONObject();
+        try {
+            notifcationBody.put("title", currentUsername);
+            notifcationBody.put("message", message);
+
+            notification.put("to", userDeviceToken);
+            notification.put("data", notifcationBody);
+        } catch (JSONException e) {
+            Log.e(TAG, "onCreate: " + e.getMessage() );
+        }
+        pushNotification(notification);
+    }
+
+    private void pushNotification(JSONObject notification) {
+         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                 response -> Log.i(TAG, "onResponse: " + response.toString()),
+                 error -> {
+                     Toast.makeText(ChatActivity.this, "Request error", Toast.LENGTH_LONG).show();
+                     Log.i(TAG, "onErrorResponse: Didn't work");
+                 }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Authorization", serverKey);
+                    params.put("Content-Type", contentType);
+                    return params;
+                }
+            };
+        FCMRequestQueue.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
     private void sendMessage() {
         String message = activityChatBinding.cInputMessage.getText().toString();
         if (TextUtils.isEmpty(message)){
@@ -250,6 +299,7 @@ public class ChatActivity extends BaseActivity<ActivityChatBinding, ChatViewMode
                     if (databaseError != null){
                         Log.e("Sending message", databaseError.getMessage());
                     }
+                    sendNotification(message);
                     activityChatBinding.cInputMessage.setText("");
                 }
             });

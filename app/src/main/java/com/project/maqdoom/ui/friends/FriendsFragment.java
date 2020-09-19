@@ -245,6 +245,7 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
                             final String userName = dataSnapshot.child("name").getValue().toString();
                             String status = dataSnapshot.child("status").getValue().toString();
                             String active_status = dataSnapshot.child("active_now").getValue().toString();
+                            String device_Token = dataSnapshot.child("device_token").getValue().toString();
                             holder.active_icon.setVisibility(View.GONE);
                             if (active_status.contains("true")) {
                                 holder.active_icon.setVisibility(View.VISIBLE);
@@ -256,7 +257,7 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
                             Glide.with(getActivity()).load(R.mipmap.ic_launcher_round).into(holder.profile_thumb);
                             holder.itemView.setOnClickListener(v -> {
 
-                                Intent intent = ChatActivity.newIntent(getActivity(), userID, userName);
+                                Intent intent = ChatActivity.newIntent(getActivity(), userID, userName,device_Token);
                                 startActivity(intent);
                             });
                             /*if (loggedUser.equalsIgnoreCase(dataSnapshot.child("email").getValue().toString())) {
