@@ -61,38 +61,40 @@ public class MaqdoomMessaging extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+
         sendNotification(remoteMessage);
 
-        RemoteMessage.Notification notification = remoteMessage.getNotification();
-        Map<String, String> data = remoteMessage.getData();
 
-        data = remoteMessage.getData();
-        String title = remoteMessage.getNotification().getTitle();
-        String message = remoteMessage.getNotification().getBody();
+//        RemoteMessage.Notification notification = remoteMessage.getNotification();
+//        Map<String, String> data = remoteMessage.getData();
+//
+//        data = remoteMessage.getData();
+//        String title = remoteMessage.getNotification().getTitle();
+//        String message = remoteMessage.getNotification().getBody();
+//
+//        JSONObject json = null;
+//        try {
+//            json = (JSONObject) new JSONTokener(remoteMessage.getNotification().getBody()).nextValue();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            message = json.getString("message");
+//            Log.d("notmessage",message);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        String imageUrl = (String) data.get("image");
+//        String action = (String) data.get("action");
+//        Log.i(TAG, "onMessageReceived: title : "+title);
+//        Log.i(TAG, "onMessageReceived: message : "+message);
+//        Log.i(TAG, "onMessageReceived: imageUrl : "+imageUrl);
+//        Log.i(TAG, "onMessageReceived: action : "+action);
 
-        JSONObject json = null;
-        try {
-            json = (JSONObject) new JSONTokener(remoteMessage.getNotification().getBody()).nextValue();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            message = json.getString("message");
-            Log.d("notmessage",message);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-
-        String imageUrl = (String) data.get("image");
-        String action = (String) data.get("action");
-        Log.i(TAG, "onMessageReceived: title : "+title);
-        Log.i(TAG, "onMessageReceived: message : "+message);
-        Log.i(TAG, "onMessageReceived: imageUrl : "+imageUrl);
-        Log.i(TAG, "onMessageReceived: action : "+action);
-
-
-        sendNotification(remoteMessage, data,message);
+      //  sendNotification(remoteMessage, data,message);
 
     }
     @Override

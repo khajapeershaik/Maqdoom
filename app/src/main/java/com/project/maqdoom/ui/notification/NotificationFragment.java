@@ -73,7 +73,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
     Query query1;
     private DatabaseReference mdatabasereference;
     private ProgressDialog progressDialog;
-    FirebaseRecyclerAdapter<Product, BlogViewHolder> firebaseRecyclerAdapter;
+   // FirebaseRecyclerAdapter<Product, BlogViewHolder> firebaseRecyclerAdapter;
 
     public static NotificationFragment newInstance() {
         Bundle args = new Bundle();
@@ -191,7 +191,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
         });
     }
 
-    @Override
+    /*@Override
     public void onStart() {
         super.onStart();
         query1 = FirebaseDatabase.getInstance().getReference().child("Message").child("message");
@@ -250,7 +250,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
         fragmentNotificationBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         fragmentNotificationBinding.blogRecyclerView.setAdapter(firebaseRecyclerAdapter);
-    }
+    }*/
 
 
     public static class BlogViewHolder extends RecyclerView.ViewHolder
