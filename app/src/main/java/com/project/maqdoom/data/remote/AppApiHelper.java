@@ -33,6 +33,8 @@ import com.project.maqdoom.data.model.api.PasswordResetRequest;
 import com.project.maqdoom.data.model.api.PasswordVerificationRequest;
 import com.project.maqdoom.data.model.api.RegistrationRequest;
 import com.project.maqdoom.data.model.api.RegistrationResponse;
+import com.project.maqdoom.data.model.api.SaveUserTokenRequest;
+import com.project.maqdoom.data.model.api.SaveUserTokenResponse;
 import com.project.maqdoom.data.model.api.SellerPayRequest;
 import com.project.maqdoom.data.model.api.SellerPayResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
@@ -419,6 +421,9 @@ public class AppApiHelper implements ApiHelper {
                 .getObjectSingle(SellerPayResponse.class);
     }
 
+
+
+
     @Override
     public Single<GetProfileResponse> doGetProfile(GetProfileRequest.GetProfile request) {
         JSONObject jsonObject = new JSONObject();
@@ -437,6 +442,26 @@ public class AppApiHelper implements ApiHelper {
                 .addJSONObjectBody(jsonObject)
                 .build()
                 .getObjectSingle(GetProfileResponse.class);
+    }
+
+    @Override
+    public Single<SaveUserTokenResponse> saveUserToken(SaveUserTokenRequest.ServerSaveUserTokenRequest request) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_id", request.getUser_id());
+            jsonObject.put("token", request.getToken());
+            jsonObject.put("device", request.getDevice());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SAVE_USER_TOKEN)
+                .setContentType("application/json; charset=utf-8")
+                .addHeaders(mApiHeader.getPublicApiHeader())
+                //.addBodyParameter(request)
+                .addJSONObjectBody(jsonObject)
+                .build()
+                .getObjectSingle(SaveUserTokenResponse.class);
     }
 
 

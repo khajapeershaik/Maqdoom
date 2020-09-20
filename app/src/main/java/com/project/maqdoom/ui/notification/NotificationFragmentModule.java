@@ -24,10 +24,10 @@ import dagger.Provides;
 @Module
 public class NotificationFragmentModule {
 
-    @Provides
+    /*@Provides
     NotificationAdapter provideNotificationAdapter() {
         return new NotificationAdapter(new ArrayList<>());
-    }
+    }*/
     @Provides
     LinearLayoutManager provideLinearLayoutManager(NotificationFragment fragment) {
         return new LinearLayoutManager(fragment.getActivity());

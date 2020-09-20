@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2020 Maqdoom. All rights reserved.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -13,6 +12,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.project.maqdoom">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -27,8 +27,11 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.splash.SplashActivity"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity
+            android:name=".ui.splash.SplashActivity"
             android:theme="@style/MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,8 +44,7 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".ui.customerHome.CustomerHomeActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:launchMode="singleTop" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.registration.RegistrationActivity"
             android:launchMode="singleTop" />
@@ -60,15 +62,15 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".ui.sellerAddPackage.SellerAddPackageActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.chat.ChatActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.touristPackageDetails.FullImageActivity"
             android:launchMode="singleTop"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
 
         <service
             android:name=".utils.MaqdoomMessaging"
@@ -77,6 +79,20 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <!--  <meta-data
+              android:name="com.google.firebase.messaging.default_notification_icon"
+              android:resource="@drawable/downarrow" />
+          &lt;!&ndash; Set color used with incoming notification messages. This is used when no color is set for the incoming
+               notification message. See README(https://goo.gl/6BKBk7) for more. &ndash;&gt;
+          <meta-data
+              android:name="com.google.firebase.messaging.default_notification_color"
+              android:resource="@color/colorAccent" />
+          &lt;!&ndash;  Set fcm default channel&ndash;&gt;
+          <meta-data
+              android:name="com.google.firebase.messaging.default_notification_channel_id"
+              android:value="@string/default_notification_channel_id" />-->
+        <!-- [END] -->
     </application>
 
 </manifest>

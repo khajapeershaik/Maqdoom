@@ -29,7 +29,6 @@ import com.project.maqdoom.ui.customerSuppliesCruises.CruiseSuppliesAdapter;
 import com.project.maqdoom.ui.customerTouristGroups.insideCountry.InsideCountryAdapter;
 import com.project.maqdoom.ui.customerTouristGroups.outsideCountry.OutsideCountryAdapter;
 import com.project.maqdoom.ui.customerTouristGuide.TouristGuideAdapter;
-import com.project.maqdoom.ui.notification.NotificationAdapter;
 
 import java.util.List;
 
@@ -86,14 +85,14 @@ public final class BindingUtils {
             adapter.addItems(data);
         }
     }
-    @BindingAdapter({"adapter_notification"})
+    /*@BindingAdapter({"adapter_notification"})
     public static void addNotificationItems(RecyclerView recyclerView, List<NotificationResponse.Adds> data) {
         NotificationAdapter adapter = (NotificationAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.clearItems();
             adapter.addItems(data);
         }
-    }
+    }*/
 
     @BindingAdapter("imageUrl")
     public static void setImageUrl(ImageView imageView, String url) {

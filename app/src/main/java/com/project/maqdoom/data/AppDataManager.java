@@ -39,6 +39,8 @@ import com.project.maqdoom.data.model.api.PasswordResetRequest;
 import com.project.maqdoom.data.model.api.PasswordVerificationRequest;
 import com.project.maqdoom.data.model.api.RegistrationRequest;
 import com.project.maqdoom.data.model.api.RegistrationResponse;
+import com.project.maqdoom.data.model.api.SaveUserTokenRequest;
+import com.project.maqdoom.data.model.api.SaveUserTokenResponse;
 import com.project.maqdoom.data.model.api.SellerPayRequest;
 import com.project.maqdoom.data.model.api.SellerPayResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
@@ -155,6 +157,9 @@ public class AppDataManager implements DataManager {
         return mApiHelper.doRequestCodeApiCall(request);
     }
 
+
+
+
     @Override
     public Single<ForgotPasswordResponse> doForgotPasswordApiCall(PasswordResetRequest.ServerPasswordResetRequest request) {
         return mApiHelper.doForgotPasswordApiCall(request);
@@ -183,6 +188,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Single<GetProfileResponse> doGetProfile(GetProfileRequest.GetProfile request) {
         return mApiHelper.doGetProfile(request);
+    }
+
+    @Override
+    public Single<SaveUserTokenResponse> saveUserToken(SaveUserTokenRequest.ServerSaveUserTokenRequest request) {
+        return mApiHelper.saveUserToken(request);
     }
 
 

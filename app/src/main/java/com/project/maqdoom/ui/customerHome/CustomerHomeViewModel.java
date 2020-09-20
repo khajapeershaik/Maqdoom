@@ -14,8 +14,11 @@
 package com.project.maqdoom.ui.customerHome;
 
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.androidnetworking.error.ANError;
 import com.project.maqdoom.data.DataManager;
+import com.project.maqdoom.data.model.api.SaveUserTokenRequest;
 import com.project.maqdoom.ui.base.BaseViewModel;
 import com.project.maqdoom.utils.rx.SchedulerProvider;
 
@@ -85,5 +88,32 @@ public class CustomerHomeViewModel extends BaseViewModel<CustomerHomeNavigator> 
         }
     }
 
+    public void saveUserToken(String user_id, String token, String device) {
+        setIsLoading(true);
+        getCompositeDisposable().add(getDataManager()
+                .saveUserToken(new SaveUserTokenRequest.ServerSaveUserTokenRequest(user_id, token, device))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(response -> {
+                    setIsLoading(false);
+                   /* if ("success".equals(response.getSaveResponseData())) {
+                        login(language, phone, otp);
+                    }*/
+                    Log.d("response",response.toString());
+                }, throwable -> {
+                    if (throwable instanceof ANError) {
+                        ANError anError = (ANError) throwable;
+                        if (anError.getErrorCode() != 0) {
+
+                        } else {
+                        }
+                    } else {
+                    }
+                    throwable.printStackTrace();
+                    setIsLoading(false);
+                    getNavigator().handleError(throwable);
+                }));
+
+    }
 
 }

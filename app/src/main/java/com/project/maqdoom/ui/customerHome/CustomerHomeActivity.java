@@ -36,6 +36,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
+import com.project.maqdoom.data.model.others.NotificationMessages;
 import com.project.maqdoom.databinding.ActivityCustomerHomeBinding;
 import com.project.maqdoom.ui.base.BaseActivity;
 import com.project.maqdoom.ui.customerRentalSupplies.CustomerRentalSuppliesFragment;
@@ -54,6 +55,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
+
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -73,6 +82,12 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     private DatabaseReference userDatabaseReference;
     public FirebaseUser currentUser;
     private DatabaseReference mDatabase;
+    boolean isConsiderNewIntent = false;
+
+    private static final String TAG = "MainActivity";
+    ArrayList<NotificationMessages> notificationList = new ArrayList<>();
+
+    private String notificationMessage;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, CustomerHomeActivity.class);
@@ -160,8 +175,6 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     }
 
 
-
-
     @Override
     public void openSuppliesHome() {
         showRentalSupplies();
@@ -171,7 +184,6 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     public void openShopsHome() {
         showShops();
     }
-
 
 
     @Override
@@ -186,12 +198,115 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
         customerHomeViewModel.setNavigator(this);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+        // get the 'extra' from the intent
+
+        /*  Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                String value = extras.getString("notification");
+                Toast.makeText(getApplicationContext(),""+value,Toast.LENGTH_LONG).show();
+        }
+*/
+       /* Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            if(extras.containsKey("notification"))
+            {
+                // extract the extra-data in the Notification
+                String msg = extras.getString("message");
+                Toast.makeText(getApplicationContext(),""+msg,Toast.LENGTH_LONG).show();
+
+            }
+        }
+*/
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String tmp = "";
+            for (String key : bundle.keySet()) {
+                Object value = bundle.get(key);
+                tmp += key + ": " + value + "\n\n";
+                String messageJson = bundle.get("message").toString();
+                try {
+                    JSONObject reader = new JSONObject(messageJson);
+                    if (notificationMessage != null) {
+                        notificationMessage = reader.getString("message");
+                        notificationData(notificationMessage);
+                        Toast.makeText(getApplicationContext(), notificationMessage, Toast.LENGTH_LONG).show();
+
+                        if (getApplicationContext() != null) {
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .disallowAddToBackStack()
+                                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                                    .add(R.id.clRootView, NotificationFragment.newInstance(), NotificationFragment.TAG)
+                                    .commit();
+                          //  fragment.getAdapter().newAddeddata(company_name.getText().toString());
+
+                        }
+
+                     /*   NotificationFragment fragment = getFragmentManager().findFragmentByTag(NotificationFragment.TAG); //set tag of fragment when you add with fragment manager. and if you are using support library use getSupportFragmentManager()
+                        if(fragment!= null){
+                            fragment.getAdapter().newAddeddata(company_name.getText().toString());
+                        }*/
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            Log.d("notification", tmp);
+        }
+
+
+      /*  Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("notification");
+            try {
+                JSONObject reader = new JSONObject(value);
+                String msg = reader.getString("message");
+                Log.d("notifcations",msg);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }*/
+
+       /* Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String tmp = "";
+            for (String key : bundle.keySet()) {
+                Object value = bundle.get(key);
+                tmp += key + ": " + value + "\n\n";
+            }
+
+            Toast.makeText(getApplicationContext(),tmp,Toast.LENGTH_LONG).show();
+        }*/
+
+
+       /* Intent intent = getIntent();
+        if (intent != null) {
+            Bundle b = intent.getExtras();
+            if (b != null) {
+                Set<String> keys = b.keySet();
+                for (String key : keys) {
+                    Log.d(TAG, "Bundle Contains: key=" + key);
+                }
+            } else {
+                Log.w(TAG, "onCreate: BUNDLE is null");
+            }
+        } else {
+            Log.w(TAG, "onCreate: INTENT is null");
+        }
+*/
+
+
         if (currentUser != null) {
             String user_uID = mAuth.getCurrentUser().getUid();
 
             userDatabaseReference = FirebaseDatabase.getInstance().getReference()
                     .child("Users").child(user_uID);
         }
+
         setUp();
     }
 
@@ -215,6 +330,73 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     @Override
     protected void onResume() {
         super.onResume();
+
+     /*   Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            if(extras.containsKey("notification"))
+            {
+                // extract the extra-data in the Notification
+                String msg = extras.getString("message");
+                Toast.makeText(getApplicationContext(),""+msg,Toast.LENGTH_LONG).show();
+
+            }
+        }*/
+
+
+       /* Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("notification");
+            try {
+                JSONObject reader = new JSONObject(value);
+                String msg = reader.getString("message");
+                Log.d("notifcations",msg);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }*/
+
+       /* Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("notification");
+            try {
+                JSONObject reader = new JSONObject(value);
+                String msg = reader.getString("message");
+                Log.d("notifcations",msg);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }*/
+
+       /* Intent fintent=getIntent();
+
+        if (fintent != null) {
+
+            String data = fintent.getStringExtra("data");
+            Log.v("message",data+"::::::");
+
+            if (data != null) {
+
+                if (getApplicationContext() != null) {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .disallowAddToBackStack()
+                            .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                            .add(R.id.clRootView, NotificationFragment.newInstance(), NotificationFragment.TAG)
+                            .commit();
+                }
+
+            }
+        }*/
+
+      /*  if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d("notifications", "Key: " + key + " Value: " + value);
+                // navigate the app based on param
+            }
+        }*/
+
+
         //setUpFCM();
     }
 
@@ -291,7 +473,7 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     }
 
     private void showTouristGuide() {
-        if (getApplicationContext() != null){
+        if (getApplicationContext() != null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .disallowAddToBackStack()
@@ -361,5 +543,38 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
         return getSupportFragmentManager().findFragmentById(R.id.clRootView);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
 
+    /* @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        *//*if (intent != null) {
+
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                String value = extras.getString("notification");
+                try {
+                    JSONObject reader = new JSONObject(value);
+                    String msg = reader.getString("message");
+                    Log.d("notifcations",msg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+*//*
+
+      // }
+
+    }*/
+
+    public void notificationData(String notificationMessage) {
+        NotificationMessages notificationMessages = new NotificationMessages();
+        notificationMessages.setMessage(notificationMessage);
+        notificationList.add(notificationMessages);
+        // notifyDataSetChanged();
+    }
 }

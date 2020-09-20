@@ -80,6 +80,9 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Override
     public void openCustomerHome() {
         Intent intent = CustomerHomeActivity.newIntent(SplashActivity.this);
+        if (getIntent().getExtras() != null) {
+            intent.putExtras(getIntent().getExtras());
+        }
         startActivity(intent);
         finish();
     }

@@ -62,6 +62,7 @@ public final class ApiEndPoint {
 
     public static final String ENDPOINT_SERVER_IMAGE_UPLOAD = BuildConfig.BASE_SERVER_URL + "/insertAddImage";
     public static final String ENDPOINT_SAVE_PHONE_OTP = BuildConfig.BASE_SERVER_URL + "/savePhoneOtp";
+    public static final String ENDPOINT_SAVE_USER_TOKEN = BuildConfig.BASE_SERVER_URL + "/saveUserToken";
 
     private ApiEndPoint() {
         // This class is not publicly instantiable

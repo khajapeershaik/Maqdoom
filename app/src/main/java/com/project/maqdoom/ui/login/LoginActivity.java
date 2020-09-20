@@ -81,6 +81,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     private FirebaseFirestore fStore;
     String firebaseOTP = "";
 
+
+    private String current_user_id;
+    private String deviceToken;
+
+
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
     }
@@ -112,9 +117,17 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY, "en");
         String mobile = mActivityLoginBinding.etMobileNumber.getText().toString();
         String otp = mActivityLoginBinding.etOTP.getText().toString();
-        String number = mActivityLoginBinding.etCountryCode.getText().toString().trim() +mobile;
+        String number = mActivityLoginBinding.etCountryCode.getText().toString().trim() + mobile;
 //        if(firebaseOTP.equalsIgnoreCase(otp)) {
-            mLoginViewModel.savePhoneOTP(langPreference, number, otp);
+
+
+        mLoginViewModel.savePhoneOTP(langPreference, number, otp);
+
+
+
+
+
+
 //        }else {
 //            mActivityLoginBinding.etOTP.setError("Invalid OTP");
 //        }
@@ -194,16 +207,15 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         countryCodePicker = mActivityLoginBinding.ccp;
         fStore = FirebaseFirestore.getInstance();
 
-        mActivityLoginBinding.etCountryCode.setText("+"+countryCodePicker.getSelectedCountryCode());
+        mActivityLoginBinding.etCountryCode.setText("+" + countryCodePicker.getSelectedCountryCode());
 
 
         mActivityLoginBinding.btnSubmit.setOnClickListener(v -> {
-            if(!TextUtils.isEmpty(mActivityLoginBinding.etMobileNumber.getText())) {
+            if (!TextUtils.isEmpty(mActivityLoginBinding.etMobileNumber.getText())) {
                 String phoneNum = mActivityLoginBinding.etCountryCode.getText().toString().trim() + mActivityLoginBinding.etMobileNumber.getText().toString();
                 Log.d("phone", "Phone No.: " + phoneNum);
                 requestPhoneAuth(phoneNum);
-            }
-            else {
+            } else {
                 mActivityLoginBinding.etMobileNumber.setError("Mandatory");
             }
         });
@@ -236,6 +248,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 userMap.put("thumb_image", "default");
                 userMap.put("active_now", "false");
                 userMap.put("device_token", device_token);
+
+
                 mDatabase.setValue(userMap).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
 
@@ -249,15 +263,32 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         });
     }
 
+
+    /*@Override
+    protected void onStart() {
+        super.onStart();
+        String email = mLoginViewModel.getDataManager().getEmail();
+        String password = mLoginViewModel.getDataManager().getCreatedDate();
+        firebaseLoginUser(email,password);
+    }*/
+
     private void firebaseLoginUser(String email, String password) {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+
                 String current_user_id = mAuth.getCurrentUser().getUid();
                 String deviceToken = FirebaseInstanceId.getInstance().getToken();
+
+                int userId = mLoginViewModel.getDataManager().getCurrentUserId();
+
+                mLoginViewModel.saveUserToken(String.valueOf(userId), deviceToken, "android");
+
+
                 mDatabase.child(current_user_id).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
                     }
                 });
 
@@ -290,6 +321,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                         mActivityLoginBinding.btnSubmit.setVisibility(View.GONE);
 
                     }
+
                     @Override
                     public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
                         verifyAuth(phoneAuthCredential);
@@ -307,16 +339,16 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                  //  Toast.makeText(LoginActivity.this, "Phone Verified."+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                if (task.isSuccessful()) {
+                    //  Toast.makeText(LoginActivity.this, "Phone Verified."+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
                     if (credential.getSmsCode() != null) {
                         mActivityLoginBinding.etOTP.setText(credential.getSmsCode());
-                       firebaseOTP = credential.getSmsCode();
+                        firebaseOTP = credential.getSmsCode();
                         mActivityLoginBinding.btnSubmit.setVisibility(View.GONE);
 
                     }
 
-                }else {
+                } else {
 //                    progressBar.setVisibility(View.GONE);
 //                    state.setVisibility(View.GONE);
                     Toast.makeText(LoginActivity.this, "Can not Verify phone and Create Account.", Toast.LENGTH_SHORT).show();
@@ -324,4 +356,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             }
         });
     }
+
+
 }

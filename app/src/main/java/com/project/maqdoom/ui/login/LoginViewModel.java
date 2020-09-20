@@ -21,6 +21,7 @@ import com.project.maqdoom.data.DataManager;
 import com.project.maqdoom.data.model.api.MaqDoomLoginResponse;
 import com.project.maqdoom.data.model.api.MaqdoomLoginRequest;
 import com.project.maqdoom.data.model.api.ProfileResponse;
+import com.project.maqdoom.data.model.api.SaveUserTokenRequest;
 import com.project.maqdoom.data.remote.api_rest.ApiClient;
 import com.project.maqdoom.data.remote.api_rest.ApiInterface;
 import com.project.maqdoom.ui.base.BaseViewModel;
@@ -65,6 +66,11 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                     } else {
                         if (response.getData() != null) {
                             if (!"".equals(response.getData().getId())) {
+                                getDataManager().setCurrentUserId(Integer.parseInt(response.getData().getId()));
+
+                                getDataManager().setUserType((response.getData().getIs_seller()));
+
+
                                 getDataManager()
                                         .updateUserInfo(
                                                 Integer.valueOf(response.getData().getId()),
@@ -75,6 +81,8 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                                                 response.getData().getIs_seller(),
                                                 response.getData().getSeller_subscrption_status(),
                                                 response.getData().getPhone()
+
+
 
                                         );
                                 imageUrl = response.getData().getDpimg();
@@ -147,6 +155,36 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 }));
 
     }
+
+
+    public void saveUserToken(String user_id, String token, String device) {
+        setIsLoading(true);
+        getCompositeDisposable().add(getDataManager()
+
+                .saveUserToken(new SaveUserTokenRequest.ServerSaveUserTokenRequest(user_id, token, device))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(response -> {
+                    setIsLoading(false);
+                  /*  if(response.getSaveResponseData().getMessage().equals("inserted or updated User Token.")) {
+
+                    }*/
+                }, throwable -> {
+                    if (throwable instanceof ANError) {
+                        ANError anError = (ANError) throwable;
+                        if (anError.getErrorCode() != 0) {
+
+                        } else {
+                        }
+                    } else {
+                    }
+                    throwable.printStackTrace();
+                    setIsLoading(false);
+                    getNavigator().handleError(throwable);
+                }));
+
+    }
+
 
     public String getProfileImage() {
         return imageUrl;

@@ -21,7 +21,7 @@
     <string name="paste">معجون</string>
     <string name="delete">حذف</string>
     <string name="share">شارك</string>
-    <string name="send">إرسال</string>
+    <string name="send">ارسال</string>
 
     <!--Drawer-->
     <string name="open_drawer">فتح الدرج</string>
@@ -51,7 +51,7 @@
 
     <!-- Sign up -->
     <string name="sign_up_header">يرجى التسجيل</string>
-    <string name="name">الاسم</string>
+    <string name="name">الالاسم</string>
     <string name="re_password">اعادة ادخال كلمة السر</string>
     <string name="sign_in_label"><u>تسجيل الدخول</u></string>
     <string name="seller_label"><u> بائع؟</u>هل أنت </string>
@@ -89,7 +89,7 @@
     <string name="dashboard">لوحة القيادة</string>
     <string name="travel">سفريات</string>
     <string name="supplies">لوازم الرحلات</string>
-    <string name="shops">متاجر</string>
+    <string name="shops">مبائع</string>
     <string name="str_arabic">عربي</string>
 
 
@@ -102,21 +102,21 @@
     <string name="t_arrange_trips">الترتيب لرحلة عائلية</string>
 
     <!-- Spinner -->
-    <string name="s_country">البلد</string>
-    <string name="s_city">المدينة</string>
-    <string name="s_language">لغة</string>
+    <string name="s_country">الالالبلد</string>
+    <string name="s_city">الالمدينة</string>
+    <string name="s_language">اللغة</string>
 
     <!-- Guide profile -->
     <string name="profile_description">الملف الشخصي</string>
-    <string name="profile_language">يمكن للغة أن تتحدث</string>
-    <string name="profile_country">البلد</string>
+    <string name="profile_language">يمكن لاللغة أن تتحدث</string>
+    <string name="profile_country">الالالبلد</string>
     <string name="profile_call">اتصال</string>
     <string name="profile_whats">واتس اب</string>
     <string name="profile_message">رسالة</string>
 
     <!-- Tourist groups -->
     <string name="group_title">المجموعة السياحية</string>
-    <string name="package_name">الاسم الباكيج</string>
+    <string name="package_name">الالاسم الباكيج</string>
     <string name="travel_agent">وكيل سفر</string>
     <string name="package_address">عنوان</string>
     <string name="package_price">$1567</string>
@@ -132,20 +132,20 @@
     <string name="family_trip_title">رحلة عائلية</string>
 
     <!-- Supplies menu -->
-    <string name="supplies_menu_1">رحلات وأمبير. القصص البرية</string>
+    <string name="supplies_menu_1">رحلات ونزهات برية</string>
     <string name="supplies_menu_2">الرحلات البحرية</string>
 
     <!-- Package details -->
     <string name="package_header">حزمة من التفاصيل</string>
     <string name="package_flights">الرحلات الجوية</string>
     <string name="package_hotels">الفنادق</string>
-    <string name="package_sight_seeing">معالم الالمدينة</string>
+    <string name="package_sight_seeing">معالم الالالمدينة</string>
     <string name="package_meals">وجبات</string>
-    <string name="package_site_visit">زيارة البصر</string>
-    <string name="city_hint">الرجاء إدخال الالمدينة</string>
+    <string name="package_site_visit">زيارة معلم</string>
+    <string name="city_hint">الرجاء إدخال الالالمدينة</string>
 
     <!-- Notification -->
-    <string name="notification_header">إشعارات</string>
+    <string name="notification_header">تنبيه</string>
 
     <!-- Profile -->
     <string name="profile_header">الملف الشخصي</string>
@@ -161,7 +161,7 @@
     <string name="text_4">إلغاء التسجيل في أي وقت</string>
     <string name="plan_purchase">عملية الشراء</string>
     <string name="card_number">رقم البطاقة</string>
-    <string name="card_name">الالاسم على البطاقة</string>
+    <string name="card_name">الالالاسم على البطاقة</string>
     <string name="expiry">تاريخ الانتهاء</string>
     <string name="card_code">رمز الحماية</string>
     <string name="confirm">تؤكد</string>
@@ -172,10 +172,10 @@
 
     <!-- Service addition -->
     <string name="service_category">الفئة</string>
-    <string name="service_title">الالخدمات</string>
+    <string name="service_title">الالالخدمات</string>
     <string name="service_sub_category">فئة فرعية</string>
-    <string name="Service_name">الالاسم</string>
-    <string name="name_hint">الرجاء ادخال الالاسم</string>
+    <string name="Service_name">الالالاسم</string>
+    <string name="name_hint">الرجاء ادخال الالالاسم</string>
     <string name="Service_phone">الهاتف</string>
     <string name="phone_hint">رقم الهاتف</string>
     <string name="Service_wp">واتس اب</string>
@@ -184,7 +184,7 @@
     <string name="Service_image">إضافة صورة</string>
     <string name="Service_more">تفاصيل اكثر</string>
     <string name="Service_image_upload_hint">Upload images here</string>
-    <string name="add_service">إضافة الخدمات</string>
+    <string name="add_service">إضافة الالخدمات</string>
     <string name="service_price">السعر</string>
     <string name="service_location">الموقع</string>
     <string name="location_hint">إضافة موقع</string>
@@ -198,9 +198,9 @@
 
     <!--Dialog -->
     <string name="select_option">حدد اختيارا</string>
-    <string name="select_country_option">الرجاء اختيار الالبلد</string>
-    <string name="select_city_option">الرجاء اختيار الالمدينة</string>
-    <string name="select_language_option">الرجاء اختيار اللغة</string>
+    <string name="select_country_option">الرجاء اختيار الالالالبلد</string>
+    <string name="select_city_option">الرجاء اختيار الالالمدينة</string>
+    <string name="select_language_option">الرجاء اختيار الاللغة</string>
     <string name="select_category_option">الفئة</string>
     <string name="select_sub_category_option">فئة فرعية</string>
 
@@ -209,7 +209,7 @@
     <string name="Ok">حسنا</string>
     <string name="sure_delete">Do you sure want to Delete?</string>
     <string-array name="country_list">
-        <item>اختر الالبلد</item>
+        <item>اختر الالالالبلد</item>
         <item>أفغانستان</item>
         <item>البانيا</item>
         <item>الجزائر</item>
@@ -442,7 +442,7 @@
         <item>أوروغواي</item>
         <item>أوزبكستان</item>
         <item>فانواتو</item>
-        <item>المدينة الفاتيكان</item>
+        <item>الالمدينة الفاتيكان</item>
         <item>فنزويلا</item>
         <item>فيتنام</item>
         <item>واليس وفوتونا</item>
@@ -453,7 +453,7 @@
         <item>زيمبابوي</item>
     </string-array>
     <string-array name="city_list">
-        <item>الرجاء اختيار الالمدينة</item>
+        <item>الرجاء اختيار الالالمدينة</item>
         <item>لندن</item>
         <item>نيويورك</item>
         <item>باريس</item>
@@ -461,7 +461,7 @@
         <item>موسكو</item>
     </string-array>
     <string-array name="language_list">
-        <item>الرجاء اختيار اللغة</item>
+        <item>الرجاء اختيار الاللغة</item>
         <item>الصينية</item>
         <item>الاسبانية</item>
         <item>الإنجليزية</item>
@@ -523,7 +523,7 @@
         <item>السويدية</item>
         <item>لومبارد</item>
         <item>كازاخستان</item>
-        <item>ILOCANO</item>
+        <item>إيلوكانو</item>
         <item>فولفولد</item>
         <item>كرمانجي</item>
         <item>شونا</item>
@@ -559,11 +559,11 @@
 
     <string name="domestic_text">محلي</string>
     <string name="international_text">دولي</string>
-    <string name="city">الالمدينة</string>
-    <string name="service">الخدمات</string>
+    <string name="city">الالالمدينة</string>
+    <string name="service">الالخدمات</string>
     <string name="edit">تحرير</string>
     <string name="str_chat">دردشة</string>
-    <string name="str_travel_agent">الاسم وكيل سفريات</string>
+    <string name="str_travel_agent">الالاسم وكيل سفريات</string>
     <string name="str_low_high">من الأقل الى الأعلى</string>
     <string name="str_high_low">من الأعلى الى الأقل</string>
     <string name="mobileNo">رقم الهاتف المحمول</string>
@@ -592,7 +592,7 @@
     </string-array>
 
     <string-array name="cruises_services">
-        <item>Sea Food Seller</item>
+        <item>بائع مأكولات بحرية</item>
         <item>ركوب الدراجات المائية</item>
         <item>رحلة بحرية</item>
         <item>لوازم للطهي</item>
@@ -614,6 +614,7 @@
 
     <string name="country_saudi">المملكة العربية السعودية</string>
 
+    <string name="fcm_message">FCM Message</string>
 
 </resources>
 

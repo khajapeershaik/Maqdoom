@@ -33,6 +33,8 @@ import com.project.maqdoom.data.model.api.PasswordResetRequest;
 import com.project.maqdoom.data.model.api.PasswordVerificationRequest;
 import com.project.maqdoom.data.model.api.RegistrationRequest;
 import com.project.maqdoom.data.model.api.RegistrationResponse;
+import com.project.maqdoom.data.model.api.SaveUserTokenRequest;
+import com.project.maqdoom.data.model.api.SaveUserTokenResponse;
 import com.project.maqdoom.data.model.api.SellerPayRequest;
 import com.project.maqdoom.data.model.api.SellerPayResponse;
 import com.project.maqdoom.data.model.api.TravelCategoryGroupResponse;
@@ -77,6 +79,7 @@ public interface ApiHelper {
     Single<SellerPayResponse> dosavePhoneOTP(MaqdoomLoginRequest.ServerLoginRequest request);
 
     Single<GetProfileResponse> doGetProfile(GetProfileRequest.GetProfile request);
+    Single<SaveUserTokenResponse> saveUserToken(SaveUserTokenRequest.ServerSaveUserTokenRequest request);
 
     ApiHeader getApiHeader();
 
