@@ -32,8 +32,10 @@ import android.view.View;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.project.maqdoom.R;
+import com.project.maqdoom.data.DataManager;
 import com.project.maqdoom.ui.chat.ChatActivity;
 import com.project.maqdoom.ui.customerHome.CustomerHomeActivity;
+import com.project.maqdoom.ui.sellerHome.SellerHomeActivity;
 import com.project.maqdoom.ui.splash.SplashActivity;
 
 import java.io.IOException;
@@ -58,55 +60,63 @@ public class MaqdoomMessaging extends FirebaseMessagingService {
     private static final String CHANNEL_NAME = "FCM";
     private static final String CHANNEL_DESC = "Firebase Cloud Messaging";
     private int numMessages = 0;
+    private final DataManager mDataManager;
 
+    public MaqdoomMessaging(DataManager mDataManager) {
+        this.mDataManager = mDataManager;
+    }
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
 
-        sendNotification(remoteMessage);
+       sendNotification(remoteMessage);
 
 
-//        RemoteMessage.Notification notification = remoteMessage.getNotification();
-//        Map<String, String> data = remoteMessage.getData();
-//
-//        data = remoteMessage.getData();
-//        String title = remoteMessage.getNotification().getTitle();
-//        String message = remoteMessage.getNotification().getBody();
-//
-//        JSONObject json = null;
-//        try {
-//            json = (JSONObject) new JSONTokener(remoteMessage.getNotification().getBody()).nextValue();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            message = json.getString("message");
-//            Log.d("notmessage",message);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        String imageUrl = (String) data.get("image");
-//        String action = (String) data.get("action");
-//        Log.i(TAG, "onMessageReceived: title : "+title);
-//        Log.i(TAG, "onMessageReceived: message : "+message);
-//        Log.i(TAG, "onMessageReceived: imageUrl : "+imageUrl);
-//        Log.i(TAG, "onMessageReceived: action : "+action);
+       /* RemoteMessage.Notification notification = remoteMessage.getNotification();
+        Map<String, String> data = remoteMessage.getData();
+
+        data = remoteMessage.getData();
+        String title = remoteMessage.getNotification().getTitle();
+        String message = remoteMessage.getNotification().getBody();
+
+        JSONObject json = null;
+        try {
+            json = (JSONObject) new JSONTokener(remoteMessage.getNotification().getBody()).nextValue();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            message = json.getString("message");
+            Log.d("notmessage",message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
-      //  sendNotification(remoteMessage, data,message);
+        String imageUrl = (String) data.get("image");
+        String action = (String) data.get("action");
+        Log.i(TAG, "onMessageReceived: title : "+title);
+        Log.i(TAG, "onMessageReceived: message : "+message);
+        Log.i(TAG, "onMessageReceived: imageUrl : "+imageUrl);
+        Log.i(TAG, "onMessageReceived: action : "+action);
+
+
+        sendNotification(remoteMessage, data,message);*/
 
     }
     @Override
     public void onNewToken(String token) {
         Log.d(TAG, "Refreshed token: " + token);
-
+        sendRegistrationToServer(token);
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
         //sendRegistrationToServer(token);
     }
+    private void sendRegistrationToServer(String token) {
+        // TODO: Implement this method to send token to your app server.
 
+
+    }
     private void sendNotification(RemoteMessage remoteMessage) {
     //    Intent intent = ChatActivity.newIntent(getApplicationContext(), remoteMessage.getData().get("id"),remoteMessage.getData().get("name"),"");
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
@@ -161,17 +171,33 @@ public class MaqdoomMessaging extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage  notification, Map<String, String> data,String message) {
-       /* Intent intent = new Intent(this, CustomerHomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+     /*  Intent resultIntent = new Intent(this, CustomerHomeActivity.class);
+        resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
         Bundle bundle = new Bundle();
         bundle.putString("notification",message);
-        intent.putExtras(bundle);*/
+        resultIntent.putExtras(bundle);*/
         // handleIntent(bundle);
 
+        Intent resultIntent;
+        if (mDataManager.getUserType().equals("0")) {
+            resultIntent = new Intent(this, CustomerHomeActivity.class).
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("notification", message);
+            resultIntent.putExtras(bundle);
+        }
+        else{
+            resultIntent = new Intent(this, SellerHomeActivity.class).
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("notification", message);
+            resultIntent.putExtras(bundle);
+        }
 
 
-
-        Intent resultIntent = new Intent(this, CustomerHomeActivity.class).
+    /*    Intent resultIntent = new Intent(this, CustomerHomeActivity.class).
                 addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Bundle bundle = new Bundle();
         bundle.putString("notification",message);
@@ -182,7 +208,7 @@ public class MaqdoomMessaging extends FirebaseMessagingService {
                         0,
                         resultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT
-                );
+                );*/
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 

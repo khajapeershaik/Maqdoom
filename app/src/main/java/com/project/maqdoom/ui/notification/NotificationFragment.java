@@ -36,7 +36,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.maqdoom.BR;
 import com.project.maqdoom.R;
 import com.project.maqdoom.ViewModelProviderFactory;
-import com.project.maqdoom.data.model.others.Product;
 import com.project.maqdoom.databinding.FragmentNotificationBinding;
 import com.project.maqdoom.ui.base.BaseFragment;
 import com.project.maqdoom.ui.customerTouristGroups.TouristGroupFragment;
@@ -167,10 +166,10 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
         // fragmentNotificationBinding.blogRecyclerView.setAdapter(notificationAdapter);
 
         mdatabasereference = FirebaseDatabase.getInstance().getReference("messages");
-        progressDialog = new ProgressDialog(getActivity());
+     /*   progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading Products Please Wait...");
         progressDialog.show();
-    }
+    */}
     private void showHome() {
         for (Fragment fragment : this.getActivity().getSupportFragmentManager().getFragments()) {
             this.getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
