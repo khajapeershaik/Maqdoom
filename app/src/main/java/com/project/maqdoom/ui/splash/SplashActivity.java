@@ -48,6 +48,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     public static final String LANGUAGE_REFERENCE = "language_preference";
     public static final String LANGUAGE_KEY = "language";
     private boolean isLanguage = false;
+    private int notifyFlag = 0;
 
     @Override
     public int getBindingVariable() {
@@ -79,14 +80,14 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Override
     public void openCustomerHome() {
-        Intent intent = CustomerHomeActivity.newIntent(SplashActivity.this);
+        Intent intent = CustomerHomeActivity.newIntent(SplashActivity.this,notifyFlag);
         startActivity(intent);
         finish();
     }
 
     @Override
     public void openSellerHome() {
-        Intent intent = SellerHomeActivity.newIntent(SplashActivity.this);
+        Intent intent = SellerHomeActivity.newIntent(SplashActivity.this,notifyFlag);
         startActivity(intent);
         finish();
     }
@@ -105,7 +106,9 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         sharedpreferences = getSharedPreferences(LANGUAGE_REFERENCE, Context.MODE_PRIVATE);
         String langPreference = sharedpreferences.getString(LANGUAGE_KEY, "en");
         Log.v("saved preference splash", langPreference);
-
+        if(getIntent().getExtras()!=null) {
+            notifyFlag = getIntent().getExtras().getInt("notify");
+        }
         updateLocale(langPreference);
 
         mSplashViewModel.startSeeding();

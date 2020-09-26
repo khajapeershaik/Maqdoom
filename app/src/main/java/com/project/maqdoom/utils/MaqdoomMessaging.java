@@ -67,6 +67,7 @@ public class MaqdoomMessaging extends FirebaseMessagingService {
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         int notificationID = new Random().nextInt(3000);
       Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+      intent.putExtra("notify",1);
       /*
         Apps targeting SDK 26 or above (Android O) must implement notification channels and add its notifications
         to at least one of them. Therefore, confirm if version is Oreo or higher, then setup notification channel

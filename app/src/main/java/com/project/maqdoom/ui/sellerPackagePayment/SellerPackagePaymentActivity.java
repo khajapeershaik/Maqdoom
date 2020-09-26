@@ -73,7 +73,7 @@ public class SellerPackagePaymentActivity extends BaseActivity<ActivitySellerPac
 
     @Override
     public void openSellerHome() {
-        Intent intent = SellerHomeActivity.newIntent(SellerPackagePaymentActivity.this);
+        Intent intent = SellerHomeActivity.newIntent(SellerPackagePaymentActivity.this,0);
         startActivity(intent);
         finish();
     }

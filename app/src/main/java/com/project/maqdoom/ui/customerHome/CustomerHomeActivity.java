@@ -73,9 +73,11 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
     private DatabaseReference userDatabaseReference;
     public FirebaseUser currentUser;
     private DatabaseReference mDatabase;
+    private int notifyFlag = 0;
 
-    public static Intent newIntent(Context context) {
+    public static Intent newIntent(Context context , int notify) {
         Intent intent = new Intent(context, CustomerHomeActivity.class);
+        intent.putExtra("notify",notify);
         return intent;
     }
 
@@ -186,6 +188,9 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
         customerHomeViewModel.setNavigator(this);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+        if(getIntent().getExtras()!=null) {
+            notifyFlag = getIntent().getExtras().getInt("notify");
+        }
         if (currentUser != null) {
             String user_uID = mAuth.getCurrentUser().getUid();
 
@@ -250,6 +255,9 @@ public class CustomerHomeActivity extends BaseActivity<ActivityCustomerHomeBindi
         bottomNavigationView = activityCustomerHomeBinding.bottomNavigation;
         setupBottomNavigation();
         customerHomeViewModel.onNavMenuCreated();
+        if(notifyFlag==1){
+            showChats();
+        }
     }
 
 

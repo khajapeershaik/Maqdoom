@@ -366,7 +366,7 @@ public class SellerAddPackageActivity extends BaseActivity<ActivitySellerAddPack
 
     @Override
     public void openSellerHome() {
-        Intent intent = SellerHomeActivity.newIntent(SellerAddPackageActivity.this);
+        Intent intent = SellerHomeActivity.newIntent(SellerAddPackageActivity.this,0);
         startActivity(intent);
         finish();
     }
@@ -464,7 +464,7 @@ public class SellerAddPackageActivity extends BaseActivity<ActivitySellerAddPack
 
     @Override
     public void goBack() {
-        Intent intent = SellerHomeActivity.newIntent(SellerAddPackageActivity.this);
+        Intent intent = SellerHomeActivity.newIntent(SellerAddPackageActivity.this,0);
         startActivity(intent);
         finish();
     }

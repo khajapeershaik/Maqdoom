@@ -144,7 +144,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         registerForChat();
         registerUserType(mLoginViewModel.getDataManager().getUserType());
         Log.v("userType", mLoginViewModel.getDataManager().getUserType());
-        Intent intent = CustomerHomeActivity.newIntent(LoginActivity.this);
+        Intent intent = CustomerHomeActivity.newIntent(LoginActivity.this,0);
         startActivity(intent);
         finish();
 
@@ -172,7 +172,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         registerForChat();
         registerUserType(mLoginViewModel.getDataManager().getUserType());
         Log.v("userType", mLoginViewModel.getDataManager().getUserType());
-        Intent intent = SellerHomeActivity.newIntent(LoginActivity.this);
+        Intent intent = SellerHomeActivity.newIntent(LoginActivity.this,0);
         startActivity(intent);
         finish();
     }

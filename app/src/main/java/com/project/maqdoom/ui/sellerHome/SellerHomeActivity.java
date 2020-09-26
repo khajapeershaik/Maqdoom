@@ -77,9 +77,11 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
     private DatabaseReference userDatabaseReference;
     public FirebaseUser currentUser;
     private DatabaseReference mDatabase;
+    private int notifyFlag = 0;
 
-    public static Intent newIntent(Context context) {
+    public static Intent newIntent(Context context,int notify) {
         Intent intent = new Intent(context, SellerHomeActivity.class);
+        intent.putExtra("notify",notify);
         return intent;
     }
 
@@ -219,6 +221,9 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
         sellerHomeViewModel.setNavigator(this);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+        if(getIntent().getExtras()!=null) {
+            notifyFlag = getIntent().getExtras().getInt("notify");
+        }
         if (currentUser != null) {
             String user_uID = mAuth.getCurrentUser().getUid();
             userDatabaseReference = FirebaseDatabase.getInstance().getReference()
@@ -299,6 +304,9 @@ public class SellerHomeActivity extends BaseActivity<ActivitySellerHomeBinding, 
         bottomNavigationView = activitySellerHomeBinding.bottomNavigation;
         setupBottomNavigation();
         sellerHomeViewModel.onNavMenuCreated();
+        if(notifyFlag==1){
+            showChats();
+        }
     }
 
     private void setupBottomNavigation() {
